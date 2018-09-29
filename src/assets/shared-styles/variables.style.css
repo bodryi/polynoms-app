@@ -1,0 +1,8 @@
+:root {
+  --container-bg: #f0f0f0;
+  --container-border: #cabfbf;
+  --border-width: 0.5px;
+  /* --container-border: black; */
+  --btn-bg: #e1e1e1;
+  --btn-border: #b5b5b5;
+}

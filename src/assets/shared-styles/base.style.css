@@ -1,0 +1,12 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif, "Helvetica Neue Light",
+  "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial,
+  sans-serif;
+  overflow: hidden;
+  background: var(--container-bg);
+}

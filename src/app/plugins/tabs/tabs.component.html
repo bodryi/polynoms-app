@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="nav-tabs">
+        <i *ngIf="hideAngle()" backgroundChange (click)="scrollLeft()" class="fa fa-angle-left fa-3x angle-custom"></i>
+        <ul #tabsContent class="tab">
+            <li #tabContent *ngFor="let tab of tabs; let i = index;" (click)="selectTab(tab); setFocus(i)" [class.selected]="tab.active ? '.object-search' : ''">
+                <span [ngStyle]="{'white-space': wrap ? 'normal' : 'nowrap'}">{{tab.tabTitle}}</span>
+            </li>
+            <ng-content select="div.custom-tab"></ng-content>
+        </ul>
+        <i *ngIf="hideAngle()" backgroundChange (click)="scrollRight()" class="fa fa-angle-right fa-3x angle-custom"></i>
+    </div>
+    <ng-content></ng-content>
+</div>

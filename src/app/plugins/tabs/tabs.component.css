@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.tab {
+  display: flex;
+  max-height: 100px;
+}
+
+.angle-custom {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  opacity: 0.5;
+  color: #122b40;
+}
+
+.angle-custom-enter {
+  opacity: 0.5;
+  background-color: #ccc;
+}
+
+.nav-tabs {
+  display: flex;
+  width: 100%;
+}
+
+ul.tab {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  overflow: hidden;
+}
+
+ul.tab li {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  background: var(--container-bg);
+  transition: 0.3s;
+  /* border-radius: 4px 4px 0 0; */
+  border: var(--border-width) solid transparent;
+  border-bottom-color: var(--container-border);
+}
+
+ul.tab li span {
+  width: 100%;
+  text-align: center;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-size: 12px;
+  float: left;
+}
+
+ul.tab li.selected {
+  border: var(--border-width) solid var(--container-border);
+  border-bottom-color: transparent;
+}
+
+ul.tab li.selected span {
+  color: #000000;
+}
+
+ul.tab li:hover {
+  background-color: var(--container-bg);
+  cursor: pointer;
+}
+
+ul.tab li:focus,
+.active {
+  background-color: var(--container-bg);
+}
