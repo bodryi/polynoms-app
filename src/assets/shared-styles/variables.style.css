@@ -2,7 +2,10 @@
   --container-bg: #f0f0f0;
   --container-border: #cabfbf;
   --border-width: 0.5px;
-  /* --container-border: black; */
+
   --btn-bg: #e1e1e1;
   --btn-border: #b5b5b5;
+  --btn-active: #d2d2d2;
+ /* can be changed in matrix-view component*/
+  --columns-number: 4;
 }

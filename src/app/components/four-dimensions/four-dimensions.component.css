@@ -1,0 +1,17 @@
+.container {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%;
+    grid-gap: 2vw;
+    margin: 5px 0;
+}
+
+.bordered {
+    border: var(--border-width) var(--container-border) solid;
+    padding: 5px;
+}
+
+.matrix-actions {
+    display: flex;
+    justify-content: space-between;
+}

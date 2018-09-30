@@ -10,3 +10,17 @@ body {
   overflow: hidden;
   background: var(--container-bg);
 }
+
+button {
+    background: var(--btn-bg);
+    border: var(--border-width) var(--btn-border) solid;
+    cursor: pointer;
+}
+
+button:hover {
+    background: rgba(var(--btn-bg), 0.9);
+}
+
+button:active {
+    background: var(--btn-active);
+}

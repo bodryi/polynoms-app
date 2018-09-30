@@ -1,0 +1,6 @@
+<div class="container">
+    <ng-container *ngFor="let row of value; let rowI = index">
+        <input *ngFor="let item of row; let itemI = index; trackBy:trackByFn" value="{{item}}" (input)="onChange($event, rowI, itemI)"
+        />
+    </ng-container>
+</div>
