@@ -1,0 +1,38 @@
+form {
+  display: flex;
+  justify-content: space-around;
+}
+
+.vector-wrapper {
+  border: var(--border-width) var(--container-border) solid;
+  padding: 20px 10px 10px 10px;
+  position: relative;
+  flex-grow: 1;
+}
+
+.vector-wrapper:not(:first-child):not(:last-child) {
+  margin: 0 10px;
+}
+
+.vector-wrapper:first-child {
+  margin-right: 5px;
+}
+
+.vector-wrapper:last-child {
+  margin-left: 5px;
+}
+
+.vector-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.header {
+  position: absolute;
+  background: var(--container-bg);
+  right: 80%;
+  top: -5%;
+  font-size: 17px;
+  padding: 0 5px;
+}

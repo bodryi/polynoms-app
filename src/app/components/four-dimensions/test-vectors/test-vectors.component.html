@@ -1,0 +1,29 @@
+<form [formGroup]="vectorsForm">
+  <div class="vector-wrapper">
+    <span class="header">A</span>
+    <vector-view formControlName="A" [componentNames]="componentNames"></vector-view>
+    <div class="vector-actions">
+      <button>Copy</button>
+      <button>Paste</button>
+      <button>Clear</button>
+    </div>
+  </div>
+  <div class="vector-wrapper">
+    <span class="header">B</span>
+    <vector-view formControlName="B" [componentNames]="componentNames"></vector-view>
+    <div class="vector-actions">
+      <button>Copy</button>
+      <button>Paste</button>
+      <button>Clear</button>
+    </div>
+  </div>
+  <div class="vector-wrapper">
+    <span class="header">C</span>
+    <vector-view formControlName="C" [componentNames]="componentNames"></vector-view>
+    <div class="vector-actions">
+      <button>Copy</button>
+      <button>Paste</button>
+      <button>Clear</button>
+    </div>
+  </div>
+</form>

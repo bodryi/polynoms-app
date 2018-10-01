@@ -12,42 +12,14 @@ export class MatrixBlockComponent implements OnInit {
   MATRIX_SIZE = 4;
 
   ngOnInit() {
-      // error with form group and from control name
+    // error with form group and from control name
     this.matrixForm = new FormGroup({
-      matrix: new FormArray([
-        new FormArray([
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-        ]),
-        new FormArray([
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-        ]),
-        new FormArray([
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-        ]),
-        new FormArray([
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-          new FormControl(''),
-        ]),
+      matrix: new FormControl([
+        ['', '', '', ''],
+        ['', '', '', ''],
+        ['', '', '', ''],
+        ['', '', '', ''],
       ]),
     });
   }
-  // this.matrixForm = new FormGroup({
-  //   matrix: new FormControl([
-  //     ['', '', '', ''],
-  //     ['', '', '', ''],
-  //     ['', '', '', ''],
-  //     ['', '', '', ''],
-  //   ]),
-  // });
 }
