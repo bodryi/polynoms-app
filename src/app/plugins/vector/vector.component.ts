@@ -1,15 +1,11 @@
 import {
-  AfterViewInit,
   Component,
   forwardRef,
-  Injector,
   Input,
-  OnInit,
 } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
-  NgControl,
 } from '@angular/forms';
 
 @Component({
@@ -24,20 +20,11 @@ import {
     },
   ],
 })
-export class VectorComponent implements ControlValueAccessor, AfterViewInit {
+export class VectorComponent implements ControlValueAccessor {
   @Input() componentNames: Array<string> = [];
-
-  ngControl: NgControl;
   value: Array<string> = null;
   private propagateChange = (_: any) => {};
   private onTouched = () => {};
-
-  constructor(private inj: Injector) {}
-
-  ngAfterViewInit() {
-    this.ngControl = this.inj.get(NgControl);
-    // console.log(this.ngControl, this.ngControl.name)
-  }
 
   writeValue(obj: Array<string>): void {
     this.value = obj;
