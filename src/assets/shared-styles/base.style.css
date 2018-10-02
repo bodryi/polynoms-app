@@ -12,17 +12,18 @@ body {
 }
 
 button {
-    background: var(--btn-bg);
-    border: var(--border-width) var(--btn-border) solid;
-    cursor: pointer;
-    padding: 4px 9px;
-    font-size: 14px;
+  background: var(--btn-bg);
+  border: var(--border-width) var(--btn-border) solid;
+  cursor: pointer;
+  padding: 4px 9px;
+  font-size: 14px;
 }
 
 button:hover {
-    background: rgba(var(--btn-bg), 0.9);
+  background: rgba(var(--btn-bg), 0.9);
 }
 
 button:active {
-    background: var(--btn-active);
+  background: var(--btn-active);
+  transform: translateY(1px);
 }

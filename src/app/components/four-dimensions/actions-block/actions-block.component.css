@@ -1,0 +1,14 @@
+.container {
+  padding: 5px;
+}
+
+.btn-block {
+  display: grid;
+  /*grid-template-rows: 1fr;*/
+  grid-template-columns: 22% 22% 22% 26%;
+  grid-gap: 1vw;
+}
+
+.btn-block:first-child {
+  margin-bottom: 1vw;
+}
