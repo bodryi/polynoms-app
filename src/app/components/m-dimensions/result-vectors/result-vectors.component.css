@@ -1,13 +1,14 @@
 form {
-  display: flex;
-  justify-content: space-around;
+  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: repeat(6, 33.3%);
 }
 
 .vector-wrapper {
   border: var(--border-width) var(--container-border) solid;
   padding: 10px;
   position: relative;
-  flex-grow: 1;
 }
 
 .vector-wrapper:not(:first-child):not(:last-child) {
@@ -29,8 +30,17 @@ form {
 }
 
 .header {
-  background: var(--container-bg);
+  display: flex;
   font-size: 16px;
   padding: 0 5px;
   margin: 0 0 8px 0;
+  cursor: pointer;
+}
+
+.header p {
+  margin: 0;
+}
+
+.header input {
+  margin-right: 8px;
 }

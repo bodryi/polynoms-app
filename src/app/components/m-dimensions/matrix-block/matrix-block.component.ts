@@ -15,7 +15,7 @@ export class MatrixBlockComponent implements OnInit {
     // error with form group and from control name
     this.matrixForm = new FormGroup({
       matrix: new FormControl(
-        new Array(this.m).fill(new Array(this.m).fill('')),
+        new Array(this.m).fill(null).map(() => new Array(this.m).fill('')),
       ),
     });
   }

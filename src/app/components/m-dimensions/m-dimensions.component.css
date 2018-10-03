@@ -2,14 +2,14 @@
     display: grid;
     grid-template-rows: 50% 50%;
     grid-template-columns: 40% 58%;
-    grid-gap: 0.5vw;
+    grid-gap: 2vw;
     margin: 5px 0;
 }
 
 .double-cell {
   display: grid;
   grid-template-rows: 50% 50%;
-  grid-gap: 0.5vw;
+  grid-gap: 1vw;
 }
 
 .bordered {
@@ -19,4 +19,8 @@
 
 .matrix-block-wrapper {
   height: 100%;
+}
+
+.result-wrapper {
+  overflow-y: auto;
 }

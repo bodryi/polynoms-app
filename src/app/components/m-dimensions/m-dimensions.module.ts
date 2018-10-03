@@ -8,6 +8,7 @@ import { TestVectorsComponent } from './test-vectors/test-vectors.component';
 import { VectorModule } from '../../plugins/vector/vector.module';
 import { CoefficientsComponent } from './coefficients/coefficients.component';
 import { ActionsBlockComponent } from './actions-block/actions-block.component';
+import { ResultVectorsComponent } from './result-vectors/result-vectors.component';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,9 @@ import { ActionsBlockComponent } from './actions-block/actions-block.component';
     TestVectorsComponent,
     CoefficientsComponent,
     ActionsBlockComponent,
+    ResultVectorsComponent,
   ],
   exports: [MDimensionsComponent],
   imports: [CommonModule, MatrixModule, ReactiveFormsModule, VectorModule],
 })
-export class MDimensionsModule {
-}
+export class MDimensionsModule {}
