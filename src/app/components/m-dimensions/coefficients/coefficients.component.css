@@ -8,8 +8,5 @@ form {
 
 .input-wrapper input {
   width: 99%;
-}
-
-.input-wrapper input {
-  height: 28px;
+  height: 25px;
 }

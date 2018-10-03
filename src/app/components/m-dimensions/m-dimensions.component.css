@@ -8,7 +8,7 @@
 
 .double-cell {
   display: grid;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 75% 25%;
   grid-gap: 1vw;
 }
 
