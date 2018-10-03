@@ -5,21 +5,21 @@ form {
 
 .vector-wrapper {
   border: var(--border-width) var(--container-border) solid;
-  padding: 20px 10px 10px 10px;
+  padding: 15px 10px 10px 10px;
   position: relative;
   flex-grow: 1;
 }
 
 .vector-wrapper:not(:first-child):not(:last-child) {
-  margin: 0 10px;
+  margin: 0 3px;
 }
 
 .vector-wrapper:first-child {
-  margin-right: 5px;
+  margin-right: 2px;
 }
 
 .vector-wrapper:last-child {
-  margin-left: 5px;
+  margin-left: 2px;
 }
 
 .vector-actions {

@@ -1,6 +1,5 @@
-import { Component, Input, forwardRef, Inject } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'matrix-view',
@@ -19,15 +18,8 @@ export class MatrixComponent implements ControlValueAccessor {
   private propagateChange = (_: any) => {};
   private onTouched = () => {};
 
-  constructor(@Inject(DOCUMENT) private document: any) {}
-
   writeValue(obj: Array<Array<string>>): void {
     this.value = obj;
-    this.value.length &&
-      document.documentElement.style.setProperty(
-        '--columns-number',
-        this.value.length.toString(),
-      );
   }
 
   registerOnChange(fn: any): void {

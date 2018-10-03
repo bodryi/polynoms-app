@@ -2,7 +2,7 @@
   display: grid;
   grid-template-rows: repeat(var(--columns-number), 30px);
   grid-template-columns: 1fr;
-  grid-gap: 1vw;
+  grid-gap: 0.5vw;
 }
 
 .input-wrapper {

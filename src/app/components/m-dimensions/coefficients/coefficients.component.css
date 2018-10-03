@@ -1,0 +1,15 @@
+form {
+  display: grid;
+  grid-template-rows: 25% 25% 25% 25%;
+  grid-template-columns: 1fr;
+  grid-gap: 0.5vw;
+  padding: 5px;
+}
+
+.input-wrapper input {
+  width: 99%;
+}
+
+.input-wrapper input {
+  height: 28px;
+}

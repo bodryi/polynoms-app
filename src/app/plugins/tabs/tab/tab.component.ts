@@ -1,16 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'tab',
   templateUrl: './tab.component.html',
 })
 export class TabComponent {
+  @Input() tabTitle: string;
   @Input()
-  tabTitle: string;
-  @Input()
-  active = false;
-  @Input()
-  template;
-  @Input()
-  dataContext;
+  set active(v: boolean) {
+    this._active = v;
+    if (this._active) {
+      this.tabSelected.emit();
+    }
+  }
+
+  get active(): boolean {
+    return this._active;
+  }
+
+  @Input() template;
+  @Input() dataContext;
+  @Output() tabSelected: EventEmitter<void> = new EventEmitter();
+
+  private _active = false;
 }

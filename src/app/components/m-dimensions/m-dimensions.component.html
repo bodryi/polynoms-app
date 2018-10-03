@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container" *ngIf="m">
   <div class="bordered">
     <div class="matrix-block-wrapper">
-      <matrix-block></matrix-block>
+      <matrix-block [m]="m"></matrix-block>
     </div>
   </div>
   <div>
-    <test-vectors></test-vectors>
+    <test-vectors [m]="m"></test-vectors>
   </div>
   <div class="double-cell">
     <div class="bordered">
@@ -17,3 +17,4 @@
   </div>
   <div>Result vectors</div>
 </div>
+<div *ngIf="!m">M is not provided!</div>
