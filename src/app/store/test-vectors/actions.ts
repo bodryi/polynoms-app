@@ -28,19 +28,19 @@ export class TestVectorCChange implements Action {
 export class Copy implements Action {
   readonly type = COPY;
 
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
 }
 
 export class Paste implements Action {
   readonly type = PASTE;
 
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
 }
 
 export class Clear implements Action {
   readonly type = CLEAR;
 
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
 }
 
 export type Actions =

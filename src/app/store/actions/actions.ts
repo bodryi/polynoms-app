@@ -6,6 +6,7 @@ export const LEFT_MULTIPLY = '[Actions] Left Multiply';
 export const RIGHT_MULTIPLY = '[Actions] Right Multiply';
 export const ADD_A_B = '[Actions] Add A B';
 export const A_POWER_N = '[Actions] A Power N';
+export const SET_N = '[Actions] Set N';
 
 export class MultiplyAB implements Action {
   readonly type = MULTIPLY_A_B;
@@ -28,7 +29,13 @@ export class AddAB implements Action {
 }
 
 export class APowerN implements Action {
-  readonly type = A_POWER_N; // with payload or take from store N
+  readonly type = A_POWER_N;
+}
+
+export class SetN implements Action {
+  readonly type = SET_N;
+
+  constructor(public payload: number) {}
 }
 
 export type Actions =
@@ -37,4 +44,5 @@ export type Actions =
   | LeftMultiply
   | RightMultiply
   | AddAB
-  | APowerN;
+  | APowerN
+  | SetN;
