@@ -5,6 +5,8 @@ export const OPEN_FILE = '[Matrix] Open File';
 export const OPEN_FILE_SUCCESS = '[Matrix] Open File Success';
 export const OPEN_FILE_FAILURE = '[Matrix] Open File Failure';
 export const SAVE_FILE = '[Matrix] Save File';
+export const SAVE_FILE_SUCCESS = '[Matrix] Save File Success';
+export const SAVE_FILE_FAILURE = '[Matrix] Save File Failure';
 export const COPY = '[Matrix] Copy';
 export const PASTE = '[Matrix] Paste';
 export const CLEAR = '[Matrix] Clear';
@@ -34,6 +36,14 @@ export class SaveFile implements Action {
   readonly type = SAVE_FILE;
 }
 
+export class SaveFileSuccess implements Action {
+  readonly type = SAVE_FILE_SUCCESS;
+}
+
+export class SaveFileFailure implements Action {
+  readonly type = SAVE_FILE_FAILURE;
+}
+
 export class Copy implements Action {
   readonly type = COPY;
 }
@@ -57,6 +67,8 @@ export type Actions =
   | OpenFileFailure
   | OpenFileFailure
   | SaveFile
+  | SaveFileSuccess
+  | SaveFileFailure
   | Copy
   | Paste
   | Clear
