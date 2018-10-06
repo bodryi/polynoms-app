@@ -10,19 +10,19 @@ export const CLEAR = '[Test Vectors] Clear';
 export class TestVectorAChange implements Action {
   readonly type = TEST_VECTOR_A_CHANGE;
 
-  constructor(public payload: Array<Array<string>>) {}
+  constructor(public payload: Array<string>) {}
 }
 
 export class TestVectorBChange implements Action {
   readonly type = TEST_VECTOR_B_CHANGE;
 
-  constructor(public payload: Array<Array<string>>) {}
+  constructor(public payload: Array<string>) {}
 }
 
 export class TestVectorCChange implements Action {
   readonly type = TEST_VECTOR_C_CHANGE;
 
-  constructor(public payload: Array<Array<string>>) {}
+  constructor(public payload: Array<string>) {}
 }
 
 export class Copy implements Action {
