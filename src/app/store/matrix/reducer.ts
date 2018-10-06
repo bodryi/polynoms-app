@@ -9,7 +9,7 @@ export interface State {
 }
 
 const initialState: State = {
-  matrix: [null, null],
+  matrix: [getEmptyMatrix(4), getEmptyMatrix(6)],
   bufferMatrix: [null, null],
   matrixValid: [false, false],
   matrixSize: null, // 4
@@ -61,6 +61,12 @@ function getNewMatrixArray(
     : matrixes;
 }
 
+function getEmptyMatrix(matrixSize: number): Array<Array<string>> {
+  return new Array(matrixSize)
+    .fill(null)
+    .map(() => new Array(matrixSize).fill(''));
+}
+
 export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case Action.MATRIX_CHANGE:
@@ -96,7 +102,11 @@ export function reducer(state = initialState, action: any): State {
     case Action.CLEAR:
       return {
         ...state,
-        matrix: null,
+        matrix: getNewMatrixArray(
+          getEmptyMatrix(state.matrixSize),
+          state.matrix,
+          state.matrixSize,
+        ),
         matrixValid: setMatrixValidity(
           false,
           state.matrixValid,

@@ -13,15 +13,19 @@ export interface State {
 }
 
 const initialState: State = {
-  A: [null, null],
-  B: [null, null],
-  C: [null, null],
+  A: [getEmptyVector(4), getEmptyVector(6)],
+  B: [getEmptyVector(4), getEmptyVector(6)],
+  C: [getEmptyVector(4), getEmptyVector(6)],
   AValid: [false, false],
   BValid: [false, false],
   CValid: [false, false],
-  vectorBuffer: [null, null],
-  matrixSize: null, // 4
+  vectorBuffer: [getEmptyVector(4), getEmptyVector(6)],
+  matrixSize: null,
 };
+
+function getEmptyVector(vectorSize: number): Array<string> {
+  return new Array(vectorSize).fill('');
+}
 
 function getIndex(matrixSize: number): number {
   return (matrixSize - 4) / 2;
@@ -118,12 +122,12 @@ export function reducer(state = initialState, action: any): State {
         ...state,
         [action.payload]: setVector(
           state[action.payload],
-          [],
+          getEmptyVector(state.matrixSize),
           state.matrixSize,
         ),
         [`${action.payload}Valid`]: validateTestVector(
           state[`${action.payload}Valid`],
-          null,
+          getEmptyVector(state.matrixSize),
           state.matrixSize,
         ),
       };

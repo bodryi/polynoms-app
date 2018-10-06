@@ -35,7 +35,6 @@ export class MatrixComponent implements ControlValueAccessor {
   }
 
   onChange(event: any, rowIndex: number, itemIndex: number) {
-    //InputEvent
     this.value[rowIndex][itemIndex] = event.target.value;
     this.propagateChange(this.value);
   }

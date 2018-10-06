@@ -9,11 +9,18 @@ export interface State {
 }
 
 const initialState: State = {
-  result: [null, null],
-  vectorBuffer: [null, null],
+  result: [
+    getEmptyVector(4).map(() => getEmptyVector(4)),
+    getEmptyVector(6).map(() => getEmptyVector(6)),
+  ],
+  vectorBuffer: [getEmptyVector(4), getEmptyVector(6)],
   activeResult: [0, 0],
-  matrixSize: null, // 4
+  matrixSize: null,
 };
+
+function getEmptyVector(vectorSize: number): Array<string> {
+  return new Array(vectorSize).fill('');
+}
 
 function getIndex(matrixSize: number): number {
   return (matrixSize - 4) / 2;
@@ -103,7 +110,7 @@ export function reducer(state = initialState, action: any): State {
         ...state,
         result: setVector(
           state.result,
-          [],
+          getEmptyVector(state.matrixSize),
           state.activeResult[getIndex(state.matrixSize)],
           state.matrixSize,
         ),

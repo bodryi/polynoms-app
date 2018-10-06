@@ -1,5 +1,5 @@
 <div class="container">
-    <ng-container *ngFor="let row of value; let rowI = index">
+    <ng-container *ngFor="let row of value; let rowI = index; trackBy:trackByFn">
         <input *ngFor="let item of row; let itemI = index; trackBy:trackByFn" value="{{item}}" (input)="onChange($event, rowI, itemI)"
         />
     </ng-container>
