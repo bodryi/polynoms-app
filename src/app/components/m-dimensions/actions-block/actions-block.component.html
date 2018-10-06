@@ -3,7 +3,9 @@
     <button>AxB</button>
     <button>(AxB)xC</button>
     <button>A^n</button>
-    <input placeholder="Power n..."/>
+    <form [formGroup]="powerForm">
+      <input formControlName="power" placeholder="Power n..."/>
+    </form>
   </div>
   <div class="btn-block">
     <button>BxC</button>
