@@ -1,32 +1,59 @@
 import * as Action from './actions';
+import * as MainAction from '../main/actions';
 
 export interface State {
-  A: Array<string>;
-  B: Array<string>;
-  C: Array<string>;
-  AValid: boolean;
-  BValid: boolean;
-  CValid: boolean;
-  vectorBuffer: Array<string>;
+  A: Array<Array<string>>;
+  B: Array<Array<string>>;
+  C: Array<Array<string>>;
+  AValid: Array<boolean>;
+  BValid: Array<boolean>;
+  CValid: Array<boolean>;
+  vectorBuffer: Array<Array<string>>;
+  matrixSize: number;
 }
 
 const initialState: State = {
-  A: [],
-  B: [],
-  C: [],
-  AValid: false,
-  BValid: false,
-  CValid: false,
-  vectorBuffer: [],
+  A: [null, null],
+  B: [null, null],
+  C: [null, null],
+  AValid: [false, false],
+  BValid: [false, false],
+  CValid: [false, false],
+  vectorBuffer: [null, null],
+  matrixSize: null, // 4
 };
 
-function validateTestVector(v: Array<string>): boolean {
+function getIndex(matrixSize: number): number {
+  return (matrixSize - 4) / 2;
+}
+
+function setVector(
+  state: Array<Array<string>>,
+  payload: Array<string>,
+  matrixSize: number,
+): Array<Array<string>> {
   return (
-    v &&
-    v.reduce(
-      (acc: boolean, curr: string) => acc && !!curr && !!curr.match(/^[0,1]*$/),
-      true,
-    )
+    state &&
+    state.map((v, index) => (index === getIndex(matrixSize) ? [...payload] : v))
+  );
+}
+
+function validateTestVector(
+  state: Array<boolean>,
+  v: Array<string>,
+  matrixSize: number,
+): Array<boolean> {
+  return state.map(
+    (val, index) =>
+      index === getIndex(matrixSize)
+        ? v &&
+          v.length &&
+          v.reduce(
+            (acc: boolean, curr: string) =>
+              acc && !!curr && !!curr.match(/^[0,1]*$/),
+            true,
+          )
+        : val,
   );
 }
 
@@ -35,22 +62,34 @@ export function reducer(state = initialState, action: any): State {
     case Action.TEST_VECTOR_A_CHANGE:
       return {
         ...state,
-        A: [...action.payload],
-        AValid: validateTestVector(action.payload),
+        A: setVector(state.A, action.payload, state.matrixSize),
+        AValid: validateTestVector(
+          state.AValid,
+          action.payload,
+          state.matrixSize,
+        ),
       };
 
     case Action.TEST_VECTOR_B_CHANGE:
       return {
         ...state,
-        B: [...action.payload],
-        BValid: validateTestVector(action.payload),
+        B: setVector(state.B, action.payload, state.matrixSize),
+        BValid: validateTestVector(
+          state.BValid,
+          action.payload,
+          state.matrixSize,
+        ),
       };
 
     case Action.TEST_VECTOR_C_CHANGE:
       return {
         ...state,
-        C: [...action.payload],
-        CValid: validateTestVector(action.payload),
+        C: setVector(state.C, action.payload, state.matrixSize),
+        CValid: validateTestVector(
+          state.CValid,
+          action.payload,
+          state.matrixSize,
+        ),
       };
 
     case Action.COPY:
@@ -62,15 +101,37 @@ export function reducer(state = initialState, action: any): State {
     case Action.PASTE:
       return {
         ...state,
-        [action.payload]: state.vectorBuffer && [...state.vectorBuffer],
-        [`Valid${action.payload}`]: validateTestVector(state.vectorBuffer),
+        [action.payload]: setVector(
+          state[action.payload],
+          state.vectorBuffer[getIndex(state.matrixSize)],
+          state.matrixSize,
+        ),
+        [`${action.payload}Valid`]: validateTestVector(
+          state[`${action.payload}Valid`],
+          state.vectorBuffer[getIndex(state.matrixSize)],
+          state.matrixSize,
+        ),
       };
 
     case Action.CLEAR:
       return {
         ...state,
-        [action.payload]: [],
-        [`Valid${action.payload}`]: false,
+        [action.payload]: setVector(
+          state[action.payload],
+          [],
+          state.matrixSize,
+        ),
+        [`${action.payload}Valid`]: validateTestVector(
+          state[`${action.payload}Valid`],
+          null,
+          state.matrixSize,
+        ),
+      };
+
+    case MainAction.SET_MATRIX_SIZE:
+      return {
+        ...state,
+        matrixSize: action.payload,
       };
 
     default:
@@ -78,9 +139,15 @@ export function reducer(state = initialState, action: any): State {
   }
 }
 
-export const getTestVectorA = (state: State) => state.A;
-export const getTestVectorB = (state: State) => state.B;
-export const getTestVectorC = (state: State) => state.C;
-export const getIsValidTestVectorA = (state: State) => state.AValid;
-export const getIsValidTestVectorB = (state: State) => state.BValid;
-export const getIsValidTestVectorC = (state: State) => state.CValid;
+export const getTestVectorA = (state: State) =>
+  state.A[getIndex(state.matrixSize)];
+export const getTestVectorB = (state: State) =>
+  state.B[getIndex(state.matrixSize)];
+export const getTestVectorC = (state: State) =>
+  state.C[getIndex(state.matrixSize)];
+export const getIsValidTestVectorA = (state: State) =>
+  state.AValid[getIndex(state.matrixSize)];
+export const getIsValidTestVectorB = (state: State) =>
+  state.BValid[getIndex(state.matrixSize)];
+export const getIsValidTestVectorC = (state: State) =>
+  state.CValid[getIndex(state.matrixSize)];

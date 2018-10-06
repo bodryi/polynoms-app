@@ -58,6 +58,11 @@ export const getIsMatrixValid = createSelector(
   fromMatrix.getIsMatrixValid,
 );
 
+export const getMatrixSize = createSelector(
+  getMatrixState,
+  fromMatrix.getMatrixSize,
+);
+
 export const getResult = createSelector(
   getResultVectorsState,
   fromResultVectors.getResult,

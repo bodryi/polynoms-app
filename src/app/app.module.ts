@@ -11,20 +11,17 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, LayoutModule,
+  imports: [
+    BrowserModule,
+    LayoutModule,
     StoreModule.forRoot(reducers),
 
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
-    EffectsModule.forRoot([
-      MatrixEffects,
-      ActionsEffects,
-    ]),
-
+    EffectsModule.forRoot([MatrixEffects, ActionsEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

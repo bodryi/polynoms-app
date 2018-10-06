@@ -7,7 +7,6 @@ export const COPY = '[Result Vectors] Copy';
 export const PASTE = '[Result Vectors] Paste';
 export const CLEAR = '[Result Vectors] Clear';
 
-
 export class SetActiveResultVector implements Action {
   readonly type = SET_ACTIVE_RESULT_VECTOR;
 
@@ -38,4 +37,9 @@ export class Clear implements Action {
   constructor(public payload: number) {}
 }
 
-export type Actions = SetActiveResultVector | SetResult | Copy | Paste | Clear;
+export type Actions =
+  | SetActiveResultVector
+  | SetResult
+  | Copy
+  | Paste
+  | Clear;
