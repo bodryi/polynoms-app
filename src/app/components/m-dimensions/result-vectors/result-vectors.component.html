@@ -8,9 +8,9 @@
       </label>
       <vector-view formControlName="{{i}}" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button>Copy</button>
-        <button>Paste</button>
-        <button>Clear</button>
+        <button (click)="onCopyClick(i)">Copy</button>
+        <button (click)="onPasteClick(i)">Paste</button>
+        <button (click)="onClearClick(i)">Clear</button>
       </div>
     </div>
   </div>

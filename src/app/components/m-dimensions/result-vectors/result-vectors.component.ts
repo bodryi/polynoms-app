@@ -64,6 +64,18 @@ export class ResultVectorsComponent implements OnInit, OnDestroy {
     this.store.dispatch(new resultVectors.SetActiveResultVector(newActiveResult));
   }
 
+  onCopyClick(index: number) {
+    this.store.dispatch(new resultVectors.Copy(index));
+  }
+
+  onPasteClick(index: number) {
+    this.store.dispatch(new resultVectors.Paste(index));
+  }
+
+  onClearClick(index: number) {
+    this.store.dispatch(new resultVectors.Clear(index));
+  }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

@@ -102,7 +102,7 @@ export function reducer(state = initialState, action: any): State {
         result: setVector(
           state.result,
           state.vectorBuffer[getIndex(state.matrixSize)],
-          state.activeResult[getIndex(state.matrixSize)],
+          action.payload,
           state.matrixSize,
         ),
       };
@@ -113,7 +113,7 @@ export function reducer(state = initialState, action: any): State {
         result: setVector(
           state.result,
           getEmptyVector(state.matrixSize),
-          state.activeResult[getIndex(state.matrixSize)],
+          action.payload,
           state.matrixSize,
         ),
       };
