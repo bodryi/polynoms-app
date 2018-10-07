@@ -24,10 +24,12 @@ form {
 }
 
 .vector-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 31.5%);
+  grid-gap: 0.5vw;
   margin-top: 15px;
-  display: flex;
-  justify-content: space-around;
 }
+
 
 .header {
   display: flex;
