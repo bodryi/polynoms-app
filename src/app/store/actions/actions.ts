@@ -35,7 +35,7 @@ export class APowerN implements Action {
 export class SetN implements Action {
   readonly type = SET_N;
 
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
 }
 
 export type Actions =

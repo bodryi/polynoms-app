@@ -8,5 +8,8 @@
   "parser": "typescript",
   "semi": true,
   "useTabs": false,
-  "ignorePath": ".prettierignore"
+  "eslintIntegration": false,
+  "stylelintIntegration": false,
+  "ignorePath": ".prettierignore",
+  "disableLanguages": []
 }
