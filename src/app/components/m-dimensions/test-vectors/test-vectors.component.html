@@ -3,27 +3,27 @@
     <p class="header">Test Vector A</p>
     <vector-view formControlName="A" [componentNames]="componentNames"></vector-view>
     <div class="vector-actions">
-      <button>Copy</button>
-      <button>Paste</button>
-      <button>Clear</button>
+      <button (click)="onCopyClick('A')">Copy</button>
+      <button (click)="onPasteClick('A')">Paste</button>
+      <button (click)="onClearClick('A')">Clear</button>
     </div>
   </div>
   <div class="vector-wrapper">
     <p class="header">Test Vector B</p>
     <vector-view formControlName="B" [componentNames]="componentNames"></vector-view>
     <div class="vector-actions">
-      <button>Copy</button>
-      <button>Paste</button>
-      <button>Clear</button>
+      <button (click)="onCopyClick('B')">Copy</button>
+      <button (click)="onPasteClick('B')">Paste</button>
+      <button (click)="onClearClick('B')">Clear</button>
     </div>
   </div>
   <div class="vector-wrapper">
     <p class="header">Test Vector C</p>
     <vector-view formControlName="C" [componentNames]="componentNames"></vector-view>
     <div class="vector-actions">
-      <button>Copy</button>
-      <button>Paste</button>
-      <button>Clear</button>
+      <button (click)="onCopyClick('C')">Copy</button>
+      <button (click)="onPasteClick('C')">Paste</button>
+      <button (click)="onClearClick('C')">Clear</button>
     </div>
   </div>
 </form>

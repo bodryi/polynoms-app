@@ -19,7 +19,8 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
   readonly charCodeSmallA = 97;
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) {
+  }
 
   ngOnInit() {
     for (let i = 0; i < this.m; i++) {
@@ -82,6 +83,18 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
       .subscribe((value: Array<string>) =>
         this.store.dispatch(new testVectors.TestVectorCChange(value)),
       );
+  }
+
+  onCopyClick(vectorName: string) {
+    this.store.dispatch(new testVectors.Copy(vectorName));
+  }
+
+  onPasteClick(vectorName: string) {
+    this.store.dispatch(new testVectors.Paste(vectorName));
+  }
+
+  onClearClick(vectorName: string) {
+    this.store.dispatch(new testVectors.Clear(vectorName));
   }
 
   ngOnDestroy() {
