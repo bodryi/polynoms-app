@@ -1,11 +1,11 @@
 <form [formGroup]="matrixForm">
     <matrix-view formControlName="matrix"></matrix-view>
     <div class="matrix-actions">
-      <button>Load</button>
-      <button>Save</button>
-      <button>Copy</button>
-      <button>Paste</button>
-      <button>Clear</button>
-      <button>Default</button>
+      <button (click)="onLoadClick()">Load</button>
+      <button (click)="onSaveClick()">Save</button>
+      <button (click)="onCopyClick()">Copy</button>
+      <button (click)="onPasteClick()">Paste</button>
+      <button (click)="onClearClick()">Clear</button>
+      <button (click)="onDefaultClick()">Default</button>
     </div>
 </form>

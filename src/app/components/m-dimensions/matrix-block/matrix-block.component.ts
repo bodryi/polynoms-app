@@ -17,7 +17,8 @@ export class MatrixBlockComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) {
+  }
 
   ngOnInit() {
     this.matrixForm = new FormGroup({
@@ -41,6 +42,28 @@ export class MatrixBlockComponent implements OnInit, OnDestroy {
       .subscribe((value: { matrix: Array<Array<string>> }) =>
         this.store.dispatch(new matrix.MatrixChange(value.matrix)),
       );
+  }
+
+  onLoadClick() {
+  }
+
+  onSaveClick() {
+  }
+
+  onCopyClick() {
+    this.store.dispatch(new matrix.Copy());
+  }
+
+  onPasteClick() {
+    this.store.dispatch(new matrix.Paste());
+  }
+
+  onClearClick() {
+    this.store.dispatch(new matrix.Clear());
+  }
+
+  onDefaultClick() {
+    this.store.dispatch(new matrix.SetDefault());
   }
 
   ngOnDestroy() {

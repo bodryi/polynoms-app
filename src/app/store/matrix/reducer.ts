@@ -10,12 +10,13 @@ export interface State {
 
 const initialState: State = {
   matrix: [getEmptyMatrix(4), getEmptyMatrix(6)],
-  bufferMatrix: [null, null],
+  bufferMatrix: [getEmptyMatrix(4), getEmptyMatrix(6)],
   matrixValid: [false, false],
   matrixSize: null, // 4
 };
 
-const defaultMatrix = null; // temporary
+const defaultMatrix4 = getEmptyMatrix(4); // temporary
+const defaultMatrix6 = getEmptyMatrix(6); // temporary
 
 function validateMatrix(
   m: Array<Array<string>>,
@@ -51,20 +52,29 @@ function getNewMatrixArray(
   matrixSize: number,
 ) {
   const changedIndex = getIndex(matrixSize);
-  return changedIndex || changedIndex === 0
-    ? matrixes.map(
-        (matrix, index) =>
-          index === changedIndex
-            ? deepArrayCopy(payload)
-            : deepArrayCopy(matrix),
-      )
-    : matrixes;
+  return matrixes.map(
+    (matrix, index) =>
+      index === changedIndex
+        ? deepArrayCopy(payload)
+        : deepArrayCopy(matrix),
+  );
 }
 
 function getEmptyMatrix(matrixSize: number): Array<Array<string>> {
   return new Array(matrixSize)
     .fill(null)
     .map(() => new Array(matrixSize).fill(''));
+}
+
+function getDefaultMatrix(matrixSize: number): Array<Array<string>> {
+  switch (matrixSize) {
+    case 4:
+      return defaultMatrix4;
+    case 6:
+      return defaultMatrix6;
+    default:
+      return getEmptyMatrix(matrixSize);
+  }
 }
 
 export function reducer(state = initialState, action: any): State {
@@ -88,12 +98,12 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         matrix: getNewMatrixArray(
-          defaultMatrix,
+          getDefaultMatrix(state.matrixSize),
           state.matrix,
           state.matrixSize,
         ),
         matrixValid: validateMatrix(
-          defaultMatrix,
+          getDefaultMatrix(state.matrixSize),
           state.matrixValid,
           state.matrixSize,
         ),
@@ -118,8 +128,8 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         bufferMatrix: getNewMatrixArray(
-          action.payload,
-          state.matrix,
+          state.matrix[getIndex(state.matrixSize)],
+          state.bufferMatrix,
           state.matrixSize,
         ),
       };
@@ -129,17 +139,17 @@ export function reducer(state = initialState, action: any): State {
         ...state,
         matrix: state.bufferMatrix
           ? getNewMatrixArray(
-              state.bufferMatrix[getIndex(state.matrixSize)],
-              state.matrix,
-              state.matrixSize,
-            )
+            state.bufferMatrix[getIndex(state.matrixSize)],
+            state.matrix,
+            state.matrixSize,
+          )
           : state.matrix,
         matrixValid: state.bufferMatrix
           ? validateMatrix(
-              state.bufferMatrix[getIndex(state.matrixSize)],
-              state.matrixValid,
-              state.matrixSize,
-            )
+            state.bufferMatrix[getIndex(state.matrixSize)],
+            state.matrixValid,
+            state.matrixSize,
+          )
           : state.matrixValid,
       };
 
