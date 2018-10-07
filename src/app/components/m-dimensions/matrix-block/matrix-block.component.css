@@ -6,12 +6,6 @@ form {
   height: 100%;
 }
 
-/*.matrix-actions {*/
-  /*display: flex;*/
-  /*justify-content: space-between;*/
-  /*margin-bottom: 10px;*/
-/*}*/
-
 .matrix-actions {
   display: grid;
   grid-template-columns: repeat(6, 15.5%);
