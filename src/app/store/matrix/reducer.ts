@@ -1,6 +1,21 @@
 import * as Action from './actions';
 import * as MainAction from '../main/actions';
 
+const defaultMatrix4 = [
+  ['Aa', 'Bb', 'Cc', 'Ad'],
+  ['Aa', 'Bb', 'Cc', 'Ad'],
+  ['Aa', 'Bb', 'Cc', 'Ad'],
+  ['Aa', 'Bb', 'Cc', 'Ad'],
+];
+const defaultMatrix6 = [
+  ['a', 'b', 'c', 'd', 'e', 'f'],
+  ['b', 'Bb', 'Cc', 'Ad', 'Be', 'Cf'],
+  ['c', 'Bb', 'Cc', 'Ad', 'Be', 'Cf'],
+  ['d', 'Bb', 'Cc', 'Ad', 'Be', 'Cf'],
+  ['e', 'Bb', 'Cc', 'Ad', 'Be', 'Cf'],
+  ['f', 'Bb', 'Cc', 'Ad', 'Be', 'Cf'],
+];
+
 export interface State {
   matrix: Array<Array<Array<string>>>;
   bufferMatrix: Array<Array<Array<string>>>;
@@ -9,14 +24,11 @@ export interface State {
 }
 
 const initialState: State = {
-  matrix: [getEmptyMatrix(4), getEmptyMatrix(6)],
+  matrix: [getDefaultMatrix(4), getDefaultMatrix(6)],
   bufferMatrix: [getEmptyMatrix(4), getEmptyMatrix(6)],
   matrixValid: [false, false],
   matrixSize: null, // 4
 };
-
-const defaultMatrix4 = getEmptyMatrix(4); // temporary
-const defaultMatrix6 = getEmptyMatrix(6); // temporary
 
 function validateMatrix(
   m: Array<Array<string>>,
