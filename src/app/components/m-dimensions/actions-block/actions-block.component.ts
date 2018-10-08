@@ -37,6 +37,26 @@ export class ActionsBlockComponent implements OnInit, OnDestroy {
       );
   }
 
+  multiplyAB() {
+    this.store.dispatch(new actions.MultiplyAB());
+  }
+
+  multiplyBC() {
+    this.store.dispatch(new actions.MultiplyBC());
+  }
+
+  leftMultiply() {
+    this.store.dispatch(new actions.LeftMultiply());
+  }
+
+  rightMultiply() {
+    this.store.dispatch(new actions.RightMultiply());
+  }
+
+  addAB() {
+    this.store.dispatch(new actions.AddAB());
+  }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

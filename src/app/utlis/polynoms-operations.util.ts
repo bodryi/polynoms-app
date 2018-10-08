@@ -1,6 +1,8 @@
 export function fillWithZeros(
-  bin1: Array<number>, bin2: Array<number>, n: number = Math.max(bin1.length, bin2.length),
-): { bin1: Array<number>, bin2: Array<number> } {
+  bin1: Array<number>,
+  bin2: Array<number>,
+  n: number = Math.max(bin1.length, bin2.length),
+): { bin1: Array<number>; bin2: Array<number> } {
   if (n > 300) {
     throw new Error('fillWithZeros: n is greater than 300');
   }
@@ -11,7 +13,10 @@ export function fillWithZeros(
   return { bin1, bin2 };
 }
 
-export function fillWithZerosOneNumber(bin: Array<number>, n: number): Array<number> {
+export function fillWithZerosOneNumber(
+  bin: Array<number>,
+  n: number,
+): Array<number> {
   if (n > 300) {
     throw new Error('fillWithZerosOneNumber: n is greater than 300');
   }
@@ -21,7 +26,10 @@ export function fillWithZerosOneNumber(bin: Array<number>, n: number): Array<num
   return bin;
 }
 
-export function plus(polynom1: Array<number>, polynom2: Array<number>): Array<number> {
+export function plus(
+  polynom1: Array<number>,
+  polynom2: Array<number>,
+): Array<number> {
   // проверка какая-нибудь, чтобы не вызывать каждый раз fill with zeroes каждый раз
   const { bin1: filledPolynom1, bin2: filledPolynom2 } = fillWithZeros(
     polynom1,
@@ -34,7 +42,10 @@ export function minus(polynom1, polynom2) {
   return plus(polynom1, polynom2);
 }
 
-export function multiply(polynom1: Array<number>, polynom2: Array<number>): Array<number> {
+export function multiply(
+  polynom1: Array<number>,
+  polynom2: Array<number>,
+): Array<number> {
   const m = polynom1.length;
   const n = polynom2.length;
   const prod = new Array(m + n - 1).fill(0);
@@ -48,7 +59,7 @@ export function multiply(polynom1: Array<number>, polynom2: Array<number>): Arra
   return prod;
 }
 
-function invert(bin: Array<number>): Array<number> {
+export function invert(bin: Array<number>): Array<number> {
   return bin.map(v => v ^ 1);
 }
 

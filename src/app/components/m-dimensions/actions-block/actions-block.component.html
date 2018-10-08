@@ -1,15 +1,15 @@
 <div class="container">
   <div class="btn-block">
-    <button>AxB</button>
-    <button>(AxB)xC</button>
+    <button (click)="multiplyAB()">AxB</button>
+    <button (click)="leftMultiply()">(AxB)xC</button>
     <button>A^n</button>
     <form [formGroup]="powerForm">
       <input formControlName="power" placeholder="Power n..."/>
     </form>
   </div>
   <div class="btn-block">
-    <button>BxC</button>
-    <button>Ax(BxC)</button>
-    <button>A+B</button>
+    <button (click)="multiplyBC()">BxC</button>
+    <button (click)="rightMultiply()">Ax(BxC)</button>
+    <button (click)="addAB()">A+B</button>
   </div>
 </div>
