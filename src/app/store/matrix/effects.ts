@@ -1,30 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import * as matrix from './actions';
+import * as matrixActions from './actions';
 import * as fromRoot from '../index';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/internal/operators';
+import { switchMap, withLatestFrom } from 'rxjs/internal/operators';
+import { saveToFile } from '../../utlis/work-with-files.util';
 
 @Injectable()
 export class MatrixEffects {
-  constructor(private store: Store<fromRoot.State>, private actions$: Actions) {
-  }
+  private matrix$ = this.store.pipe(select(fromRoot.getMatrix));
 
-  @Effect() saveFile$: Observable<any> = this.actions$.pipe(
-    ofType(matrix.SAVE_FILE),
-    switchMap(() => {
-      // FileSaver will return promise from util
-      return of(new matrix.SaveFileSuccess());
-    }),
+  constructor(
+    private store: Store<fromRoot.State>,
+    private actions$: Actions,
+  ) {}
+
+  @Effect()
+  saveFile$: Observable<any> = this.actions$.pipe(
+    ofType(matrixActions.SAVE_FILE),
+    withLatestFrom(this.matrix$),
+    switchMap(([action, matrix]: [any, Array<Array<string>>]) =>
+      saveToFile(matrix)
+        .then(() => new matrixActions.SaveFileSuccess())
+        .catch(() => new matrixActions.SaveFileFailure()),
+    ),
   );
 
-  @Effect() openFile$: Observable<any> = this.actions$.pipe(
-    ofType(matrix.OPEN_FILE),
+  @Effect()
+  openFile$: Observable<any> = this.actions$.pipe(
+    ofType(matrixActions.OPEN_FILE),
     switchMap(() => {
       // open file with promise
       const result: Array<Array<string>> = null;
-      return of(new matrix.MatrixChange(result));
+      return of(new matrixActions.MatrixChange(result));
     }),
   );
 }
