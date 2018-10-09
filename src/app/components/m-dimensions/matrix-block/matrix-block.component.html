@@ -1,11 +1,12 @@
 <form [formGroup]="matrixForm">
-    <matrix-view formControlName="matrix"></matrix-view>
-    <div class="matrix-actions">
-      <button (click)="onLoadClick()">Load</button>
-      <button (click)="onSaveClick()">Save</button>
-      <button (click)="onCopyClick()">Copy</button>
-      <button (click)="onPasteClick()">Paste</button>
-      <button (click)="onClearClick()">Clear</button>
-      <button (click)="onDefaultClick()">Default</button>
-    </div>
+  <matrix-view formControlName="matrix"></matrix-view>
+  <div class="matrix-actions">
+    <label class="file-upload-label" for="file-upload" tabindex="0">Load</label>
+    <input id="file-upload" type="file" accept="text/plain" (change)="onLoadChange($event)" hidden>
+    <button (click)="onSaveClick()">Save</button>
+    <button (click)="onCopyClick()">Copy</button>
+    <button (click)="onPasteClick()">Paste</button>
+    <button (click)="onClearClick()">Clear</button>
+    <button (click)="onDefaultClick()">Default</button>
+  </div>
 </form>

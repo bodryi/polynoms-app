@@ -17,7 +17,8 @@ export class MatrixBlockComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) {
+  }
 
   ngOnInit() {
     this.matrixForm = new FormGroup({
@@ -43,7 +44,18 @@ export class MatrixBlockComponent implements OnInit, OnDestroy {
       );
   }
 
-  onLoadClick() {}
+  onLoadChange(event: any) {
+    const input = event.target;
+    const reader = new FileReader();
+    reader.onload = () => this.store.dispatch(new matrix.OpenFileSuccess(reader.result));
+    reader.onerror = () => this.store.dispatch(new matrix.OpenFileFailure());
+    try {
+      reader.readAsText(input.files[0]);
+    } catch (e) {
+      console.log(e);
+      this.store.dispatch(new matrix.OpenFileFailure());
+    }
+  }
 
   onSaveClick() {
     this.store.dispatch(new matrix.SaveFile());

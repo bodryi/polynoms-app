@@ -13,18 +13,18 @@ function getLongestCell(matrix: Array<Array<string>>): number {
 function formatMatrixToString(matrix: Array<Array<string>>): string {
   const maxCellLength = getLongestCell(matrix);
   return matrix.reduce(
-    (acc: string, curr: Array<string>) =>
+    (acc: string, curr: Array<string>, indexRow: number) =>
       acc +
       `${curr.reduce((str: string, cell: string, index: number) => {
         if (index === curr.length - 1) {
-          str += cell;
+          str += cell ? cell : '_';
         } else {
           str +=
-            cell +
+            (cell ? cell : '_') +
             ' '.repeat(SPACE_BETWEEN_CELLS + maxCellLength - cell.length);
         }
         return str;
-      }, '')}\n`,
+      }, '')}${indexRow === matrix.length - 1 ? '' : '\n'}`,
     '',
   );
 }

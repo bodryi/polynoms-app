@@ -25,7 +25,7 @@ export class OpenFile implements Action {
 export class OpenFileSuccess implements Action {
   readonly type = OPEN_FILE_SUCCESS;
 
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export class OpenFileFailure implements Action {

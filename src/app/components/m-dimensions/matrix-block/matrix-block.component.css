@@ -12,3 +12,21 @@ form {
   grid-gap: 0.5vw;
   margin-bottom: 10px;
 }
+
+.file-upload-label {
+  background: var(--btn-bg);
+  border: var(--border-width) var(--btn-border) solid;
+  cursor: pointer;
+  padding: 4px 9px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.file-upload-label:hover {
+  background: rgba(var(--btn-bg), 0.9);
+}
+
+.file-upload-label:active {
+  background: var(--btn-active);
+  transform: translateY(1px);
+}

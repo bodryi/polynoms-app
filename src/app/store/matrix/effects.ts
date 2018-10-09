@@ -14,7 +14,8 @@ export class MatrixEffects {
   constructor(
     private store: Store<fromRoot.State>,
     private actions$: Actions,
-  ) {}
+  ) {
+  }
 
   @Effect()
   saveFile$: Observable<any> = this.actions$.pipe(
@@ -29,11 +30,16 @@ export class MatrixEffects {
 
   @Effect()
   openFile$: Observable<any> = this.actions$.pipe(
-    ofType(matrixActions.OPEN_FILE),
-    switchMap(() => {
-      // open file with promise
-      const result: Array<Array<string>> = null;
-      return of(new matrixActions.MatrixChange(result));
+    ofType(matrixActions.OPEN_FILE_SUCCESS),
+    switchMap((action: { payload: string }) => {
+      const rows: Array<string> = action.payload.split('\n');
+      const matrix: Array<Array<string>> = rows.map(
+        (row: string) => row.split(/\s+/).map(
+          (cell: string) => cell === '_' ? '' : cell,
+        ),
+      );
+      console.log(matrix);
+      return of(new matrixActions.MatrixChange(matrix));
     }),
   );
 }
