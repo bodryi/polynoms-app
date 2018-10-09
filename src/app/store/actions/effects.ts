@@ -7,7 +7,7 @@ import * as actions from './actions';
 import * as resultVectors from '../result-vectors/actions';
 import { switchMap, withLatestFrom } from 'rxjs/internal/operators';
 import { toBits, plus } from '../../utlis/polynoms-operations.util';
-import { multiplyVectors } from '../../utlis/matrix-operations.util';
+import { multiplyVectors, vectorPow } from '../../utlis/matrix-operations.util';
 
 @Injectable()
 export class ActionsEffects {
@@ -319,20 +319,49 @@ export class ActionsEffects {
   @Effect()
   aPowerN$: Observable<any> = this.actions$.pipe(
     ofType(actions.A_POWER_N),
-    withLatestFrom(this.testVectorA$, this.n$, this.activeResult$),
+    withLatestFrom(
+      this.testVectorA$,
+      this.n$,
+      this.matrix$,
+      this.mod$,
+      this.coefficientA$,
+      this.coefficientB$,
+      this.coefficientC$,
+      this.activeResult$,
+    ),
     switchMap(
       (
-        [action, testVectorA, n, activeResult]: [
+        [
+          action,
+          testVectorA,
+          n,
+          matrix,
+          mod,
+          coefficientA,
+          coefficientB,
+          coefficientC,
+          activeResult,
+        ]: [
           any,
           Array<string>,
-          number,
+          string,
+          Array<Array<string>>,
+          string,
+          string,
+          string,
+          string,
           number
         ],
       ) => {
-        // const testVectorABitwised: Array<Array<number>> = testVectorA.map((c: string) => toBits(c));
-        // operations
-
-        const resultVector: Array<string> = [];
+        const resultVector: Array<string> = vectorPow(
+          testVectorA,
+          n,
+          mod,
+          matrix,
+          coefficientA,
+          coefficientB,
+          coefficientC,
+        );
         return of(
           new resultVectors.SetResult({
             vector: resultVector,

@@ -99,3 +99,29 @@ export function multiplyVectors(
 
   return resultVector;
 }
+
+export function vectorPow(
+  v: Array<string>,
+  pow: string,
+  mod: string,
+  multiplyMatrix: Array<Array<string>>,
+  ...coefficients: Array<string>
+) {
+  const parsedPow = parseInt(pow, 10);
+
+  let res: Array<string> = [...v];
+  let currPow = 1;
+  const powOne = [...v];
+  while (currPow <= parsedPow) {
+    if (currPow * 2 > parsedPow || currPow + 1 === parsedPow) {
+      // needs improvements here
+      res = multiplyVectors(res, powOne, multiplyMatrix, mod, ...coefficients);
+      currPow++;
+    } else {
+      res = multiplyVectors(res, res, multiplyMatrix, mod, ...coefficients);
+      currPow *= 2;
+    }
+  }
+
+  return res;
+}

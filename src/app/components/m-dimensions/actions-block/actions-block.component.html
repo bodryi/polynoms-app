@@ -2,7 +2,7 @@
   <div class="btn-block">
     <button (click)="multiplyAB()">AxB</button>
     <button (click)="leftMultiply()">(AxB)xC</button>
-    <button>A^n</button>
+    <button (click)="power()">A^n</button>
     <form [formGroup]="powerForm">
       <input formControlName="power" placeholder="Power n..."/>
     </form>
