@@ -38,7 +38,6 @@ export class MatrixEffects {
           (cell: string) => cell === '_' ? '' : cell,
         ),
       );
-      console.log(matrix);
       return of(new matrixActions.MatrixChange(matrix));
     }),
   );
