@@ -3,8 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import * as coefficients from '../../../store/coefficients/actions';
 import { select, Store } from '@ngrx/store';
-import { debounceTime, takeUntil } from 'rxjs/internal/operators';
+import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as fromRoot from '../../../store';
+import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
 
 @Component({
   selector: 'coefficients',
@@ -27,39 +28,33 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     });
 
     this.store
-      .pipe(
-        select(fromRoot.getMod),
-        takeUntil(this.ngUnsubscribe),
-      )
+      .pipe(select(fromRoot.getMod), takeUntil(this.ngUnsubscribe))
       .subscribe((s: string) =>
         this.coefficientsForm.get('mod').setValue(s, { emitEvent: false }),
       );
 
     this.store
-      .pipe(
-        select(fromRoot.getA),
-        takeUntil(this.ngUnsubscribe),
-      )
+      .pipe(select(fromRoot.getA), takeUntil(this.ngUnsubscribe))
       .subscribe((s: string) =>
-        this.coefficientsForm.get('A').setValue(s, { emitEvent: false }),
+        this.coefficientsForm
+          .get('A')
+          .setValue(binToHex(s), { emitEvent: false }),
       );
 
     this.store
-      .pipe(
-        select(fromRoot.getB),
-        takeUntil(this.ngUnsubscribe),
-      )
+      .pipe(select(fromRoot.getB), takeUntil(this.ngUnsubscribe))
       .subscribe((s: string) =>
-        this.coefficientsForm.get('B').setValue(s, { emitEvent: false }),
+        this.coefficientsForm
+          .get('B')
+          .setValue(binToHex(s), { emitEvent: false }),
       );
 
     this.store
-      .pipe(
-        select(fromRoot.getC),
-        takeUntil(this.ngUnsubscribe),
-      )
+      .pipe(select(fromRoot.getC), takeUntil(this.ngUnsubscribe))
       .subscribe((s: string) =>
-        this.coefficientsForm.get('C').setValue(s, { emitEvent: false }),
+        this.coefficientsForm
+          .get('C')
+          .setValue(binToHex(s), { emitEvent: false }),
       );
 
     this.coefficientsForm
@@ -71,21 +66,33 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
 
     this.coefficientsForm
       .get('A')
-      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .valueChanges.pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientAChange(value)),
       );
 
     this.coefficientsForm
       .get('B')
-      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .valueChanges.pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientBChange(value)),
       );
 
     this.coefficientsForm
       .get('C')
-      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .valueChanges.pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientCChange(value)),
       );

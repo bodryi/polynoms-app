@@ -3,8 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import * as fromRoot from '../../../store';
 import { select, Store } from '@ngrx/store';
 import * as testVectors from '../../../store/test-vectors/actions';
-import { debounceTime, filter, takeUntil } from 'rxjs/internal/operators';
+import { debounceTime, filter, map, takeUntil } from 'rxjs/internal/operators';
 import { Subject } from 'rxjs';
+import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
 
 @Component({
   selector: 'test-vectors',
@@ -19,8 +20,7 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
   readonly charCodeSmallA = 97;
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {
-  }
+  constructor(private store: Store<fromRoot.State>) {}
 
   ngOnInit() {
     for (let i = 0; i < this.m; i++) {
@@ -40,7 +40,11 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
         takeUntil(this.ngUnsubscribe),
       )
       .subscribe((v: Array<string>) =>
-        this.vectorsForm.get('A').setValue(v, { emitEvent: false }),
+        this.vectorsForm
+          .get('A')
+          .setValue(v.map((str: string) => binToHex(str)), {
+            emitEvent: false,
+          }),
       );
 
     this.store
@@ -50,7 +54,11 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
         takeUntil(this.ngUnsubscribe),
       )
       .subscribe((v: Array<string>) =>
-        this.vectorsForm.get('B').setValue(v, { emitEvent: false }),
+        this.vectorsForm
+          .get('B')
+          .setValue(v.map((str: string) => binToHex(str)), {
+            emitEvent: false,
+          }),
       );
 
     this.store
@@ -60,26 +68,42 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
         takeUntil(this.ngUnsubscribe),
       )
       .subscribe((v: Array<string>) =>
-        this.vectorsForm.get('C').setValue(v, { emitEvent: false }),
+        this.vectorsForm
+          .get('C')
+          .setValue(v.map((str: string) => binToHex(str)), {
+            emitEvent: false,
+          }),
       );
 
     this.vectorsForm
       .get('A')
-      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .valueChanges.pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
+      )
       .subscribe((value: Array<string>) =>
         this.store.dispatch(new testVectors.TestVectorAChange(value)),
       );
 
     this.vectorsForm
       .get('B')
-      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .valueChanges.pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
+      )
       .subscribe((value: Array<string>) =>
         this.store.dispatch(new testVectors.TestVectorBChange(value)),
       );
 
     this.vectorsForm
       .get('C')
-      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .valueChanges.pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
+      )
       .subscribe((value: Array<string>) =>
         this.store.dispatch(new testVectors.TestVectorCChange(value)),
       );
