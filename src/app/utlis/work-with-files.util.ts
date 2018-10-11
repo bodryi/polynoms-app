@@ -30,7 +30,6 @@ function formatMatrixToString(matrix: Array<Array<string>>): string {
 }
 
 export function saveToFile(matrix: Array<Array<string>>) {
-  console.log(formatMatrixToString(matrix));
   return new Promise(resolve => {
     saveAs(
       new Blob([formatMatrixToString(matrix)], {

@@ -26,6 +26,19 @@ export function fillWithZerosOneNumber(
   return bin;
 }
 
+export function fillWithZerosOneNumberInFront(
+  bin: Array<number>,
+  n: number,
+): Array<number> {
+  if (n > 300) {
+    throw new Error('fillWithZerosOneNumber: n is greater than 300');
+  }
+  if (n > bin.length) {
+    bin = new Array(n - bin.length).fill(0).concat(bin);
+  }
+  return bin;
+}
+
 export function plus(
   polynom1: Array<number>,
   polynom2: Array<number>,

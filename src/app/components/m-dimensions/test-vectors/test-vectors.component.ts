@@ -20,7 +20,8 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
   readonly charCodeSmallA = 97;
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) {
+  }
 
   ngOnInit() {
     for (let i = 0; i < this.m; i++) {
@@ -78,10 +79,11 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
     this.vectorsForm
       .get('A')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: Array<string>) => value.map((v: string) => hexToBin(v),
+      )),
+    )
       .subscribe((value: Array<string>) =>
         this.store.dispatch(new testVectors.TestVectorAChange(value)),
       );
@@ -89,10 +91,10 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
     this.vectorsForm
       .get('B')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
+    )
       .subscribe((value: Array<string>) =>
         this.store.dispatch(new testVectors.TestVectorBChange(value)),
       );
@@ -100,10 +102,10 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
     this.vectorsForm
       .get('C')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: Array<string>) => value.map((v: string) => hexToBin(v))),
+    )
       .subscribe((value: Array<string>) =>
         this.store.dispatch(new testVectors.TestVectorCChange(value)),
       );
