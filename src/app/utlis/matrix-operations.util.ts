@@ -67,9 +67,7 @@ export function multiplyVectors(
         );
       }
       const basisVectorsMultiplyResult: string = multiplyMatrix[index1][index2];
-      const coefficientsNumbers: Array<
-        number
-      > = getCoefficientNumbersFromString(basisVectorsMultiplyResult);
+      const coefficientsNumbers: Array<number> = getCoefficientNumbersFromString(basisVectorsMultiplyResult);
       const multiplyResult: Array<number> = coefficientsNumbers.reduce(
         (acc: Array<number>, curr: number, index: number) => {
           let currVector = toBits(coefficients[curr]);
@@ -84,7 +82,7 @@ export function multiplyVectors(
       const basisVectorIndex = getRowOrColumnNumberByBasisVector(
         basisVectorsMultiplyResult[
           findVectorIndexInString(basisVectorsMultiplyResult)
-        ],
+          ],
       );
       if (resultVector[basisVectorIndex]) {
         resultVector[basisVectorIndex] = plus(
@@ -109,19 +107,41 @@ export function vectorPow(
 ) {
   const parsedPow = parseInt(pow, 10);
 
-  let res: Array<string> = [...v];
-  let currPow = 1;
-  const powOne = [...v];
-  while (currPow <= parsedPow) {
-    if (currPow * 2 > parsedPow || currPow + 1 === parsedPow) {
-      // needs improvements here
-      res = multiplyVectors(res, powOne, multiplyMatrix, mod, ...coefficients);
-      currPow++;
+  let res: Array<string> = null;
+  let tempC = [...v];
+  let w = parsedPow;
+
+  while (w > 0) {
+    if (w % 2) {
+      res = [...tempC];
+      w = (w - 1) / 2;
+      tempC = multiplyVectors(tempC, tempC, multiplyMatrix, mod, ...coefficients);
+
+      if (!w) {
+        return res;
+      } else {
+        break;
+      }
+
     } else {
-      res = multiplyVectors(res, res, multiplyMatrix, mod, ...coefficients);
-      currPow *= 2;
+      tempC = multiplyVectors(tempC, tempC, multiplyMatrix, mod, ...coefficients);
+      w /= 2;
     }
   }
 
-  return res;
+  let vi = w;
+
+  while (vi >= 0) {
+    if (vi % 2) {
+      res = multiplyVectors(res, tempC, multiplyMatrix, mod, ...coefficients);
+      vi = (vi - 1) / 2;
+    } else {
+      if (!vi) {
+        return res;
+      } else {
+        vi /= 2;
+      }
+    }
+    tempC = multiplyVectors(tempC, tempC, multiplyMatrix, mod, ...coefficients);
+  }
 }
