@@ -1,11 +1,13 @@
+import BigNumber from 'bignumber.js';
+
 export function fillWithZeros(
   bin1: Array<number>,
   bin2: Array<number>,
   n: number = Math.max(bin1.length, bin2.length),
 ): { bin1: Array<number>; bin2: Array<number> } {
-  if (n > 300) {
-    throw new Error('fillWithZeros: n is greater than 300');
-  }
+  // if (n > 300) {
+  //   throw new Error('fillWithZeros: n is greater than 300');
+  // }
 
   bin2 = bin2.concat(new Array(n - bin2.length).fill(0));
   bin1 = bin1.concat(new Array(n - bin1.length).fill(0));
@@ -17,9 +19,9 @@ export function fillWithZerosOneNumber(
   bin: Array<number>,
   n: number,
 ): Array<number> {
-  if (n > 300) {
-    throw new Error('fillWithZerosOneNumber: n is greater than 300');
-  }
+  // if (n > 300) {
+  //   throw new Error('fillWithZerosOneNumber: n is greater than 300');
+  // }
   if (n > bin.length) {
     bin = bin.concat(new Array(n - bin.length).fill(0));
   }
@@ -51,7 +53,7 @@ export function plus(
   return filledPolynom1.map((val, index) => filledPolynom2[index] ^ val);
 }
 
-export function minus(polynom1, polynom2) {
+export function minus(polynom1: Array<number>, polynom2: Array<number>): Array<number> {
   return plus(polynom1, polynom2);
 }
 
@@ -95,4 +97,118 @@ export function toBits(string: string): Array<number> {
   }
 
   return result;
+}
+
+export function pow(
+  polynom: Array<number>,
+  power: BigNumber,
+) {
+
+  let res: Array<number> = null;
+  let tempC = [...polynom];
+  let w = power;
+
+  while (w.comparedTo(0) === 1) {
+    if (w.mod(2)) {
+      res = [...tempC];
+      w = w.minus(1).div(2);
+      tempC = multiply(tempC, tempC);
+
+      if (!w.comparedTo(0)) {
+        return res;
+      } else {
+        break;
+      }
+
+    } else {
+      tempC = multiply(tempC, tempC);
+      w = w.div(2);
+    }
+  }
+
+  let vi = w;
+
+  while (vi.comparedTo(0) > -1) {
+    if (vi.mod(2)) {
+      res = multiply(res, tempC);
+      vi = vi.minus(1).div(2);
+    } else {
+      if (!vi.comparedTo(0)) {
+        return res;
+      } else {
+        vi = vi.div(2);
+      }
+    }
+    tempC = multiply(tempC, tempC);
+  }
+}
+
+export function mod(dividend: Array<number>, divisor: Array<number>): Array<number> {
+  const a = [...dividend].reverse();
+  const b = [...divisor].reverse();
+  while (a.length >= b.length && a) {
+    if (a[0] === 1) {
+      a.shift();
+      for (let j = 0; j < b.length - 1; j++) {
+        a[j] ^= b[j + 1];
+      }
+    } else {
+      a.shift();
+    }
+  }
+  return a.reverse();
+}
+
+export function multiplyMod(
+  polynom1: Array<number>,
+  polynom2: Array<number>,
+  module: Array<number>,
+): Array<number> {
+  return mod(multiply(polynom1, polynom2), module);
+}
+
+
+export function powMod(
+  polynom: Array<number>,
+  power: BigNumber,
+  module: Array<number>,
+): Array<number> {
+
+  let res: Array<number> = null;
+  let tempC = [...polynom];
+  let w = power;
+
+  while (w.comparedTo(0) === 1) {
+    if (w.mod(2)) {
+      res = [...tempC];
+      w = w.minus(1).div(2);
+      tempC = multiplyMod(tempC, tempC, module);
+
+      if (!w.comparedTo(0)) {
+        return res;
+      } else {
+        break;
+      }
+
+    } else {
+      tempC = multiplyMod(tempC, tempC, module);
+      w = w.div(2);
+    }
+  }
+
+  let vi = w;
+
+  while (vi.comparedTo(0) > -1) {
+    if (vi.mod(2)) {
+      res = multiplyMod(res, tempC, module);
+      vi = vi.minus(1).div(2);
+    } else {
+      if (!vi.comparedTo(0)) {
+        return res;
+      } else {
+        vi = vi.div(2);
+      }
+    }
+    tempC = multiplyMod(tempC, tempC, module);
+  }
 }
