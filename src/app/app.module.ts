@@ -8,6 +8,7 @@ import { MatrixEffects } from './store/matrix/effects';
 import { ActionsEffects } from './store/actions/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CoefficientsEffects } from './store/coefficients/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,9 +20,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
-    EffectsModule.forRoot([MatrixEffects, ActionsEffects]),
+    EffectsModule.forRoot([MatrixEffects, ActionsEffects, CoefficientsEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

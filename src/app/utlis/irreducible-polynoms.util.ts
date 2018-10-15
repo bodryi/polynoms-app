@@ -13,7 +13,8 @@ export function primeFactorization(number: BigNumber, res?: Array<BigNumber>) {
     while (
       number.mod(x).comparedTo(0) &&
       (x = x.plus(2)).comparedTo(root) === -1
-    ) {}
+      ) {
+    }
   }
 
   x = x.comparedTo(root) !== 1 ? x : number;
@@ -34,7 +35,7 @@ function isPolynomEqualsOne(polynom: Array<number>): boolean {
   if (!polynom.length || polynom[0] !== 1) {
     return false;
   } else {
-    return !!polynom.find((el, index) => el === 1 && !!index);
+    return !polynom.find((el, index) => el === 1 && !!index);
   }
 }
 
@@ -64,19 +65,34 @@ function condition2(
   return true;
 }
 
-export function testPolynome(polynome: string): boolean {
-  const polynomPower: number = polynome.length;
-  const polynomParsed: Array<number> = polynome
+export function testPolynom(polynom: string): boolean {
+  // TODO: trim last zeroes for correct power picking
+  if (polynom && polynom.length === 2 && polynom[1] === '1') {
+    // x, x + 1
+    return true;
+  }
+  const polynomPower: number = polynom.length - 1;
+  const polynomParsed: Array<number> = polynom
     .split('')
     .map(n => parseInt(n, 10));
   const powForTests: BigNumber = new BigNumber(2).pow(polynomPower).minus(1);
   const primes: Array<BigNumber> = primeFactorization(powForTests);
-  // primes distinct need to do
-
+  // TODO: primes distinct need to do
   let c = 1;
   while (c < ITERATIONS_COUNT) {
-    const randomPolynom = generateRandomPolynom(polynomPower);
+    const randomPolynom = generateRandomPolynom(polynom.length);
+    // leave it for info purposes until tests
+    // if (randomPolynom.length) {
+    //   console.log('----------------------');
+    //   console.log('random polynom', randomPolynom);
+    //   console.log('parsed polynom', polynomParsed);
+    //   console.log('powForTests', powForTests.toString());
+    //   console.log('primes', primes.map(p => p.toString()));
+    //   console.log('condition1', condition1(randomPolynom, polynomParsed, powForTests));
+    //   console.log('condition2', condition2(randomPolynom, polynomParsed, powForTests, primes));
+    // }
     if (
+      randomPolynom.length &&
       condition1(randomPolynom, polynomParsed, powForTests) &&
       condition2(randomPolynom, polynomParsed, powForTests, primes)
     ) {
@@ -99,7 +115,8 @@ export function primeFactorization53(number: number, res?: Array<number>) {
   if (number % x) {
     x = 3;
 
-    while (number % x && (x = x + 2) < root) {}
+    while (number % x && (x = x + 2) < root) {
+    }
   }
 
   x = x <= root ? x : number;

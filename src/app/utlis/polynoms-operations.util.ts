@@ -178,7 +178,7 @@ export function powMod(
   let w = power;
 
   while (w.comparedTo(0) === 1) {
-    if (w.mod(2)) {
+    if (w.mod(2).comparedTo(0)) {
       res = [...tempC];
       w = w.minus(1).div(2);
       tempC = multiplyMod(tempC, tempC, module);
@@ -197,7 +197,7 @@ export function powMod(
   let vi = w;
 
   while (vi.comparedTo(0) > -1) {
-    if (vi.mod(2)) {
+    if (vi.mod(2).comparedTo(0)) {
       res = multiplyMod(res, tempC, module);
       vi = vi.minus(1).div(2);
     } else {
