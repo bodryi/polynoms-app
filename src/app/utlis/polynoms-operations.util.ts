@@ -53,7 +53,10 @@ export function plus(
   return filledPolynom1.map((val, index) => filledPolynom2[index] ^ val);
 }
 
-export function minus(polynom1: Array<number>, polynom2: Array<number>): Array<number> {
+export function minus(
+  polynom1: Array<number>,
+  polynom2: Array<number>,
+): Array<number> {
   return plus(polynom1, polynom2);
 }
 
@@ -99,11 +102,7 @@ export function toBits(string: string): Array<number> {
   return result;
 }
 
-export function pow(
-  polynom: Array<number>,
-  power: BigNumber,
-) {
-
+export function pow(polynom: Array<number>, power: BigNumber) {
   let res: Array<number> = null;
   let tempC = [...polynom];
   let w = power;
@@ -119,7 +118,6 @@ export function pow(
       } else {
         break;
       }
-
     } else {
       tempC = multiply(tempC, tempC);
       w = w.div(2);
@@ -143,7 +141,10 @@ export function pow(
   }
 }
 
-export function mod(dividend: Array<number>, divisor: Array<number>): Array<number> {
+export function mod(
+  dividend: Array<number>,
+  divisor: Array<number>,
+): Array<number> {
   const a = [...dividend].reverse();
   const b = [...divisor].reverse();
   while (a.length >= b.length && a) {
@@ -167,13 +168,11 @@ export function multiplyMod(
   return mod(multiply(polynom1, polynom2), module);
 }
 
-
 export function powMod(
   polynom: Array<number>,
   power: BigNumber,
   module: Array<number>,
 ): Array<number> {
-
   let res: Array<number> = null;
   let tempC = [...polynom];
   let w = power;
@@ -189,7 +188,6 @@ export function powMod(
       } else {
         break;
       }
-
     } else {
       tempC = multiplyMod(tempC, tempC, module);
       w = w.div(2);

@@ -67,7 +67,9 @@ export function multiplyVectors(
         );
       }
       const basisVectorsMultiplyResult: string = multiplyMatrix[index1][index2];
-      const coefficientsNumbers: Array<number> = getCoefficientNumbersFromString(basisVectorsMultiplyResult);
+      const coefficientsNumbers: Array<
+        number
+      > = getCoefficientNumbersFromString(basisVectorsMultiplyResult);
       const multiplyResult: Array<number> = coefficientsNumbers.reduce(
         (acc: Array<number>, curr: number, index: number) => {
           let currVector = toBits(coefficients[curr]);
@@ -82,7 +84,7 @@ export function multiplyVectors(
       const basisVectorIndex = getRowOrColumnNumberByBasisVector(
         basisVectorsMultiplyResult[
           findVectorIndexInString(basisVectorsMultiplyResult)
-          ],
+        ],
       );
       if (resultVector[basisVectorIndex]) {
         resultVector[basisVectorIndex] = plus(
@@ -115,16 +117,27 @@ export function vectorPow(
     if (w % 2) {
       res = [...tempC];
       w = (w - 1) / 2;
-      tempC = multiplyVectors(tempC, tempC, multiplyMatrix, mod, ...coefficients);
+      tempC = multiplyVectors(
+        tempC,
+        tempC,
+        multiplyMatrix,
+        mod,
+        ...coefficients,
+      );
 
       if (!w) {
         return res;
       } else {
         break;
       }
-
     } else {
-      tempC = multiplyVectors(tempC, tempC, multiplyMatrix, mod, ...coefficients);
+      tempC = multiplyVectors(
+        tempC,
+        tempC,
+        multiplyMatrix,
+        mod,
+        ...coefficients,
+      );
       w /= 2;
     }
   }
