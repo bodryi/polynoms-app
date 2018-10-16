@@ -6,6 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
+import { CoefficientsEffects } from '../../../store/coefficients/effects';
 
 @Component({
   selector: 'coefficients',
@@ -17,8 +18,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {
-  }
+  constructor(
+    private store: Store<fromRoot.State>,
+    private coefficientsEffects: CoefficientsEffects,
+  ) {}
 
   ngOnInit() {
     this.coefficientsForm = new FormGroup({
@@ -31,7 +34,9 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.store
       .pipe(select(fromRoot.getMod), takeUntil(this.ngUnsubscribe))
       .subscribe((s: string) =>
-        this.coefficientsForm.get('mod').setValue(s, { emitEvent: false }),
+        this.coefficientsForm
+          .get('mod')
+          .setValue(binToHex(s), { emitEvent: false }),
       );
 
     this.store
@@ -60,7 +65,11 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
 
     this.coefficientsForm
       .get('mod')
-      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .valueChanges.pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.ModChange(value)),
       );
@@ -68,10 +77,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('A')
       .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-      map((value: string) => hexToBin(value)),
-    )
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientAChange(value)),
       );
@@ -79,10 +88,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('B')
       .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-      map((value: string) => hexToBin(value)),
-    )
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientBChange(value)),
       );
@@ -90,17 +99,22 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('C')
       .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-      map((value: string) => hexToBin(value)),
-    )
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientCChange(value)),
       );
+
+    // TODO: redo to store saving
+    this.coefficientsEffects.testPolynom$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(res => console.log('res in component', res));
   }
 
   testPolynom() {
-    this.store.dispatch(new coefficients.TestPolynom(this.coefficientsForm.get('mod').value));
+    this.store.dispatch(new coefficients.TestPolynom());
   }
 
   ngOnDestroy() {

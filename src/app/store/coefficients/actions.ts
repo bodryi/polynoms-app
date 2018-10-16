@@ -38,7 +38,7 @@ export class CoefficientCChange implements Action {
 export class TestPolynom implements Action {
   readonly type = TEST_POLYNOM;
 
-  constructor(public payload: string) {
+  constructor(public payload?: string) {
   }
 }
 
