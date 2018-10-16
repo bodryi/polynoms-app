@@ -6,6 +6,7 @@ export const COEFFICIENT_B_CHANGE = '[Coefficients] Coefficient B Change';
 export const COEFFICIENT_C_CHANGE = '[Coefficients] Coefficient C Change';
 export const TEST_POLYNOM = '[Coefficients] Test Polynom';
 export const TEST_POLYNOM_SUCCESS = '[Coefficients] Test Polynom Success';
+export const TEST_POLYNOM_RESULT_RESET = '[Coefficients] Test Polynom Result Reset';
 
 export class ModChange implements Action {
   readonly type = MOD_CHANGE;
@@ -49,10 +50,15 @@ export class TestPolynomSuccess implements Action {
   }
 }
 
+export class TestPolynomResetResult implements Action {
+  readonly type = TEST_POLYNOM_RESULT_RESET;
+}
+
 export type Actions =
   | ModChange
   | CoefficientAChange
   | CoefficientBChange
   | CoefficientCChange
   | TestPolynom
+  | TestPolynomResetResult
   | TestPolynomSuccess;

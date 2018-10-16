@@ -2,7 +2,8 @@
   <div class="input-wrapper">
     <label>Mod</label>
     <div class="mod-section">
-      <input formControlName="mod"/>
+      <input formControlName="mod"
+             [ngClass]="{'test-passed': !!(polynomTestResult$ | async), 'test-failed': (polynomTestResult$ | async) === false}"/>
       <button (click)="testPolynom()">Test</button>
       <button (click)="0">Generate</button>
     </div>

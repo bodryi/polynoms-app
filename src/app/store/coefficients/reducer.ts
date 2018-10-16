@@ -7,6 +7,7 @@ export interface State {
   B: Array<string>;
   C: Array<string>;
   matrixSize: number;
+  polynomTestResult: Array<boolean>;
 }
 
 const initialState: State = {
@@ -15,6 +16,7 @@ const initialState: State = {
   B: ['', ''],
   C: ['', ''],
   matrixSize: null,
+  polynomTestResult: [null, null],
 };
 
 function getIndex(matrixSize: number): number {
@@ -28,6 +30,16 @@ function setCoefficient(
 ) {
   return state.map(
     (c, index) => (index === getIndex(matrixSize) ? payload : c),
+  );
+}
+
+function setTestResult(
+  state: Array<boolean>,
+  payload: boolean,
+  matrixSize: number,
+) {
+  return state.map(
+    (r, index) => (index === getIndex(matrixSize) ? payload : r),
   );
 }
 
@@ -63,6 +75,18 @@ export function reducer(state = initialState, action: any): State {
         matrixSize: action.payload,
       };
 
+    case Action.TEST_POLYNOM_SUCCESS:
+      return {
+        ...state,
+        polynomTestResult: setTestResult(state.polynomTestResult, action.payload, state.matrixSize),
+      };
+
+    case Action.TEST_POLYNOM_RESULT_RESET:
+      return {
+        ...state,
+        polynomTestResult: setTestResult(state.polynomTestResult, null, state.matrixSize),
+      };
+
     default:
       return state;
   }
@@ -72,3 +96,4 @@ export const getMod = (state: State) => state.mod[getIndex(state.matrixSize)];
 export const getA = (state: State) => state.A[getIndex(state.matrixSize)];
 export const getB = (state: State) => state.B[getIndex(state.matrixSize)];
 export const getC = (state: State) => state.C[getIndex(state.matrixSize)];
+export const getPolynomTestResult = (state: State) => state.polynomTestResult[getIndex(state.matrixSize)];

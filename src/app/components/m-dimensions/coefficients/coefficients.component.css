@@ -22,3 +22,11 @@ form {
   align-items: center;
   margin-top: 3px;
 }
+
+.test-passed {
+  background: var(--green-higlight);
+}
+
+.test-failed {
+  background: var(--red-higlight);
+}

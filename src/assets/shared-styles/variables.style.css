@@ -8,4 +8,6 @@
   --btn-active: #d2d2d2;
  /* can be changed in matrix-view component*/
   --columns-number: 4;
+  --green-higlight: #88fab2;
+  --red-higlight: #f99;
 }

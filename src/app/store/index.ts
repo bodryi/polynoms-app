@@ -51,6 +51,8 @@ export const getB = createSelector(getCoefficientsState, fromCoefficients.getB);
 
 export const getC = createSelector(getCoefficientsState, fromCoefficients.getC);
 
+export const getPolynomTestResult = createSelector(getCoefficientsState, fromCoefficients.getPolynomTestResult);
+
 export const getMatrix = createSelector(getMatrixState, fromMatrix.getMatrix);
 
 export const getIsMatrixValid = createSelector(
