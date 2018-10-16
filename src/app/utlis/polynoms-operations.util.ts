@@ -45,7 +45,7 @@ export function plus(
   polynom1: Array<number>,
   polynom2: Array<number>,
 ): Array<number> {
-  // проверка какая-нибудь, чтобы не вызывать каждый раз fill with zeroes каждый раз
+  // TODO: don't call fill with zeros every time
   const { bin1: filledPolynom1, bin2: filledPolynom2 } = fillWithZeros(
     polynom1,
     polynom2,
@@ -102,13 +102,13 @@ export function toBits(string: string): Array<number> {
   return result;
 }
 
-export function pow(polynom: Array<number>, power: BigNumber) {
+export function pow(polynom: Array<number>, power: BigNumber): Array<number> {
   let res: Array<number> = null;
   let tempC = [...polynom];
   let w = power;
 
   while (w.comparedTo(0) === 1) {
-    if (w.mod(2)) {
+    if (w.mod(2).comparedTo(0)) {
       res = [...tempC];
       w = w.minus(1).div(2);
       tempC = multiply(tempC, tempC);
@@ -127,7 +127,7 @@ export function pow(polynom: Array<number>, power: BigNumber) {
   let vi = w;
 
   while (vi.comparedTo(0) > -1) {
-    if (vi.mod(2)) {
+    if (vi.mod(2).comparedTo(0)) {
       res = multiply(res, tempC);
       vi = vi.minus(1).div(2);
     } else {
