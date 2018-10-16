@@ -6,7 +6,19 @@ form {
   padding: 5px;
 }
 
-.input-wrapper input {
+.input-wrapper > input {
   width: 99%;
+}
+
+.input-wrapper input {
   height: 25px;
+}
+
+.mod-section {
+  display: grid;
+  grid-template-columns: 60% 18% 19%;
+  grid-template-rows: 25px;
+  grid-gap: 0.5vw;
+  align-items: center;
+  margin-top: 3px;
 }

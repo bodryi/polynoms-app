@@ -1,8 +1,11 @@
 <form [formGroup]="coefficientsForm">
   <div class="input-wrapper">
     <label>Mod</label>
-    <input formControlName="mod"/>
-    <button (click)="testPolynom()">Test polynom</button>
+    <div class="mod-section">
+      <input formControlName="mod"/>
+      <button (click)="testPolynom()">Test</button>
+      <button (click)="0">Generate</button>
+    </div>
   </div>
   <div class="input-wrapper">
     <label>A</label>
