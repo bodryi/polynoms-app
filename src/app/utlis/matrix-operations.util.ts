@@ -1,4 +1,11 @@
-import { toBits, multiply, plus, invert } from './polynoms-operations.util';
+import {
+  toBits,
+  multiply,
+  plus,
+  invert,
+  multiplyMod,
+  plusMod,
+} from './polynoms-operations.util';
 
 const CHAR_CODE_SMALL_A = 97;
 const CHAR_CODE_CAPITAL_A = 65;
@@ -50,22 +57,17 @@ export function multiplyVectors(
   if (v1.length !== v2.length) {
     throw new Error('multiplyVectors: vectors must have equal length');
   }
-  const parsedMod = parseInt(mod, 10);
+  const parsedMod = toBits(mod);
   const vectorSize = v1.length;
   const resultVector = new Array(vectorSize).fill('0');
 
   v1.forEach((comp1: string, index1: number) => {
     v2.forEach((comp2: string, index2: number) => {
-      let firstCoefsMultiplicationResult: Array<number> = multiply(
+      const firstCoefsMultiplicationResult: Array<number> = multiplyMod(
         toBits(comp1),
         toBits(comp2),
+        parsedMod,
       );
-      if (firstCoefsMultiplicationResult.length > parsedMod) {
-        firstCoefsMultiplicationResult = firstCoefsMultiplicationResult.slice(
-          0,
-          parsedMod,
-        );
-      }
       const basisVectorsMultiplyResult: string = multiplyMatrix[index1][index2];
       const coefficientsNumbers: Array<
         number
@@ -76,8 +78,7 @@ export function multiplyVectors(
           if (!index && hasMinus(basisVectorsMultiplyResult)) {
             currVector = invert(currVector);
           }
-          const res = multiply(acc, currVector);
-          return res.length > parsedMod ? res.slice(0, parsedMod) : res;
+          return multiplyMod(acc, currVector, parsedMod);
         },
         firstCoefsMultiplicationResult,
       );
@@ -87,9 +88,10 @@ export function multiplyVectors(
         ],
       );
       if (resultVector[basisVectorIndex]) {
-        resultVector[basisVectorIndex] = plus(
+        resultVector[basisVectorIndex] = plusMod(
           toBits(resultVector[basisVectorIndex]),
           multiplyResult,
+          parsedMod,
         ).join('');
       } else {
         resultVector[basisVectorIndex] = multiplyResult.join('');

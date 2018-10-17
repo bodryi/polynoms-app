@@ -6,7 +6,7 @@ import * as fromRoot from '../index';
 import * as actions from './actions';
 import * as resultVectors from '../result-vectors/actions';
 import { switchMap, withLatestFrom } from 'rxjs/internal/operators';
-import { toBits, plus } from '../../utlis/polynoms-operations.util';
+import { toBits, plusMod } from '../../utlis/polynoms-operations.util';
 import { multiplyVectors, vectorPow } from '../../utlis/matrix-operations.util';
 
 @Injectable()
@@ -39,14 +39,20 @@ export class ActionsEffects {
   @Effect()
   addAB$: Observable<any> = this.actions$.pipe(
     ofType(actions.ADD_A_B),
-    withLatestFrom(this.testVectorA$, this.testVectorB$, this.activeResult$),
+    withLatestFrom(
+      this.testVectorA$,
+      this.testVectorB$,
+      this.activeResult$,
+      this.mod$,
+    ),
     switchMap(
       (
-        [action, testVectorA, testVectorB, activeResult]: [
+        [action, testVectorA, testVectorB, activeResult, mod]: [
           any,
           Array<string>,
           Array<string>,
-          number
+          number,
+          string
         ],
       ) => {
         const testVectorABitwised: Array<Array<number>> = testVectorA.map(
@@ -55,9 +61,10 @@ export class ActionsEffects {
         const testVectorBBitwised: Array<Array<number>> = testVectorB.map(
           (c: string) => toBits(c),
         );
+        const modBitwised: Array<number> = toBits(mod);
         const resultVector: Array<string> = testVectorABitwised.map(
           (c: Array<number>, index: number) =>
-            plus(c, testVectorBBitwised[index]).join(''),
+            plusMod(c, testVectorBBitwised[index], modBitwised).join(''),
         );
         return of(
           new resultVectors.SetResult({

@@ -53,6 +53,14 @@ export function plus(
   return filledPolynom1.map((val, index) => filledPolynom2[index] ^ val);
 }
 
+export function plusMod(
+  polynom1: Array<number>,
+  polynom2: Array<number>,
+  module: Array<number>,
+): Array<number> {
+  return mod(plus(polynom1, polynom2), module);
+}
+
 export function minus(
   polynom1: Array<number>,
   polynom2: Array<number>,

@@ -5,6 +5,7 @@ import {
   multiply,
   multiplyMod,
   plus,
+  plusMod,
   pow,
   powMod,
   toBits,
@@ -38,6 +39,52 @@ describe('Polynoms Operations Util', () => {
       1,
       1,
     ]);
+  });
+
+  it('plus mod', () => {
+    expect(
+      plusMod(
+        '1100101'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '1101'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '101010111'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '1101000'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+
+    expect(
+      plusMod(
+        '10101010111101011110101010010101110101010111'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '1010101010101110111101011110101010010101110101010111'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '1010101111111101011'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '110111100110110111'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
   });
 
   it('multiply', () => {
@@ -352,12 +399,8 @@ describe('Polynoms Operations Util', () => {
         .map(n => parseInt(n, 10)),
     );
 
-    expect(
-      toBits('000101001100'),
-    ).toEqual(
-      '000101001100'
-        .split('')
-        .map(n => parseInt(n, 10)),
+    expect(toBits('000101001100')).toEqual(
+      '000101001100'.split('').map(n => parseInt(n, 10)),
     );
   });
 });
