@@ -64,8 +64,9 @@ function condition2(
   return true;
 }
 
-export function testPolynom(polynom: string): boolean {
-  // TODO: trim last zeroes for correct power picking
+export function testPolynom(polynomParam: string): boolean {
+  // trim last zeros for correct power picking
+  const polynom = polynomParam.replace(/(0+)$/g, '');
   if (polynom && polynom.length === 2 && polynom[1] === '1') {
     // x, x + 1
     return true;
@@ -76,14 +77,18 @@ export function testPolynom(polynom: string): boolean {
     .map(n => parseInt(n, 10));
   const powForTests: BigNumber = new BigNumber(2).pow(polynomPower).minus(1);
   const primes: Array<BigNumber> = primeFactorization(powForTests);
-  // TODO: primes distinct need to do
+
+  const distinctPrimes = Array.from(new Set(primes.map(p => p.toString()))).map(
+    p => new BigNumber(p),
+  );
+
   let c = 1;
   while (c < ITERATIONS_COUNT) {
     const randomPolynom = generateRandomPolynom(polynom.length);
     if (
       randomPolynom.length &&
       condition1(randomPolynom, polynomParsed, powForTests) &&
-      condition2(randomPolynom, polynomParsed, powForTests, primes)
+      condition2(randomPolynom, polynomParsed, powForTests, distinctPrimes)
     ) {
       return true;
     }
