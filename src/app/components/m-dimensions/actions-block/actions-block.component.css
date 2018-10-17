@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: 23% 23% 23% 26%;
   grid-gap: 0.5vw;
+  align-items: center;
 }
 
 .btn-block:first-child {
@@ -14,5 +15,5 @@
 
 input {
   width: 100%;
-  height: 19px;
+  height: 20px;
 }

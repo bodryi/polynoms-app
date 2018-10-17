@@ -2,6 +2,8 @@ import { BigNumber } from 'bignumber.js';
 import { powMod } from './polynoms-operations.util';
 
 const ITERATIONS_COUNT = 30;
+const MAX_FACTORIZED_POWER = 62;
+const MAX_GENERATE_TRIES = 10;
 
 export function primeFactorization(number: BigNumber, res?: Array<BigNumber>) {
   const result = res || [];
@@ -24,8 +26,11 @@ export function primeFactorization(number: BigNumber, res?: Array<BigNumber>) {
 }
 
 export function generateRandomPolynom(maxPow: number): Array<number> {
+  if (!maxPow) {
+    return [];
+  }
   const pow = Math.floor(Math.random() * 255) % maxPow;
-  return new Array(pow ? pow : maxPow - 1)
+  return new Array(pow || maxPow - 1)
     .fill(null)
     .map(() => Math.floor(Math.random() * 65535) % 2);
 }
@@ -66,7 +71,13 @@ function condition2(
 
 export function testPolynom(polynomParam: string): boolean {
   // trim last zeros for correct power picking
+  if (!polynomParam) {
+    return false;
+  }
   const polynom = polynomParam.replace(/(0+)$/g, '');
+  if (polynom.length === 1) {
+    return false;
+  }
   if (polynom && polynom.length === 2 && polynom[1] === '1') {
     // x, x + 1
     return true;
@@ -95,6 +106,24 @@ export function testPolynom(polynomParam: string): boolean {
     c++;
   }
   return false;
+}
+
+export function generateIrreduciblePolynom(
+  maxPow: number = MAX_FACTORIZED_POWER,
+): Promise<Array<number>> {
+  return new Promise((resolve, reject) => {
+    let c = 0;
+    while (c < MAX_GENERATE_TRIES) {
+      const polynom = generateRandomPolynom(maxPow);
+      if (polynom.length > 1 && testPolynom(polynom.join(''))) {
+        resolve(polynom);
+      }
+
+      c++;
+    }
+
+    resolve(null);
+  });
 }
 
 /**

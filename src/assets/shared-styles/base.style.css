@@ -19,6 +19,11 @@ button {
   font-size: 14px;
 }
 
+input {
+  padding: 0 5px;
+  border: var(--border-width) var(--btn-border) solid;
+}
+
 button:hover {
   background: rgba(var(--btn-bg), 0.9);
 }
