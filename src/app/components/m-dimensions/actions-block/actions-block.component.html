@@ -1,15 +1,32 @@
 <div class="container">
   <div class="btn-block">
-    <button (click)="multiplyAB()">AxB</button>
-    <button (click)="leftMultiply()">(AxB)xC</button>
-    <button (click)="power()">A^n</button>
+    <button (click)="multiplyAB()"
+            [disabled]="!(testVectorAValid$ | async) || !(testVectorBValid$ | async) || !(matrixValid$ | async) || !(modValid$ | async) || !(coefficientsValid$ | async)">
+      AxB
+    </button>
+    <button (click)="leftMultiply()"
+            [disabled]="!(testVectorAValid$ | async) || !(testVectorBValid$ | async) || !(testVectorCValid$ | async) || !(matrixValid$ | async) || !(modValid$ | async) || !(coefficientsValid$ | async)">
+      (AxB)xC
+    </button>
+    <button (click)="power()"
+            [disabled]="!(testVectorAValid$ | async) || !(matrixValid$ | async) || !(modValid$ | async) || !(coefficientsValid$ | async) || !(nValid$ | async)">
+      A^n
+    </button>
     <form [formGroup]="powerForm">
       <input formControlName="power" placeholder="Power n..."/>
     </form>
   </div>
   <div class="btn-block">
-    <button (click)="multiplyBC()">BxC</button>
-    <button (click)="rightMultiply()">Ax(BxC)</button>
-    <button (click)="addAB()">A+B</button>
+    <button (click)="multiplyBC()"
+            [disabled]="!(testVectorBValid$ | async) || !(testVectorCValid$ | async) || !(matrixValid$ | async) || !(modValid$ | async) || !(coefficientsValid$ | async)">
+      BxC
+    </button>
+    <button (click)="rightMultiply()"
+            [disabled]="!(testVectorAValid$ | async) || !(testVectorBValid$ | async) || !(testVectorCValid$ | async) || !(matrixValid$ | async) || !(modValid$ | async) || !(coefficientsValid$ | async)">
+      Ax(BxC)
+    </button>
+    <button (click)="addAB()"
+            [disabled]="!(testVectorAValid$ | async) || !(testVectorBValid$ | async) || !(modValid$ | async)">A+B
+    </button>
   </div>
 </div>

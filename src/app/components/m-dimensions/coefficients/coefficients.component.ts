@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { from, Observable, Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as coefficients from '../../../store/coefficients/actions';
 import { select, Store } from '@ngrx/store';
 import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
-import { generateIrreduciblePolynom } from '../../../utlis/irreducible-polynoms.util';
+import { maxPolynomPower } from '../../../validators';
 
 @Component({
   selector: 'coefficients',
@@ -20,14 +20,15 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
   private timeoutToClearTestResult: any;
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) {
+  }
 
   ngOnInit() {
     this.coefficientsForm = new FormGroup({
-      mod: new FormControl(''),
-      A: new FormControl(''),
-      B: new FormControl(''),
-      C: new FormControl(''),
+      mod: new FormControl('', [Validators.required, maxPolynomPower(62)]),
+      A: new FormControl('', Validators.required),
+      B: new FormControl('', Validators.required),
+      C: new FormControl('', Validators.required),
     });
 
     this.store
@@ -65,13 +66,13 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('mod')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) => {
         this.timeoutToClearTestResult &&
-          clearTimeout(this.timeoutToClearTestResult);
+        clearTimeout(this.timeoutToClearTestResult);
         this.store.dispatch(new coefficients.TestPolynomResetResult());
         this.store.dispatch(new coefficients.ModChange(value));
       });
@@ -79,10 +80,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('A')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientAChange(value)),
       );
@@ -90,10 +91,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('B')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientBChange(value)),
       );
@@ -101,13 +102,32 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('C')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientCChange(value)),
       );
+
+    this.coefficientsForm.get('mod').statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+      )
+      .subscribe((val: 'VALID' | 'INVALID') => this.store.dispatch(new coefficients.SetModValidity(val === 'VALID')));
+
+    combineLatest(
+      this.coefficientsForm.get('A').statusChanges,
+      this.coefficientsForm.get('B').statusChanges,
+      this.coefficientsForm.get('C').statusChanges,
+    ).pipe(
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+    )
+      .subscribe(([aStatus, bStatus, cStatus]) => this.store.dispatch(new coefficients.SetCoefficientsValidity(
+        aStatus === 'VALID' && bStatus === 'VALID' && cStatus === 'VALID',
+      )));
 
     this.polynomTestResult$ = this.store.pipe(
       select(fromRoot.getPolynomTestResult),
@@ -136,7 +156,6 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
   }
 
   generatePolynom() {
-    // console.log(generateIrreduciblePolynom());
     this.store.dispatch(new coefficients.GenerateIrreduciblePolynom());
   }
 

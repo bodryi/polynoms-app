@@ -4,6 +4,8 @@ export const MOD_CHANGE = '[Coefficients] Mod Change';
 export const COEFFICIENT_A_CHANGE = '[Coefficients] Coefficient A Change';
 export const COEFFICIENT_B_CHANGE = '[Coefficients] Coefficient B Change';
 export const COEFFICIENT_C_CHANGE = '[Coefficients] Coefficient C Change';
+export const SET_MOD_VALIDITY = '[Coefficients] Set Mod Validity';
+export const SET_COEFFICIENTS_VALIDITY = '[Coefficients] Set Coefficients Validity';
 export const TEST_POLYNOM = '[Coefficients] Test Polynom';
 export const TEST_POLYNOM_SUCCESS = '[Coefficients] Test Polynom Success';
 export const TEST_POLYNOM_RESULT_RESET =
@@ -37,6 +39,18 @@ export class CoefficientCChange implements Action {
   readonly type = COEFFICIENT_C_CHANGE;
 
   constructor(public payload: string) {}
+}
+
+export class SetCoefficientsValidity implements Action {
+  readonly type = SET_COEFFICIENTS_VALIDITY;
+
+  constructor(public payload: boolean) {}
+}
+
+export class SetModValidity implements Action {
+  readonly type = SET_MOD_VALIDITY;
+
+  constructor(public payload: boolean) {}
 }
 
 export class TestPolynom implements Action {
@@ -79,4 +93,7 @@ export type Actions =
   | TestPolynomSuccess
   | GenerateIrreduciblePolynom
   | GenerateIrreduciblePolynomSuccess
-  | GenerateIrreduciblePolynomFailure;
+  | GenerateIrreduciblePolynomFailure
+  | CoefficientCChange
+  | SetCoefficientsValidity
+  | SetModValidity;

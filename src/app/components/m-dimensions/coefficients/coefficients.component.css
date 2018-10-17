@@ -6,8 +6,13 @@ form {
   padding: 5px;
 }
 
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .input-wrapper > input {
-  width: 99%;
+  width: 98%;
 }
 
 .input-wrapper input {

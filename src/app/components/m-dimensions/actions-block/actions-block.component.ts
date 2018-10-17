@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as fromRoot from '../../../store';
 import * as actions from '../../../store/actions/actions';
 import { select, Store } from '@ngrx/store';
 import { debounceTime, takeUntil } from 'rxjs/internal/operators';
+import { number } from '../../../validators';
 
 @Component({
   selector: 'actions-block',
@@ -13,14 +14,22 @@ import { debounceTime, takeUntil } from 'rxjs/internal/operators';
 })
 export class ActionsBlockComponent implements OnInit, OnDestroy {
   powerForm: FormGroup;
+  matrixValid$: Observable<boolean>;
+  testVectorAValid$: Observable<boolean>;
+  testVectorBValid$: Observable<boolean>;
+  testVectorCValid$: Observable<boolean>;
+  modValid$: Observable<boolean>;
+  coefficientsValid$: Observable<boolean>;
+  nValid$: Observable<boolean>;
 
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) {
+  }
 
   ngOnInit() {
     this.powerForm = new FormGroup({
-      power: new FormControl(''),
+      power: new FormControl('', [Validators.required, Validators.min(1), number]),
     });
 
     this.store
@@ -35,6 +44,19 @@ export class ActionsBlockComponent implements OnInit, OnDestroy {
       .subscribe((value: string) =>
         this.store.dispatch(new actions.SetN(value)),
       );
+
+    this.powerForm
+      .get('power')
+      .statusChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .subscribe((val: 'VALID' | 'INVALID') => this.store.dispatch(new actions.SetNValidity(val === 'VALID')));
+
+    this.testVectorAValid$ = this.store.pipe(select(fromRoot.getIsValidTestVectorA));
+    this.testVectorBValid$ = this.store.pipe(select(fromRoot.getIsValidTestVectorB));
+    this.testVectorCValid$ = this.store.pipe(select(fromRoot.getIsValidTestVectorC));
+    this.matrixValid$ = this.store.pipe(select(fromRoot.getIsMatrixValid));
+    this.modValid$ = this.store.pipe(select(fromRoot.getModValid));
+    this.coefficientsValid$ = this.store.pipe(select(fromRoot.getCoefficientsValid));
+    this.nValid$ = this.store.pipe(select(fromRoot.getNValid));
   }
 
   multiplyAB() {

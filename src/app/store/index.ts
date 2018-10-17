@@ -51,6 +51,10 @@ export const getB = createSelector(getCoefficientsState, fromCoefficients.getB);
 
 export const getC = createSelector(getCoefficientsState, fromCoefficients.getC);
 
+export const getCoefficientsValid = createSelector(getCoefficientsState, fromCoefficients.getCoefficientsValid);
+
+export const getModValid = createSelector(getCoefficientsState, fromCoefficients.getModValid);
+
 export const getPolynomTestResult = createSelector(getCoefficientsState, fromCoefficients.getPolynomTestResult);
 
 export const getTestLoading = createSelector(getCoefficientsState, fromCoefficients.getTestLoading);
@@ -108,6 +112,8 @@ export const getIsValidTestVectorC = createSelector(
 );
 
 export const getN = createSelector(getActionsState, fromActions.getN);
+
+export const getNValid = createSelector(getActionsState, fromActions.getNValid);
 
 export const getButtonsState = createSelector(
   getActionsState,

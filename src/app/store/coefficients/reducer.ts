@@ -7,6 +7,8 @@ export interface State {
   B: Array<string>;
   C: Array<string>;
   matrixSize: number;
+  modValid: Array<boolean>;
+  coefficientsValid: Array<boolean>;
   polynomTestResult: Array<boolean>;
   testLoading: Array<boolean>;
 }
@@ -17,6 +19,8 @@ const initialState: State = {
   B: ['', ''],
   C: ['', ''],
   matrixSize: null,
+  modValid: [false, false],
+  coefficientsValid: [false, false],
   polynomTestResult: [null, null],
   testLoading: [false, false],
 };
@@ -25,33 +29,13 @@ function getIndex(matrixSize: number): number {
   return (matrixSize - 4) / 2;
 }
 
-function setCoefficient(
-  state: Array<string>,
-  payload: string,
+function setValue(
+  state: Array<any>,
+  payload: any,
   matrixSize: number,
 ) {
   return state.map(
     (c, index) => (index === getIndex(matrixSize) ? payload : c),
-  );
-}
-
-function setTestResult(
-  state: Array<boolean>,
-  payload: boolean,
-  matrixSize: number,
-) {
-  return state.map(
-    (r, index) => (index === getIndex(matrixSize) ? payload : r),
-  );
-}
-
-function setTestLoading(
-  state: Array<boolean>,
-  payload: boolean,
-  matrixSize: number,
-) {
-  return state.map(
-    (r, index) => (index === getIndex(matrixSize) ? payload : r),
   );
 }
 
@@ -60,25 +44,37 @@ export function reducer(state = initialState, action: any): State {
     case Action.COEFFICIENT_A_CHANGE:
       return {
         ...state,
-        A: setCoefficient(state.A, action.payload, state.matrixSize),
+        A: setValue(state.A, action.payload, state.matrixSize),
       };
 
     case Action.COEFFICIENT_B_CHANGE:
       return {
         ...state,
-        B: setCoefficient(state.B, action.payload, state.matrixSize),
+        B: setValue(state.B, action.payload, state.matrixSize),
       };
 
     case Action.COEFFICIENT_C_CHANGE:
       return {
         ...state,
-        C: setCoefficient(state.C, action.payload, state.matrixSize),
+        C: setValue(state.C, action.payload, state.matrixSize),
       };
 
     case Action.MOD_CHANGE:
       return {
         ...state,
-        mod: setCoefficient(state.mod, action.payload, state.matrixSize),
+        mod: setValue(state.mod, action.payload, state.matrixSize),
+      };
+
+    case Action.SET_MOD_VALIDITY:
+      return {
+        ...state,
+        modValid: setValue(state.modValid, action.payload, state.matrixSize),
+      };
+
+    case Action.SET_COEFFICIENTS_VALIDITY:
+      return {
+        ...state,
+        coefficientsValid: setValue(state.coefficientsValid, action.payload, state.matrixSize),
       };
 
     case MainAction.SET_MATRIX_SIZE:
@@ -90,18 +86,18 @@ export function reducer(state = initialState, action: any): State {
     case Action.TEST_POLYNOM_SUCCESS:
       return {
         ...state,
-        polynomTestResult: setTestResult(
+        polynomTestResult: setValue(
           state.polynomTestResult,
           action.payload,
           state.matrixSize,
         ),
-        testLoading: setTestLoading(state.testLoading, false, state.matrixSize),
+        testLoading: setValue(state.testLoading, false, state.matrixSize),
       };
 
     case Action.TEST_POLYNOM_RESULT_RESET:
       return {
         ...state,
-        polynomTestResult: setTestResult(
+        polynomTestResult: setValue(
           state.polynomTestResult,
           null,
           state.matrixSize,
@@ -112,32 +108,32 @@ export function reducer(state = initialState, action: any): State {
     case Action.GENERATE_IRREDUCIBLE_POLYNOM_SUCCESS:
       return {
         ...state,
-        mod: setCoefficient(state.mod, action.payload, state.matrixSize),
-        polynomTestResult: setTestResult(
+        mod: setValue(state.mod, action.payload, state.matrixSize),
+        polynomTestResult: setValue(
           state.polynomTestResult,
           true,
           state.matrixSize,
         ),
-        testLoading: setTestLoading(state.testLoading, false, state.matrixSize),
+        testLoading: setValue(state.testLoading, false, state.matrixSize),
       };
 
     case Action.GENERATE_IRREDUCIBLE_POLYNOM_FAILURE:
       return {
         ...state,
-        mod: setCoefficient(state.mod, '', state.matrixSize),
-        polynomTestResult: setTestResult(
+        mod: setValue(state.mod, '', state.matrixSize),
+        polynomTestResult: setValue(
           state.polynomTestResult,
           false,
           state.matrixSize,
         ),
-        testLoading: setTestLoading(state.testLoading, false, state.matrixSize),
+        testLoading: setValue(state.testLoading, false, state.matrixSize),
       };
 
     case Action.GENERATE_IRREDUCIBLE_POLYNOM:
     case Action.TEST_POLYNOM:
       return {
         ...state,
-        testLoading: setTestLoading(state.testLoading, true, state.matrixSize),
+        testLoading: setValue(state.testLoading, true, state.matrixSize),
       };
 
     default:
@@ -149,6 +145,8 @@ export const getMod = (state: State) => state.mod[getIndex(state.matrixSize)];
 export const getA = (state: State) => state.A[getIndex(state.matrixSize)];
 export const getB = (state: State) => state.B[getIndex(state.matrixSize)];
 export const getC = (state: State) => state.C[getIndex(state.matrixSize)];
+export const getCoefficientsValid = (state: State) => state.coefficientsValid[getIndex(state.matrixSize)];
+export const getModValid = (state: State) => state.modValid[getIndex(state.matrixSize)];
 export const getTestLoading = (state: State) =>
   state.testLoading[getIndex(state.matrixSize)];
 export const getPolynomTestResult = (state: State) =>

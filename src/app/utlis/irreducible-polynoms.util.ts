@@ -4,6 +4,7 @@ import { powMod } from './polynoms-operations.util';
 const ITERATIONS_COUNT = 30;
 const MAX_FACTORIZED_POWER = 62;
 const MAX_GENERATE_TRIES = 10;
+const LAST_ZEROES_REGEXP = /(0+)$/g;
 
 export function primeFactorization(number: BigNumber, res?: Array<BigNumber>) {
   const result = res || [];
@@ -74,7 +75,7 @@ export function testPolynom(polynomParam: string): boolean {
   if (!polynomParam) {
     return false;
   }
-  const polynom = polynomParam.replace(/(0+)$/g, '');
+  const polynom = polynomParam.replace(LAST_ZEROES_REGEXP, '');
   if (polynom.length === 1) {
     return false;
   }

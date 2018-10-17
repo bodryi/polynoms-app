@@ -26,7 +26,7 @@ export interface State {
 const initialState: State = {
   matrix: [getDefaultMatrix(4), getDefaultMatrix(6)],
   bufferMatrix: [getEmptyMatrix(4), getEmptyMatrix(6)],
-  matrixValid: [false, false],
+  matrixValid: [true, true],
   matrixSize: null, // 4
 };
 

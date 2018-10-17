@@ -7,6 +7,7 @@ export const RIGHT_MULTIPLY = '[Actions] Right Multiply';
 export const ADD_A_B = '[Actions] Add A B';
 export const A_POWER_N = '[Actions] A Power N';
 export const SET_N = '[Actions] Set N';
+export const SET_N_VALIDITY = '[Actions] Set N Validity';
 
 export class MultiplyAB implements Action {
   readonly type = MULTIPLY_A_B;
@@ -38,6 +39,12 @@ export class SetN implements Action {
   constructor(public payload: string) {}
 }
 
+export class SetNValidity implements Action {
+  readonly type = SET_N_VALIDITY;
+
+  constructor(public payload: boolean) {}
+}
+
 export type Actions =
   | MultiplyAB
   | MultiplyBC
@@ -45,4 +52,5 @@ export type Actions =
   | RightMultiply
   | AddAB
   | APowerN
+  | SetNValidity
   | SetN;
