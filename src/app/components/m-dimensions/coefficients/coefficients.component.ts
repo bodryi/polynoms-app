@@ -146,7 +146,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
           clearTimeout(this.timeoutToClearTestResult);
           this.timeoutToClearTestResult = setTimeout(() => {
             this.store.dispatch(new coefficients.TestPolynomResetResult());
-          }, 5000);
+          }, 10000);
         }
       });
   }

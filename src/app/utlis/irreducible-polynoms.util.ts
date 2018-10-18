@@ -113,6 +113,21 @@ export function generateIrreduciblePolynom(
   maxPow: number = MAX_FACTORIZED_POWER,
 ): Promise<Array<number>> {
   return new Promise((resolve, reject) => {
+    let end = false;
+    while (!end) {
+      const polynom = generateRandomPolynom(maxPow);
+      if (polynom.length > 1 && testPolynom(polynom.join(''))) {
+        end = true;
+        resolve(polynom);
+      }
+    }
+  });
+}
+
+export function generateIrreduciblePolynomOld(
+  maxPow: number = MAX_FACTORIZED_POWER,
+): Promise<Array<number>> {
+  return new Promise((resolve, reject) => {
     let c = 0;
     while (c < MAX_GENERATE_TRIES) {
       const polynom = generateRandomPolynom(maxPow);
