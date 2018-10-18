@@ -16,6 +16,10 @@ const defaultMatrix6 = [
   ['f', 'Bb', 'Cc', 'Ad', 'Be', 'Cf'],
 ];
 
+const MATRIX_4_CELL_REGEXP = /^-?[A-C]*[a-d][A-C]*$/;
+const MATRIX_6_CELL_REGEXP = /^-?[A-C]*[a-f][A-C]*$/;
+const matrixRegexps = [MATRIX_4_CELL_REGEXP, MATRIX_6_CELL_REGEXP];
+
 export interface State {
   matrix: Array<Array<Array<string>>>;
   bufferMatrix: Array<Array<Array<string>>>;
@@ -36,7 +40,22 @@ function validateMatrix(
   matrixSize: number,
 ): Array<boolean> {
   const newMatrixValid = [...matrixValidArray];
-  newMatrixValid[getIndex(matrixSize)] = !!m; // temporary
+  const index = getIndex(matrixSize);
+  newMatrixValid[index] = m.reduce(
+    (acc: boolean, row: Array<string>) => {
+      if (!acc) {
+        return false;
+      }
+
+      for (let i = 0; i < row.length; i++) {
+        if (!matrixRegexps[index].test(row[i])) {
+          return false;
+        }
+      }
+      return true;
+    },
+    true,
+  );
   return newMatrixValid;
 }
 
@@ -66,9 +85,7 @@ function getNewMatrixArray(
   const changedIndex = getIndex(matrixSize);
   return matrixes.map(
     (matrix, index) =>
-      index === changedIndex
-        ? deepArrayCopy(payload)
-        : deepArrayCopy(matrix),
+      index === changedIndex ? deepArrayCopy(payload) : deepArrayCopy(matrix),
   );
 }
 
@@ -151,17 +168,17 @@ export function reducer(state = initialState, action: any): State {
         ...state,
         matrix: state.bufferMatrix
           ? getNewMatrixArray(
-            state.bufferMatrix[getIndex(state.matrixSize)],
-            state.matrix,
-            state.matrixSize,
-          )
+              state.bufferMatrix[getIndex(state.matrixSize)],
+              state.matrix,
+              state.matrixSize,
+            )
           : state.matrix,
         matrixValid: state.bufferMatrix
           ? validateMatrix(
-            state.bufferMatrix[getIndex(state.matrixSize)],
-            state.matrixValid,
-            state.matrixSize,
-          )
+              state.bufferMatrix[getIndex(state.matrixSize)],
+              state.matrixValid,
+              state.matrixSize,
+            )
           : state.matrixValid,
       };
 
