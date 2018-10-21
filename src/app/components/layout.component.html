@@ -1,10 +1,13 @@
 <div class="layout-wrapper">
-    <tabs>
-        <tab tabTitle="m = 4" (tabSelected)="onTabSelect(4)">
-            <m-dimensions [m]="4"></m-dimensions>
-        </tab>
-        <tab tabTitle="m = 6" (tabSelected)="onTabSelect(6)">
-          <m-dimensions [m]="6"></m-dimensions>
-        </tab>
-    </tabs>
+  <tabs>
+    <tab tabTitle="m = 4" (tabSelected)="onTabSelect(4)">
+      <m-dimensions [m]="4"></m-dimensions>
+    </tab>
+    <tab tabTitle="m = 6" (tabSelected)="onTabSelect(6)">
+      <m-dimensions [m]="6"></m-dimensions>
+    </tab>
+    <tab tabTitle="Polynoms">
+      <polynoms></polynoms>
+    </tab>
+  </tabs>
 </div>

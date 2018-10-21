@@ -9,6 +9,7 @@ import * as fromCoefficients from './coefficients/reducer';
 import * as fromMatrix from './matrix/reducer';
 import * as fromResultVectors from './result-vectors/reducer';
 import * as fromTestVectors from './test-vectors/reducer';
+import * as fromPolynoms from './polynoms/reducer';
 
 export interface State {
   actions: fromActions.State;
@@ -16,6 +17,7 @@ export interface State {
   matrix: fromMatrix.State;
   resultVectors: fromResultVectors.State;
   testVectors: fromTestVectors.State;
+  polynoms: fromPolynoms.State
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -24,6 +26,7 @@ export const reducers: ActionReducerMap<State> = {
   matrix: fromMatrix.reducer,
   resultVectors: fromResultVectors.reducer,
   testVectors: fromTestVectors.reducer,
+  polynoms: fromPolynoms.reducer,
 };
 
 export const getActionsState = createFeatureSelector<fromActions.State>(
@@ -39,6 +42,7 @@ export const getResultVectorsState = createFeatureSelector<
 export const getTestVectorsState = createFeatureSelector<fromTestVectors.State>(
   'testVectors',
 );
+export const getPolynomsState = createFeatureSelector<fromPolynoms.State>('polynoms');
 
 export const getMod = createSelector(
   getCoefficientsState,
@@ -122,3 +126,13 @@ export const getButtonsState = createSelector(
   getIsValidTestVectorC,
   fromActions.getButtonsState,
 );
+
+export const getPolynomA = createSelector(getPolynomsState, fromPolynoms.getPolynomA);
+
+export const getPolynomB = createSelector(getPolynomsState, fromPolynoms.getPolynomB);
+
+export const getPolynomC = createSelector(getPolynomsState, fromPolynoms.getPolynomC);
+
+export const getPolynomResult = createSelector(getPolynomsState, fromPolynoms.getPolynomResult);
+
+export const getPolynomPower = createSelector(getPolynomsState, fromPolynoms.getPolynomPower);
