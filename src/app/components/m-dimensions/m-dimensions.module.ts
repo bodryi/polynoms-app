@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { MatrixModule } from '../../plugins/matrix/matrix.module';
 import { MDimensionsComponent } from './m-dimensions.component';
 import { MatrixBlockComponent } from './matrix-block/matrix-block.component';
@@ -21,5 +21,6 @@ import { ResultVectorsComponent } from './result-vectors/result-vectors.componen
   ],
   exports: [MDimensionsComponent],
   imports: [CommonModule, MatrixModule, ReactiveFormsModule, VectorModule],
+  providers: [UpperCasePipe]
 })
 export class MDimensionsModule {}

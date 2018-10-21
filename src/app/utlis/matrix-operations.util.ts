@@ -1,8 +1,5 @@
 import {
   toBits,
-  multiply,
-  plus,
-  invert,
   multiplyMod,
   plusMod,
 } from './polynoms-operations.util';
@@ -73,13 +70,8 @@ export function multiplyVectors(
         number
       > = getCoefficientNumbersFromString(basisVectorsMultiplyResult);
       const multiplyResult: Array<number> = coefficientsNumbers.reduce(
-        (acc: Array<number>, curr: number, index: number) => {
-          let currVector = toBits(coefficients[curr]);
-          if (!index && hasMinus(basisVectorsMultiplyResult)) {
-            currVector = invert(currVector);
-          }
-          return multiplyMod(acc, currVector, parsedMod);
-        },
+        (acc: Array<number>, curr: number, index: number) =>
+          multiplyMod(acc, toBits(coefficients[curr]), parsedMod),
         firstCoefsMultiplicationResult,
       );
       const basisVectorIndex = getRowOrColumnNumberByBasisVector(

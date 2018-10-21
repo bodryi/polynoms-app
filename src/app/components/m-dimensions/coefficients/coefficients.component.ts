@@ -7,6 +7,7 @@ import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
 import { maxPolynomPower } from '../../../validators';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'coefficients',
@@ -20,7 +21,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
   private timeoutToClearTestResult: any;
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State>, private upperCasePipe: UpperCasePipe) {
   }
 
   ngOnInit() {
@@ -36,7 +37,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('mod')
-          .setValue(binToHex(s), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
       );
 
     this.store
@@ -44,7 +45,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('A')
-          .setValue(binToHex(s), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
       );
 
     this.store
@@ -52,7 +53,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('B')
-          .setValue(binToHex(s), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
       );
 
     this.store
@@ -60,7 +61,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('C')
-          .setValue(binToHex(s), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
       );
 
     this.coefficientsForm

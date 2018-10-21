@@ -1,6 +1,6 @@
 <div class="container">
   <div class="input-wrapper" *ngFor="let item of value; let rowI = index; trackBy:trackByFn" >
-    <input value="{{item}}" (input)="onChange($event, rowI)"
+    <input value="{{item | uppercase}}" (input)="onChange($event, rowI)"
     />
     <span>{{componentNames && componentNames[rowI]}}</span>
   </div>
