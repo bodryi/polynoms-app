@@ -7,7 +7,7 @@ import {
   plus,
   plusMod,
   pow,
-  powMod,
+  powMod, quo,
   toBits,
 } from '../polynoms-operations.util';
 import BigNumber from 'bignumber.js';
@@ -277,6 +277,80 @@ describe('Polynoms Operations Util', () => {
       ),
     ).toEqual(
       '10000001101100010110001010111001010010'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+  });
+
+  it('quo', () => {
+    expect(
+      quo(
+        '10111111010011001011000000001000101101111000110111000010110100111000010100101010'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '101010111101010111111110101001111101011'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '100100011001100001011010000111001011101000'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+
+    expect(
+      quo(
+        '10111111010011001011000000001000101101111000110111000010110100111000010100101010'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '110111111111111001110111111111111001110111111111111001'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '110010110101010010101111111'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+
+    expect(
+      quo(
+        '110010110101010010101111111001011010101001010111111100101101010100101011111'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '101010111101010111111110101001111101011'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '1111100001001111111100011011011100110'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+
+    expect(
+      quo(
+        '10111111010011001011000000001000101101111000110111000010110100111000010100101010'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '101010111101010111111110101001111101011'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '100100011001100001011010000111001011101000'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),

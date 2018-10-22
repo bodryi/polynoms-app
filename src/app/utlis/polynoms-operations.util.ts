@@ -168,6 +168,30 @@ export function mod(
   return a.reverse();
 }
 
+export function quo(
+  dividend: Array<number>,
+  divisor: Array<number>,
+): Array<number> {
+  const a = [...dividend].reverse();
+  const b = [...divisor].reverse();
+  let res = '';
+  while (a.length >= b.length && a) {
+    if (a[0] === 1) {
+      a.shift();
+      for (let j = 0; j < b.length - 1; j++) {
+        a[j] ^= b[j + 1];
+      }
+      if (a.length) {
+        res += '1';
+      }
+    } else {
+      a.shift();
+      res += '0';
+    }
+  }
+  return toBits(res).reverse();
+}
+
 export function multiplyMod(
   polynom1: Array<number>,
   polynom2: Array<number>,
