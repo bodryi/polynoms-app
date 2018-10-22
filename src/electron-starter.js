@@ -44,10 +44,10 @@ function createWindow() {
 
 const mainMenuTemplate = [
   {
-    label: 'Файл',
+    label: 'File',
     submenu: [
       {
-        label: 'Выход',
+        label: 'Exit',
         accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
         click() {
           app.quit();

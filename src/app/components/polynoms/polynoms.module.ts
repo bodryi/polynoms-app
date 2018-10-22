@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 
 import { PolynomsComponent } from './polynoms.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   exports: [PolynomsComponent],
   declarations: [PolynomsComponent],
-  providers: [],
+  providers: [UpperCasePipe],
 })
 export class PolynomsModule {
 }

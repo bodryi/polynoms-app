@@ -1,1 +1,34 @@
-<h1>Polynoms</h1>
+<form [formGroup]="polynomsForm">
+  <div class="fields-wrapper">
+    <div class="input-wrapper">
+      <label>Polynom A</label>
+      <input formControlName="A" [value]="polynomsForm.get('A').value | uppercase"/>
+    </div>
+    <div class="input-wrapper">
+      <label>Polynom B</label>
+      <input formControlName="B" [value]="polynomsForm.get('B').value | uppercase"/>
+    </div>
+    <div class="input-wrapper">
+      <label>Polynom C</label>
+      <input formControlName="C" [value]="polynomsForm.get('C').value | uppercase"/>
+    </div>
+    <div class="input-wrapper">
+      <label>Power</label>
+      <input formControlName="power"/>
+    </div>
+  </div>
+  <div class="actions-block">
+    <button type="button" (click)="0">(A+B)modC</button>
+    <button type="button" (click)="0">(AxB)modC</button>
+    <button type="button" (click)="0">A^(-1)modC</button>
+    <button type="button" (click)="0">(A^n)modC</button>
+    <button type="button" (click)="0">GCD(A,B)</button>
+  </div>
+  <div class="fields-wrapper">
+    <div class="input-wrapper">
+      <label>Result polynom</label>
+      <input formControlName="result" [value]="polynomsForm.get('result').value | uppercase"/>
+    </div>
+  </div>
+</form>
+

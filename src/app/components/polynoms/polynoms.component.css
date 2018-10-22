@@ -1,0 +1,44 @@
+.fields-wrapper, .actions-block {
+  margin: 5px 0;
+  padding: 10px 5px;
+  border: var(--border-width) var(--container-border) solid;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.input-wrapper:first-child {
+  margin-top: 0;
+}
+
+.input-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.input-wrapper input {
+  height: 25px;
+  margin-top: 3px;
+}
+
+.actions-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1vw 0;
+}
+
+.actions-block button {
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.actions-block button:first-child {
+  margin-left: 0;
+}
+
+.actions-block button:last-child {
+  margin-right: 0;
+}
