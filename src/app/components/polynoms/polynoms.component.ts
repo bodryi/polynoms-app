@@ -8,6 +8,7 @@ import { maxPolynomPower, number } from '../../validators';
 import { binToHex, hexToBin } from '../../utlis/convert-numbers.util';
 import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as polynoms from '../../store/polynoms/actions';
+import { isNull, gcd, xgcd } from '../../utlis/polynoms-operations.util';
 
 @Component({
   selector: 'polynoms',
@@ -28,7 +29,11 @@ export class PolynomsComponent implements OnInit, OnDestroy {
       A: new FormControl('', Validators.required),
       B: new FormControl('', Validators.required),
       C: new FormControl('', [Validators.required, maxPolynomPower(62)]),
-      power: new FormControl('', [Validators.required, Validators.min(1), number]),
+      power: new FormControl('', [
+        Validators.required,
+        Validators.min(1),
+        number,
+      ]),
       result: new FormControl(''),
     });
 
@@ -75,11 +80,9 @@ export class PolynomsComponent implements OnInit, OnDestroy {
     this.store
       .pipe(select(fromRoot.getPolynomPower), takeUntil(this.ngUnsubscribe))
       .subscribe((s: string) =>
-        this.polynomsForm
-          .get('power')
-          .setValue(s, {
-            emitEvent: false,
-          }),
+        this.polynomsForm.get('power').setValue(s, {
+          emitEvent: false,
+        }),
       );
 
     this.polynomsForm
@@ -128,13 +131,25 @@ export class PolynomsComponent implements OnInit, OnDestroy {
 
     this.polynomsForm
       .get('power')
-      .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-      )
+      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
       .subscribe((value: string) =>
         this.store.dispatch(new polynoms.PolynomPowerChange(value)),
       );
+  }
+
+  isNull() {
+    console.log(
+      xgcd(
+        this.polynomsForm
+          .get('A')
+          .value.split('')
+          .map(n => parseInt(n, 10)),
+        this.polynomsForm
+          .get('B')
+          .value.split('')
+          .map(n => parseInt(n, 10)),
+      ),
+    );
   }
 
   ngOnDestroy() {

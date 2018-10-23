@@ -1,5 +1,6 @@
 import {
   invert,
+  isNull,
   minus,
   mod,
   multiply,
@@ -7,8 +8,10 @@ import {
   plus,
   plusMod,
   pow,
-  powMod, quo,
+  powMod,
+  quo,
   toBits,
+  xgcd,
 } from '../polynoms-operations.util';
 import BigNumber from 'bignumber.js';
 
@@ -476,5 +479,71 @@ describe('Polynoms Operations Util', () => {
     expect(toBits('000101001100')).toEqual(
       '000101001100'.split('').map(n => parseInt(n, 10)),
     );
+  });
+
+  it('is null', () => {
+    expect(
+      isNull(
+        '11'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(false);
+
+    expect(
+      isNull(
+        '000000'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(true);
+
+    expect(
+      isNull(
+        '0'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(true);
+
+    expect(
+      isNull(
+        '0000000000000000000000000000000000000000000000000000001'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(false);
+  });
+
+  it('xgcd', () => {
+    expect(
+      xgcd(
+        '101011'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '11011110101'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual({
+      gcd: '101011'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+      x: '111010'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+      y: '1'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    });
   });
 });

@@ -175,13 +175,16 @@ export function quo(
   const a = [...dividend].reverse();
   const b = [...divisor].reverse();
   let res = '';
+  if (a.length < b.length) {
+    res += '0';
+  }
   while (a.length >= b.length && a) {
     if (a[0] === 1) {
       a.shift();
       for (let j = 0; j < b.length - 1; j++) {
         a[j] ^= b[j + 1];
       }
-      if (a.length) {
+      if (a.length || dividend.length === 1) {
         res += '1';
       }
     } else {
@@ -241,4 +244,44 @@ export function powMod(
     }
     tempC = multiplyMod(tempC, tempC, module);
   }
+}
+
+export function gcd(a: Array<number>, b: Array<number>): Array<number> {
+  if (isNull(a)) {
+    return b;
+  }
+
+  return gcd(mod(b, a), a);
+}
+
+export function xgcd(
+  a: Array<number>,
+  b: Array<number>,
+  x?: Array<number>,
+  y?: Array<number>,
+): { gcd: Array<number>; x: Array<number>; y: Array<number> } {
+  if (isNull(a)) {
+    x = [0];
+    y = [1];
+    return { gcd: b, x, y };
+  }
+
+  const x1 = [1];
+  const y1 = [1];
+
+  const gcdLocal = xgcd(mod(b, a), a, x1, y1).gcd;
+  x = minus(y1, multiply(quo(b, a), x1));
+  y = [...x1];
+
+  return { gcd: gcdLocal, x, y };
+}
+
+export function isNull(polynom: Array<number>) {
+  if (!polynom || !polynom.length) {
+    return true;
+  }
+  if (polynom[0]) {
+    return false;
+  }
+  return polynom.reduce((acc, curr) => acc && !curr, true);
 }
