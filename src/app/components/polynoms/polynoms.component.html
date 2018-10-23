@@ -18,11 +18,21 @@
     </div>
   </div>
   <div class="actions-block">
-    <button type="button" (click)="aPlusB()">(A+B)modC</button>
-    <button type="button" (click)="aMultiplyB()">(AxB)modC</button>
-    <button type="button" (click)="aPowMinusOne()">A^(-1)modC</button>
-    <button type="button" (click)="aPowN()">(A^n)modC</button>
-    <button type="button" (click)="gcdAB()">GCD(A,B)</button>
+    <button type="button" (click)="aPlusB()"
+            [disabled]="!(polynomAValid$ | async) || !(polynomBValid$ | async) || !(polynomCValid$ | async)">(A+B)modC
+    </button>
+    <button type="button" (click)="aMultiplyB()"
+            [disabled]="!(polynomAValid$ | async) || !(polynomBValid$ | async) || !(polynomCValid$ | async)">(AxB)modC
+    </button>
+    <button type="button" (click)="aPowMinusOne()"
+            [disabled]="!(polynomAValid$ | async) || !(polynomCValid$ | async)">A^(-1)modC
+    </button>
+    <button type="button" (click)="aPowN()"
+            [disabled]="!(polynomAValid$ | async) || !(polynomCValid$ | async) || !(powerValid$ | async)">(A^n)modC
+    </button>
+    <button type="button" (click)="gcdAB()" [disabled]="!(polynomAValid$ | async) || !(polynomBValid$ | async)">
+      GCD(A,B)
+    </button>
   </div>
   <div class="fields-wrapper">
     <div class="input-wrapper">

@@ -80,7 +80,6 @@ export class PolynomsEffects {
     ofType(polynoms.A_INVERSE_MOD_C),
     withLatestFrom(this.polynomA$, this.polynomC$),
     switchMap(([action, A, C]: [any, string, string]) => {
-      console.log(xgcd(toBits(A), toBits(C)))
       const result = xgcd(toBits(A), toBits(C)).x;
       return of(
         new polynoms.PolynomResultChange(!result.length ? '0' : result.join('')),

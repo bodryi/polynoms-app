@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import * as fromRoot from '../../store';
 import { UpperCasePipe } from '@angular/common';
 import { select, Store } from '@ngrx/store';
@@ -16,12 +16,17 @@ import * as polynoms from '../../store/polynoms/actions';
 })
 export class PolynomsComponent implements OnInit, OnDestroy {
   polynomsForm: FormGroup;
+  polynomAValid$: Observable<boolean>;
+  polynomBValid$: Observable<boolean>;
+  polynomCValid$: Observable<boolean>;
+  powerValid$: Observable<boolean>;
   private ngUnsubscribe: Subject<void> = new Subject();
 
   constructor(
     private store: Store<fromRoot.State>,
     private upperCasePipe: UpperCasePipe,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.polynomsForm = new FormGroup({
@@ -87,10 +92,10 @@ export class PolynomsComponent implements OnInit, OnDestroy {
     this.polynomsForm
       .get('A')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) =>
         this.store.dispatch(new polynoms.PolynomAChange(value)),
       );
@@ -98,10 +103,10 @@ export class PolynomsComponent implements OnInit, OnDestroy {
     this.polynomsForm
       .get('B')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) =>
         this.store.dispatch(new polynoms.PolynomBChange(value)),
       );
@@ -109,10 +114,10 @@ export class PolynomsComponent implements OnInit, OnDestroy {
     this.polynomsForm
       .get('C')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) =>
         this.store.dispatch(new polynoms.PolynomCChange(value)),
       );
@@ -120,10 +125,10 @@ export class PolynomsComponent implements OnInit, OnDestroy {
     this.polynomsForm
       .get('result')
       .valueChanges.pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-        map((value: string) => hexToBin(value)),
-      )
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+      map((value: string) => hexToBin(value)),
+    )
       .subscribe((value: string) =>
         this.store.dispatch(new polynoms.PolynomResultChange(value)),
       );
@@ -134,20 +139,57 @@ export class PolynomsComponent implements OnInit, OnDestroy {
       .subscribe((value: string) =>
         this.store.dispatch(new polynoms.PolynomPowerChange(value)),
       );
+
+    this.polynomAValid$ = this.store.pipe(select(fromRoot.getPolynomAValid));
+    this.polynomBValid$ = this.store.pipe(select(fromRoot.getPolynomBValid));
+    this.polynomCValid$ = this.store.pipe(select(fromRoot.getPolynomCValid));
+    this.powerValid$ = this.store.pipe(select(fromRoot.getPowerValid));
+
+    this.polynomsForm.get('A').statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+      )
+      .subscribe((val: 'VALID' | 'INVALID') => this.store.dispatch(new polynoms.PolynomAValidityChange(val === 'VALID')));
+
+    this.polynomsForm.get('B').statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+      )
+      .subscribe((val: 'VALID' | 'INVALID') => this.store.dispatch(new polynoms.PolynomBValidityChange(val === 'VALID')));
+
+    this.polynomsForm.get('C').statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+      )
+      .subscribe((val: 'VALID' | 'INVALID') => this.store.dispatch(new polynoms.PolynomCValidityChange(val === 'VALID')));
+
+    this.polynomsForm.get('power').statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+      )
+      .subscribe((val: 'VALID' | 'INVALID') => this.store.dispatch(new polynoms.PolynomPowerValidityChange(val === 'VALID')));
   }
 
   aPlusB() {
     this.store.dispatch(new polynoms.APlusBModC());
   }
+
   aMultiplyB() {
     this.store.dispatch(new polynoms.AMultiplyBModC());
   }
+
   aPowMinusOne() {
     this.store.dispatch(new polynoms.AInverseModC());
   }
+
   aPowN() {
     this.store.dispatch(new polynoms.APowerNModC());
   }
+
   gcdAB() {
     this.store.dispatch(new polynoms.GCDAB());
   }

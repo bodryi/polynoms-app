@@ -10,6 +10,10 @@ export const A_POWER_N_MOD_C = '[Polynoms] A Power N Mod C';
 export const GCD_A_B = '[Polynoms] GCD A B';
 export const A_INVERSE_MOD_C = '[Polynoms] A Inverse Mod C';
 export const A_MULTIPLY_B_MOD_C = '[Polynoms] A Multiply B Mod C';
+export const POLYNOM_A_VALIDITY_CHANGE = '[Polynoms] Polynom A Validity Change';
+export const POLYNOM_B_VALIDITY_CHANGE = '[Polynoms] Polynom B Validity Change';
+export const POLYNOM_C_VALIDITY_CHANGE = '[Polynoms] Polynom C Validity Change';
+export const POLYNOM_POWER_VALIDITY_CHANGE = '[Polynoms] Polynom Power Validity Change';
 
 export class PolynomAChange implements Action {
   readonly type = POLYNOM_A_CHANGE;
@@ -66,6 +70,34 @@ export class AMultiplyBModC implements Action {
   readonly type = A_MULTIPLY_B_MOD_C;
 }
 
+export class PolynomAValidityChange implements Action {
+  readonly type = POLYNOM_A_VALIDITY_CHANGE;
+
+  constructor(public payload: boolean) {
+  }
+}
+
+export class PolynomBValidityChange implements Action {
+  readonly type = POLYNOM_B_VALIDITY_CHANGE;
+
+  constructor(public payload: boolean) {
+  }
+}
+
+export class PolynomCValidityChange implements Action {
+  readonly type = POLYNOM_C_VALIDITY_CHANGE;
+
+  constructor(public payload: boolean) {
+  }
+}
+
+export class PolynomPowerValidityChange implements Action {
+  readonly type = POLYNOM_POWER_VALIDITY_CHANGE;
+
+  constructor(public payload: boolean) {
+  }
+}
+
 export type Actions =
   PolynomAChange
   | PolynomBChange
@@ -76,4 +108,8 @@ export type Actions =
   | GCDAB
   | AInverseModC
   | AMultiplyBModC
+  | PolynomAValidityChange
+  | PolynomBValidityChange
+  | PolynomCValidityChange
+  | PolynomPowerValidityChange
   | APowerNModC;

@@ -136,3 +136,11 @@ export const getPolynomC = createSelector(getPolynomsState, fromPolynoms.getPoly
 export const getPolynomResult = createSelector(getPolynomsState, fromPolynoms.getPolynomResult);
 
 export const getPolynomPower = createSelector(getPolynomsState, fromPolynoms.getPolynomPower);
+
+export const getPolynomAValid = createSelector(getPolynomsState, fromPolynoms.getPolynomAValid);
+
+export const getPolynomBValid = createSelector(getPolynomsState, fromPolynoms.getPolynomBValid);
+
+export const getPolynomCValid = createSelector(getPolynomsState, fromPolynoms.getPolynomCValid);
+
+export const getPowerValid = createSelector(getPolynomsState, fromPolynoms.getPowerValid);
