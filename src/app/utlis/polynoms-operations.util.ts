@@ -257,24 +257,52 @@ export function gcd(a: Array<number>, b: Array<number>): Array<number> {
 export function xgcd(
   a: Array<number>,
   b: Array<number>,
-  x?: Array<number>,
-  y?: Array<number>,
 ): { gcd: Array<number>; x: Array<number>; y: Array<number> } {
   if (isNull(a)) {
-    x = [0];
-    y = [1];
-    return { gcd: b, x, y };
+    return { gcd: b, x: [0], y: [1] };
   }
-
-  const x1 = [1];
-  const y1 = [1];
-
-  const gcdLocal = xgcd(mod(b, a), a, x1, y1).gcd;
-  x = minus(y1, multiply(quo(b, a), x1));
-  y = [...x1];
-
-  return { gcd: gcdLocal, x, y };
+  const { gcd: gcdLocal, x: y, y: x } = xgcd(mod(b, a), a);
+  return {
+    gcd: gcdLocal,
+    x: minus(x, multiply(quo(b, a), y)),
+    y,
+  };
 }
+// export function xgcd(
+//   a: Array<number>,
+//   b: Array<number>,
+//   x?: Array<number>,
+//   y?: Array<number>,
+// ): { gcd: Array<number>; x: Array<number>; y: Array<number> } {
+//   if (isNull(a)) {
+//     x = [0];
+//     y = [1];
+//     return { gcd: b, x, y };
+//   }
+//
+//   const x1 = [1];
+//   const y1 = [1];
+//
+//   const gcdLocal = xgcd(mod(b, a), a, x1, y1).gcd;
+//   x = minus(y1, multiply(quo(b, a), x1));
+//   y = [...x1];
+//
+//   return { gcd: gcdLocal, x, y };
+// }
+//
+// export function xgcd(a: Array<number>, b: Array<number>) {
+//   if (isNull(b)) {
+//     return { x: [1], y: [0], gcd: a };
+//   } else {
+//     const modRes = mod(a , b);
+//     const temp = xgcd(b, modRes.length ? modRes : [0]);
+//     const x = temp.x;
+//     const y = temp.y;
+//     const d = temp.gcd;
+//     // return [y, x - y * Math.floor(a / b), d];
+//     return { x: [...y], y: minus(x, multiply(y, quo(a, b))), gcd: d };
+//   }
+// }
 
 export function isNull(polynom: Array<number>) {
   if (!polynom || !polynom.length) {

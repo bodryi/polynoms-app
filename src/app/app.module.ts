@@ -9,6 +9,7 @@ import { ActionsEffects } from './store/actions/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CoefficientsEffects } from './store/coefficients/effects';
+import { PolynomsEffects } from './store/polynoms/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,10 +21,14 @@ import { CoefficientsEffects } from './store/coefficients/effects';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
-    EffectsModule.forRoot([MatrixEffects, ActionsEffects, CoefficientsEffects]),
+    EffectsModule.forRoot([
+      MatrixEffects,
+      ActionsEffects,
+      CoefficientsEffects,
+      PolynomsEffects,
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

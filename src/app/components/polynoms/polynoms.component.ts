@@ -8,7 +8,6 @@ import { maxPolynomPower, number } from '../../validators';
 import { binToHex, hexToBin } from '../../utlis/convert-numbers.util';
 import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as polynoms from '../../store/polynoms/actions';
-import { isNull, gcd, xgcd } from '../../utlis/polynoms-operations.util';
 
 @Component({
   selector: 'polynoms',
@@ -137,19 +136,20 @@ export class PolynomsComponent implements OnInit, OnDestroy {
       );
   }
 
-  isNull() {
-    console.log(
-      xgcd(
-        this.polynomsForm
-          .get('A')
-          .value.split('')
-          .map(n => parseInt(n, 10)),
-        this.polynomsForm
-          .get('B')
-          .value.split('')
-          .map(n => parseInt(n, 10)),
-      ),
-    );
+  aPlusB() {
+    this.store.dispatch(new polynoms.APlusBModC());
+  }
+  aMultiplyB() {
+    this.store.dispatch(new polynoms.AMultiplyBModC());
+  }
+  aPowMinusOne() {
+    this.store.dispatch(new polynoms.AInverseModC());
+  }
+  aPowN() {
+    this.store.dispatch(new polynoms.APowerNModC());
+  }
+  gcdAB() {
+    this.store.dispatch(new polynoms.GCDAB());
   }
 
   ngOnDestroy() {

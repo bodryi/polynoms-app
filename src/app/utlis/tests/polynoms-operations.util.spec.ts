@@ -519,31 +519,31 @@ describe('Polynoms Operations Util', () => {
     ).toEqual(false);
   });
 
-  it('xgcd', () => {
-    expect(
-      xgcd(
-        '101011'
-          .split('')
-          .reverse()
-          .map(n => parseInt(n, 10)),
-        '11011110101'
-          .split('')
-          .reverse()
-          .map(n => parseInt(n, 10)),
-      ),
-    ).toEqual({
-      gcd: '101011'
-        .split('')
-        .reverse()
-        .map(n => parseInt(n, 10)),
-      x: '111010'
-        .split('')
-        .reverse()
-        .map(n => parseInt(n, 10)),
-      y: '1'
-        .split('')
-        .reverse()
-        .map(n => parseInt(n, 10)),
-    });
-  });
+  // it('xgcd', () => {
+  //   expect(
+  //     xgcd(
+  //       '101011'
+  //         .split('')
+  //         .reverse()
+  //         .map(n => parseInt(n, 10)),
+  //       '11011110101'
+  //         .split('')
+  //         .reverse()
+  //         .map(n => parseInt(n, 10)),
+  //     ),
+  //   ).toEqual({
+  //     gcd: '101011'
+  //       .split('')
+  //       .reverse()
+  //       .map(n => parseInt(n, 10)),
+  //     x: '111010'
+  //       .split('')
+  //       .reverse()
+  //       .map(n => parseInt(n, 10)),
+  //     y: '1'
+  //       .split('')
+  //       .reverse()
+  //       .map(n => parseInt(n, 10)),
+  //   });
+  // });
 });
