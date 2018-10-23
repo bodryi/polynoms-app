@@ -519,31 +519,31 @@ describe('Polynoms Operations Util', () => {
     ).toEqual(false);
   });
 
-  // it('xgcd', () => {
-  //   expect(
-  //     xgcd(
-  //       '101011'
-  //         .split('')
-  //         .reverse()
-  //         .map(n => parseInt(n, 10)),
-  //       '11011110101'
-  //         .split('')
-  //         .reverse()
-  //         .map(n => parseInt(n, 10)),
-  //     ),
-  //   ).toEqual({
-  //     gcd: '101011'
-  //       .split('')
-  //       .reverse()
-  //       .map(n => parseInt(n, 10)),
-  //     x: '111010'
-  //       .split('')
-  //       .reverse()
-  //       .map(n => parseInt(n, 10)),
-  //     y: '1'
-  //       .split('')
-  //       .reverse()
-  //       .map(n => parseInt(n, 10)),
-  //   });
-  // });
+  it('xgcd', () => {
+    expect(
+      xgcd(
+        '00011111101011011111'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '000110100000111111011010001100100101'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual({
+      gcd: '1'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+      x: '000000000000001100001111000111010000'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+      y: '00000000000100000101'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    });
+  });
 });
