@@ -35,3 +35,7 @@ form {
 .test-failed {
   background: var(--red-higlight);
 }
+
+.power {
+  width: 86%;
+}

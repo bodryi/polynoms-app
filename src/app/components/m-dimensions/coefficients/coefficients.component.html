@@ -2,11 +2,15 @@
   <div class="input-wrapper">
     <label>Mod</label>
     <div class="mod-section">
-      <input formControlName="mod"
+      <input class="auto-generation" formControlName="mod"
              [ngClass]="{'test-passed': !!(polynomTestResult$ | async), 'test-failed': (polynomTestResult$ | async) === false}"
              [value]="coefficientsForm.get('mod').value | uppercase"/>
       <button (click)="testPolynom()" [disabled]="testLoading$ | async">Test</button>
       <button (click)="generatePolynom()" [disabled]="testLoading$ | async">Generate</button>
+      <input class="multipliers" placeholder="Multipliers...">
+      <button (click)="0">Open</button>
+      <!--<button (click)="0">Open</button>-->
+      <input class="power" placeholder="Power...">
     </div>
   </div>
   <div class="input-wrapper">
