@@ -9,7 +9,6 @@ const CHAR_CODE_CAPITAL_A = 65;
 
 const SMALL_LATIN_CHARS_REGEXP = /[a-z]/;
 const CAPITAL_LATIN_CHARS_REGEXP = /[A-Z]/;
-const MINUS_REGEXP = /[-]/;
 
 function findVectorIndexInString(str: string): number {
   return str.split('').findIndex(c => SMALL_LATIN_CHARS_REGEXP.test(c));
@@ -38,10 +37,6 @@ function getCoefficientNumbersFromString(str: string): Array<number> {
     .split('')
     .filter(c => CAPITAL_LATIN_CHARS_REGEXP.test(c))
     .map(c => getCoefficientNumberByName(c));
-}
-
-function hasMinus(str: string) {
-  return MINUS_REGEXP.test(str);
 }
 
 export function multiplyVectors(
