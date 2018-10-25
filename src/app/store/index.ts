@@ -59,6 +59,10 @@ export const getCoefficientsValid = createSelector(getCoefficientsState, fromCoe
 
 export const getModValid = createSelector(getCoefficientsState, fromCoefficients.getModValid);
 
+export const getMultipliers = createSelector(getCoefficientsState, fromCoefficients.getMultipliers);
+
+export const getModPower = createSelector(getCoefficientsState, fromCoefficients.getModPower);
+
 export const getPolynomTestResult = createSelector(getCoefficientsState, fromCoefficients.getPolynomTestResult);
 
 export const getTestLoading = createSelector(getCoefficientsState, fromCoefficients.getTestLoading);

@@ -4,6 +4,8 @@ export const MOD_CHANGE = '[Coefficients] Mod Change';
 export const COEFFICIENT_A_CHANGE = '[Coefficients] Coefficient A Change';
 export const COEFFICIENT_B_CHANGE = '[Coefficients] Coefficient B Change';
 export const COEFFICIENT_C_CHANGE = '[Coefficients] Coefficient C Change';
+export const MOD_POWER_CHANGE = '[Coefficients] Mod Power Change';
+export const MULTIPLIERS_CHANGE = '[Coefficients] Multipliers Change';
 export const SET_MOD_VALIDITY = '[Coefficients] Set Mod Validity';
 export const SET_COEFFICIENTS_VALIDITY = '[Coefficients] Set Coefficients Validity';
 export const TEST_POLYNOM = '[Coefficients] Test Polynom';
@@ -19,6 +21,18 @@ export const GENERATE_IRREDUCIBLE_POLYNOM_FAILURE =
 
 export class ModChange implements Action {
   readonly type = MOD_CHANGE;
+
+  constructor(public payload: string) {}
+}
+
+export class ModPowerChange implements Action {
+  readonly type = MOD_POWER_CHANGE;
+
+  constructor(public payload: string) {}
+}
+
+export class MultipliersChange implements Action {
+  readonly type = MULTIPLIERS_CHANGE;
 
   constructor(public payload: string) {}
 }
@@ -96,4 +110,6 @@ export type Actions =
   | GenerateIrreduciblePolynomFailure
   | CoefficientCChange
   | SetCoefficientsValidity
+  | ModPowerChange
+  | MultipliersChange
   | SetModValidity;

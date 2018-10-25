@@ -6,8 +6,9 @@ import { select, Store } from '@ngrx/store';
 import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
-import { maxPolynomPower } from '../../../validators';
+import { maxPolynomPower, number } from '../../../validators';
 import { UpperCasePipe } from '@angular/common';
+import { MAX_FACTORIZED_POWER } from '../../../utlis/irreducible-polynoms.util';
 
 @Component({
   selector: 'coefficients',
@@ -18,8 +19,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
   coefficientsForm: FormGroup;
   polynomTestResult$: Observable<boolean>;
   testLoading$: Observable<boolean>;
+  MAX_FACTORIZED_POWER = MAX_FACTORIZED_POWER;
   private timeoutToClearTestResult: any;
   private ngUnsubscribe: Subject<void> = new Subject();
+  private MULTIPLIERS_REGEXP = /^[0-9,\s]+$/;
 
   constructor(private store: Store<fromRoot.State>, private upperCasePipe: UpperCasePipe) {
   }
@@ -30,6 +33,8 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       A: new FormControl('', Validators.required),
       B: new FormControl('', Validators.required),
       C: new FormControl('', Validators.required),
+      power: new FormControl('', number),
+      multipliers: new FormControl('', Validators.pattern(this.MULTIPLIERS_REGEXP)),
     });
 
     this.store
@@ -38,6 +43,22 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
         this.coefficientsForm
           .get('mod')
           .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
+      );
+
+    this.store
+      .pipe(select(fromRoot.getModPower), takeUntil(this.ngUnsubscribe))
+      .subscribe((s: string) =>
+        this.coefficientsForm
+          .get('power')
+          .setValue(s, { emitEvent: false }),
+      );
+
+    this.store
+      .pipe(select(fromRoot.getMultipliers), takeUntil(this.ngUnsubscribe))
+      .subscribe((s: string) =>
+        this.coefficientsForm
+          .get('multipliers')
+          .setValue(s, { emitEvent: false }),
       );
 
     this.store
@@ -109,6 +130,26 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientCChange(value)),
+      );
+
+    this.coefficientsForm
+      .get('power')
+      .valueChanges.pipe(
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+    )
+      .subscribe((value: string) =>
+        this.store.dispatch(new coefficients.ModPowerChange(value)),
+      );
+
+    this.coefficientsForm
+      .get('multipliers')
+      .valueChanges.pipe(
+      takeUntil(this.ngUnsubscribe),
+      debounceTime(100),
+    )
+      .subscribe((value: string) =>
+        this.store.dispatch(new coefficients.MultipliersChange(value)),
       );
 
     this.coefficientsForm.get('mod').statusChanges

@@ -6,11 +6,16 @@
              [ngClass]="{'test-passed': !!(polynomTestResult$ | async), 'test-failed': (polynomTestResult$ | async) === false}"
              [value]="coefficientsForm.get('mod').value | uppercase"/>
       <button (click)="testPolynom()" [disabled]="testLoading$ | async">Test</button>
-      <button (click)="generatePolynom()" [disabled]="testLoading$ | async">Generate</button>
-      <input class="multipliers" placeholder="Multipliers...">
+      <button (click)="generatePolynom()"
+              [disabled]="(testLoading$ | async) || !coefficientsForm.get('power').valid ||
+              (coefficientsForm.get('power').value > MAX_FACTORIZED_POWER &&
+              (!coefficientsForm.get('multipliers').valid || !coefficientsForm.get('multipliers').value))
+      ">
+        Generate
+      </button>
+      <input formControlName="multipliers" class="multipliers" placeholder="Multipliers...">
       <button (click)="0">Open</button>
-      <!--<button (click)="0">Open</button>-->
-      <input class="power" placeholder="Power...">
+      <input formControlName="power" class="power" placeholder="Power...">
     </div>
   </div>
   <div class="input-wrapper">

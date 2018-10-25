@@ -1,8 +1,8 @@
 import { BigNumber } from 'bignumber.js';
 import { powMod } from './polynoms-operations.util';
 
-const ITERATIONS_COUNT = 30;
-const MAX_FACTORIZED_POWER = 62;
+const ITERATIONS_COUNT = 50;
+export const MAX_FACTORIZED_POWER = 61;
 const MAX_GENERATE_TRIES = 10;
 const LAST_ZEROES_REGEXP = /(0+)$/g;
 
@@ -16,7 +16,8 @@ export function primeFactorization(number: BigNumber, res?: Array<BigNumber>) {
     while (
       number.mod(x).comparedTo(0) &&
       (x = x.plus(2)).comparedTo(root) === -1
-    ) {}
+      ) {
+    }
   }
 
   x = x.comparedTo(root) !== 1 ? x : number;
@@ -26,18 +27,18 @@ export function primeFactorization(number: BigNumber, res?: Array<BigNumber>) {
   return x === number ? result : primeFactorization(number.div(x), result);
 }
 
-export function generateRandomPolynom(maxPow: number): Array<number> {
+export function generateRandomPolynom(maxPow: number, exact?: boolean): Array<number> {
   if (!maxPow) {
     return [];
   }
-  const pow = Math.floor(Math.random() * 255) % maxPow;
-  return new Array(pow || maxPow - 1)
+  const pow = exact ? maxPow : Math.floor(Math.random() * 255) % maxPow + 1;
+  return new Array(pow || maxPow)
     .fill(null)
     .map(() => Math.floor(Math.random() * 65535) % 2);
 }
 
 export function isPolynomEqualsOne(polynom: Array<number>): boolean {
-  if (!polynom.length || polynom[0] !== 1) {
+  if (!polynom || !polynom.length || polynom[0] !== 1) {
     return false;
   } else {
     return !polynom.find((el, index) => el === 1 && !!index);
@@ -70,7 +71,7 @@ function condition2(
   return true;
 }
 
-export function testPolynom(polynomParam: string): boolean {
+export function testPolynom(polynomParam: string, primeMultipliers?: Array<BigNumber>): boolean {
   // trim last zeros for correct power picking
   if (!polynomParam) {
     return false;
@@ -88,7 +89,7 @@ export function testPolynom(polynomParam: string): boolean {
     .split('')
     .map(n => parseInt(n, 10));
   const powForTests: BigNumber = new BigNumber(2).pow(polynomPower).minus(1);
-  const primes: Array<BigNumber> = primeFactorization(powForTests);
+  const primes: Array<BigNumber> = primeMultipliers || primeFactorization(powForTests);
 
   const distinctPrimes = Array.from(new Set(primes.map(p => p.toString()))).map(
     p => new BigNumber(p),
@@ -96,7 +97,7 @@ export function testPolynom(polynomParam: string): boolean {
 
   let c = 1;
   while (c < ITERATIONS_COUNT) {
-    const randomPolynom = generateRandomPolynom(polynom.length);
+    const randomPolynom = generateRandomPolynom(polynomPower - 1);
     if (
       randomPolynom.length &&
       condition1(randomPolynom, polynomParsed, powForTests) &&
@@ -110,13 +111,16 @@ export function testPolynom(polynomParam: string): boolean {
 }
 
 export function generateIrreduciblePolynom(
-  maxPow: number = MAX_FACTORIZED_POWER,
+  maxPow?: number,
+  primeMultipliers?: Array<BigNumber>,
 ): Promise<Array<number>> {
   return new Promise((resolve, reject) => {
     let end = false;
     while (!end) {
-      const polynom = generateRandomPolynom(maxPow);
-      if (polynom.length > 1 && testPolynom(polynom.join(''))) {
+      const polynom = generateRandomPolynom(
+        maxPow || MAX_FACTORIZED_POWER, !!maxPow,
+      );
+      if (polynom.length > 1 && testPolynom(polynom.join(''), primeMultipliers)) {
         end = true;
         resolve(polynom);
       }
@@ -154,7 +158,8 @@ export function primeFactorization53(number: number, res?: Array<number>) {
   if (number % x) {
     x = 3;
 
-    while (number % x && (x = x + 2) < root) {}
+    while (number % x && (x = x + 2) < root) {
+    }
   }
 
   x = x <= root ? x : number;

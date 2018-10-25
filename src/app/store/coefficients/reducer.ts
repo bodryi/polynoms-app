@@ -11,6 +11,8 @@ export interface State {
   coefficientsValid: Array<boolean>;
   polynomTestResult: Array<boolean>;
   testLoading: Array<boolean>;
+  power: Array<string>;
+  multipliers: Array<string>;
 }
 
 const initialState: State = {
@@ -23,6 +25,8 @@ const initialState: State = {
   coefficientsValid: [false, false],
   polynomTestResult: [null, null],
   testLoading: [false, false],
+  power: ['', ''],
+  multipliers: ['', ''],
 };
 
 function getIndex(matrixSize: number): number {
@@ -63,6 +67,18 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         mod: setValue(state.mod, action.payload, state.matrixSize),
+      };
+
+    case Action.MOD_POWER_CHANGE:
+      return {
+        ...state,
+        power: setValue(state.power, action.payload, state.matrixSize),
+      };
+
+    case Action.MULTIPLIERS_CHANGE:
+      return {
+        ...state,
+        multipliers: setValue(state.multipliers, action.payload, state.matrixSize),
       };
 
     case Action.SET_MOD_VALIDITY:
@@ -151,3 +167,5 @@ export const getTestLoading = (state: State) =>
   state.testLoading[getIndex(state.matrixSize)];
 export const getPolynomTestResult = (state: State) =>
   state.polynomTestResult[getIndex(state.matrixSize)];
+export const getMultipliers = (state: State) => state.multipliers[getIndex(state.matrixSize)];
+export const getModPower = (state: State) => state.power[getIndex(state.matrixSize)];
