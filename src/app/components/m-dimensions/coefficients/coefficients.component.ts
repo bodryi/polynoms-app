@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as coefficients from '../../../store/coefficients/actions';
@@ -6,15 +11,18 @@ import { select, Store } from '@ngrx/store';
 import { debounceTime, map, takeUntil } from 'rxjs/internal/operators';
 import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
-import { maxPolynomPower, number } from '../../../validators';
+import { number } from '../../../validators';
 import { UpperCasePipe } from '@angular/common';
-import { MAX_FACTORIZED_POWER, trimPolynomLastZeros } from '../../../utlis/irreducible-polynoms.util';
+import {
+  MAX_FACTORIZED_POWER,
+  trimPolynomLastZeros,
+} from '../../../utlis/irreducible-polynoms.util';
 
 @Component({
   selector: 'coefficients',
   templateUrl: 'coefficients.component.html',
   styleUrls: ['coefficients.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoefficientsComponent implements OnInit, OnDestroy {
   coefficientsForm: FormGroup;
@@ -25,8 +33,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<void> = new Subject();
   private MULTIPLIERS_REGEXP = /^[0-9,\s]+$/;
 
-  constructor(private store: Store<fromRoot.State>, private upperCasePipe: UpperCasePipe) {
-  }
+  constructor(
+    private store: Store<fromRoot.State>,
+    private upperCasePipe: UpperCasePipe,
+  ) {}
 
   ngOnInit() {
     this.coefficientsForm = new FormGroup({
@@ -35,7 +45,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       B: new FormControl('', Validators.required),
       C: new FormControl('', Validators.required),
       power: new FormControl('', number),
-      multipliers: new FormControl('', Validators.pattern(this.MULTIPLIERS_REGEXP)),
+      multipliers: new FormControl(
+        '',
+        Validators.pattern(this.MULTIPLIERS_REGEXP),
+      ),
     });
 
     this.store
@@ -43,15 +56,15 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('mod')
-          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), {
+            emitEvent: false,
+          }),
       );
 
     this.store
       .pipe(select(fromRoot.getModPower), takeUntil(this.ngUnsubscribe))
       .subscribe((s: string) =>
-        this.coefficientsForm
-          .get('power')
-          .setValue(s, { emitEvent: false }),
+        this.coefficientsForm.get('power').setValue(s, { emitEvent: false }),
       );
 
     this.store
@@ -67,7 +80,9 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('A')
-          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), {
+            emitEvent: false,
+          }),
       );
 
     this.store
@@ -75,7 +90,9 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('B')
-          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), {
+            emitEvent: false,
+          }),
       );
 
     this.store
@@ -83,19 +100,21 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       .subscribe((s: string) =>
         this.coefficientsForm
           .get('C')
-          .setValue(this.upperCasePipe.transform(binToHex(s)), { emitEvent: false }),
+          .setValue(this.upperCasePipe.transform(binToHex(s)), {
+            emitEvent: false,
+          }),
       );
 
     this.coefficientsForm
       .get('mod')
       .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-      map((value: string) => hexToBin(value)),
-    )
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) => {
         this.timeoutToClearTestResult &&
-        clearTimeout(this.timeoutToClearTestResult);
+          clearTimeout(this.timeoutToClearTestResult);
         this.store.dispatch(new coefficients.TestPolynomResetResult());
         this.store.dispatch(new coefficients.ModChange(value));
       });
@@ -103,10 +122,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('A')
       .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-      map((value: string) => hexToBin(value)),
-    )
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientAChange(value)),
       );
@@ -114,10 +133,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('B')
       .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-      map((value: string) => hexToBin(value)),
-    )
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientBChange(value)),
       );
@@ -125,52 +144,48 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
     this.coefficientsForm
       .get('C')
       .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-      map((value: string) => hexToBin(value)),
-    )
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+        map((value: string) => hexToBin(value)),
+      )
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.CoefficientCChange(value)),
       );
 
     this.coefficientsForm
       .get('power')
-      .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-    )
+      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.ModPowerChange(value)),
       );
 
     this.coefficientsForm
       .get('multipliers')
-      .valueChanges.pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
-    )
+      .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
       .subscribe((value: string) =>
         this.store.dispatch(new coefficients.MultipliersChange(value)),
       );
 
-    this.coefficientsForm.get('mod').statusChanges
-      .pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(100),
-      )
-      .subscribe((val: 'VALID' | 'INVALID') => this.store.dispatch(new coefficients.SetModValidity(val === 'VALID')));
+    this.coefficientsForm
+      .get('mod')
+      .statusChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .subscribe((val: 'VALID' | 'INVALID') =>
+        this.store.dispatch(new coefficients.SetModValidity(val === 'VALID')),
+      );
 
     combineLatest(
       this.coefficientsForm.get('A').statusChanges,
       this.coefficientsForm.get('B').statusChanges,
       this.coefficientsForm.get('C').statusChanges,
-    ).pipe(
-      takeUntil(this.ngUnsubscribe),
-      debounceTime(100),
     )
-      .subscribe(([aStatus, bStatus, cStatus]) => this.store.dispatch(new coefficients.SetCoefficientsValidity(
-        aStatus === 'VALID' && bStatus === 'VALID' && cStatus === 'VALID',
-      )));
+      .pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .subscribe(([aStatus, bStatus, cStatus]) =>
+        this.store.dispatch(
+          new coefficients.SetCoefficientsValidity(
+            aStatus === 'VALID' && bStatus === 'VALID' && cStatus === 'VALID',
+          ),
+        ),
+      );
 
     this.polynomTestResult$ = this.store.pipe(
       select(fromRoot.getPolynomTestResult),
@@ -194,6 +209,21 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       });
   }
 
+  onLoadChange(event: any) {
+    const input = event.target;
+    const reader = new FileReader();
+    reader.onload = () =>
+      this.store.dispatch(new coefficients.OpenFileSuccess(reader.result));
+    reader.onerror = () =>
+      this.store.dispatch(new coefficients.OpenFileFailure());
+    try {
+      reader.readAsText(input.files[0]);
+    } catch (e) {
+      console.log(e);
+      this.store.dispatch(new coefficients.OpenFileFailure());
+    }
+  }
+
   testPolynom() {
     this.store.dispatch(new coefficients.TestPolynom());
   }
@@ -203,7 +233,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
   }
 
   getPolynomPower(): number {
-    return trimPolynomLastZeros(hexToBin(this.coefficientsForm.get('mod').value)).length - 1;
+    return (
+      trimPolynomLastZeros(hexToBin(this.coefficientsForm.get('mod').value))
+        .length - 1
+    );
   }
 
   ngOnDestroy() {

@@ -29,6 +29,14 @@ export class CoefficientsEffects {
   ) {}
 
   @Effect()
+  openFile$: Observable<any> = this.actions$.pipe(
+    ofType(coefficients.OPEN_FILE_SUCCESS),
+    switchMap((action: { payload: string }) => {
+      return of(new coefficients.MultipliersChange(action.payload));
+    }),
+  );
+
+  @Effect()
   testPolynom$: Observable<any> = this.actions$.pipe(
     ofType(coefficients.TEST_POLYNOM),
     withLatestFrom(this.mod$, this.multipliers$),

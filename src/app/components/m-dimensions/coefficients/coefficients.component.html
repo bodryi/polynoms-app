@@ -15,7 +15,8 @@
         Generate
       </button>
       <input formControlName="multipliers" class="multipliers" placeholder="Multipliers...">
-      <button (click)="0">Open</button>
+      <label class="file-upload-label" for="file-upload-multipliers" tabindex="0">Load</label>
+      <input id="file-upload-multipliers" type="file" accept="text/plain" (change)="onLoadChange($event)" hidden>
       <input formControlName="power" class="power" placeholder="Power...">
     </div>
   </div>

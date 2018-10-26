@@ -18,6 +18,9 @@ export const GENERATE_IRREDUCIBLE_POLYNOM_SUCCESS =
   '[Coefficients] Generate Irreducible Polynom Success';
 export const GENERATE_IRREDUCIBLE_POLYNOM_FAILURE =
   '[Coefficients] Generate Irreducible Polynom Failure';
+export const OPEN_FILE = '[Coefficients] Open File';
+export const OPEN_FILE_SUCCESS = '[Coefficients] Open File Success';
+export const OPEN_FILE_FAILURE = '[Coefficients] Open File Failure';
 
 export class ModChange implements Action {
   readonly type = MOD_CHANGE;
@@ -97,6 +100,20 @@ export class GenerateIrreduciblePolynomFailure implements Action {
   readonly type = GENERATE_IRREDUCIBLE_POLYNOM_FAILURE;
 }
 
+export class OpenFile implements Action {
+  readonly type = OPEN_FILE;
+}
+
+export class OpenFileSuccess implements Action {
+  readonly type = OPEN_FILE_SUCCESS;
+
+  constructor(public payload: string) {}
+}
+
+export class OpenFileFailure implements Action {
+  readonly type = OPEN_FILE_FAILURE;
+}
+
 export type Actions =
   | ModChange
   | CoefficientAChange
@@ -112,4 +129,7 @@ export type Actions =
   | SetCoefficientsValidity
   | ModPowerChange
   | MultipliersChange
+  | OpenFile
+  | OpenFileSuccess
+  | OpenFileFailure
   | SetModValidity;
