@@ -1,5 +1,6 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
 import { hexToBin } from '../utlis/convert-numbers.util';
+import { trimPolynomLastZeros } from '../utlis/irreducible-polynoms.util';
 
 const LAST_ZEROES_REGEXP = /(0+)$/g;
 
@@ -9,6 +10,7 @@ export function maxPolynomPower(power: number): ValidatorFn {
       return { maxPolynomPower: false };
     }
     const binValue = hexToBin(control.value).replace(LAST_ZEROES_REGEXP, '');
-    return binValue.length > power ? { maxPolynomPower: false } : null;
+    const binValueTrimed = trimPolynomLastZeros(binValue);
+    return binValueTrimed.length - 1 > power ? { maxPolynomPower: false } : null;
   };
 }

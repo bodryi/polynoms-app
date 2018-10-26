@@ -5,7 +5,8 @@
       <input class="auto-generation" formControlName="mod"
              [ngClass]="{'test-passed': !!(polynomTestResult$ | async), 'test-failed': (polynomTestResult$ | async) === false}"
              [value]="coefficientsForm.get('mod').value | uppercase"/>
-      <button (click)="testPolynom()" [disabled]="testLoading$ | async">Test</button>
+      <button (click)="testPolynom()"
+              [disabled]="(testLoading$ | async) || (getPolynomPower() > MAX_FACTORIZED_POWER && (!coefficientsForm.get('multipliers').valid || !coefficientsForm.get('multipliers').value))">Test</button>
       <button (click)="generatePolynom()"
               [disabled]="(testLoading$ | async) || !coefficientsForm.get('power').valid ||
               (coefficientsForm.get('power').value > MAX_FACTORIZED_POWER &&

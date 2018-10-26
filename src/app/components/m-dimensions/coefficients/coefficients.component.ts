@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as coefficients from '../../../store/coefficients/actions';
@@ -8,12 +8,13 @@ import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
 import { maxPolynomPower, number } from '../../../validators';
 import { UpperCasePipe } from '@angular/common';
-import { MAX_FACTORIZED_POWER } from '../../../utlis/irreducible-polynoms.util';
+import { MAX_FACTORIZED_POWER, trimPolynomLastZeros } from '../../../utlis/irreducible-polynoms.util';
 
 @Component({
   selector: 'coefficients',
   templateUrl: 'coefficients.component.html',
   styleUrls: ['coefficients.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoefficientsComponent implements OnInit, OnDestroy {
   coefficientsForm: FormGroup;
@@ -29,7 +30,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.coefficientsForm = new FormGroup({
-      mod: new FormControl('', [Validators.required, maxPolynomPower(62)]),
+      mod: new FormControl('', Validators.required), //, maxPolynomPower(62)
       A: new FormControl('', Validators.required),
       B: new FormControl('', Validators.required),
       C: new FormControl('', Validators.required),
@@ -199,6 +200,10 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
 
   generatePolynom() {
     this.store.dispatch(new coefficients.GenerateIrreduciblePolynom());
+  }
+
+  getPolynomPower(): number {
+    return trimPolynomLastZeros(hexToBin(this.coefficientsForm.get('mod').value)).length - 1;
   }
 
   ngOnDestroy() {

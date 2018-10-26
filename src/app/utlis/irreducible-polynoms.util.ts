@@ -71,12 +71,16 @@ function condition2(
   return true;
 }
 
+export function trimPolynomLastZeros(polynom: string): string {
+  return polynom.replace(LAST_ZEROES_REGEXP, '');
+}
+
 export function testPolynom(polynomParam: string, primeMultipliers?: Array<BigNumber>): boolean {
   // trim last zeros for correct power picking
   if (!polynomParam) {
     return false;
   }
-  const polynom = polynomParam.replace(LAST_ZEROES_REGEXP, '');
+  const polynom = trimPolynomLastZeros(polynomParam);
   if (polynom.length === 1) {
     return false;
   }
