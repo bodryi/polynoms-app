@@ -32,7 +32,7 @@ export class PolynomsComponent implements OnInit, OnDestroy {
     this.polynomsForm = new FormGroup({
       A: new FormControl('', Validators.required),
       B: new FormControl('', Validators.required),
-      C: new FormControl('', [Validators.required, maxPolynomPower(62)]),
+      C: new FormControl('', Validators.required),
       power: new FormControl('', [
         Validators.required,
         Validators.min(1),
