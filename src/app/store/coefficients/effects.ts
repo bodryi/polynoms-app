@@ -79,20 +79,29 @@ export class CoefficientsEffects {
           .map(num => new BigNumber(num));
       }
       const multipliersValid = parsedMultipliers && parsedMultipliers.length;
-      return (parsedPower > MAX_FACTORIZED_POWER && multipliersValid) ||
+      if (!parsedPower) {
+        return generateIrreduciblePolynom().then(
+          res =>
+            res
+              ? new coefficients.GenerateIrreduciblePolynomSuccess(res.join(''))
+              : new coefficients.GenerateIrreduciblePolynomFailure(),
+        );
+      } else if (
+        (parsedPower > MAX_FACTORIZED_POWER && multipliersValid) ||
         parsedPower <= MAX_FACTORIZED_POWER
-        ? generateIrreduciblePolynom(
-            parsedPower,
-            multipliersValid ? parsedMultipliers : undefined,
-          ).then(
-            res =>
-              res
-                ? new coefficients.GenerateIrreduciblePolynomSuccess(
-                    res.join(''),
-                  )
-                : new coefficients.GenerateIrreduciblePolynomFailure(),
-          )
-        : of(new coefficients.GenerateIrreduciblePolynomFailure());
+      ) {
+        return generateIrreduciblePolynom(
+          parsedPower,
+          multipliersValid ? parsedMultipliers : undefined,
+        ).then(
+          res =>
+            res
+              ? new coefficients.GenerateIrreduciblePolynomSuccess(res.join(''))
+              : new coefficients.GenerateIrreduciblePolynomFailure(),
+        );
+      } else {
+        return of(new coefficients.GenerateIrreduciblePolynomFailure());
+      }
     }),
   );
 }

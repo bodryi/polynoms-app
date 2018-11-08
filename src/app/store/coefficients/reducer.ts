@@ -125,6 +125,7 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         mod: setValue(state.mod, action.payload, state.matrixSize),
+        modValid: setValue(state.modValid, true, state.matrixSize),
         polynomTestResult: setValue(
           state.polynomTestResult,
           true,
@@ -137,6 +138,7 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         mod: setValue(state.mod, '', state.matrixSize),
+        modValid: setValue(state.modValid, false, state.matrixSize),
         polynomTestResult: setValue(
           state.polynomTestResult,
           false,
