@@ -12,13 +12,13 @@ import * as matrix from '../../../store/matrix/actions';
   styleUrls: ['./matrix-block.component.css'],
 })
 export class MatrixBlockComponent implements OnInit, OnDestroy {
-  @Input() m: number;
+  @Input()
+  m: number;
   matrixForm: FormGroup;
 
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<fromRoot.State>) {
-  }
+  constructor(private store: Store<fromRoot.State>) {}
 
   ngOnInit() {
     this.matrixForm = new FormGroup({
@@ -38,7 +38,10 @@ export class MatrixBlockComponent implements OnInit, OnDestroy {
       );
 
     this.matrixForm.valueChanges
-      .pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        debounceTime(100),
+      )
       .subscribe((value: { matrix: Array<Array<string>> }) =>
         this.store.dispatch(new matrix.MatrixChange(value.matrix)),
       );
@@ -47,10 +50,12 @@ export class MatrixBlockComponent implements OnInit, OnDestroy {
   onLoadChange(event: any) {
     const input = event.target;
     const reader = new FileReader();
-    reader.onload = () => this.store.dispatch(new matrix.OpenFileSuccess(reader.result));
+    reader.onload = () =>
+      this.store.dispatch(new matrix.OpenFileSuccess(reader.result));
     reader.onerror = () => this.store.dispatch(new matrix.OpenFileFailure());
     try {
       reader.readAsText(input.files[0]);
+      input.value = null;
     } catch (e) {
       console.log(e);
       this.store.dispatch(new matrix.OpenFileFailure());

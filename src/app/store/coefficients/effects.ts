@@ -31,9 +31,9 @@ export class CoefficientsEffects {
   @Effect()
   openFile$: Observable<any> = this.actions$.pipe(
     ofType(coefficients.OPEN_FILE_SUCCESS),
-    switchMap((action: { payload: string }) => {
-      return of(new coefficients.MultipliersChange(action.payload));
-    }),
+    switchMap((action: { payload: string }) =>
+      of(new coefficients.MultipliersChange(action.payload)),
+    ),
   );
 
   @Effect()

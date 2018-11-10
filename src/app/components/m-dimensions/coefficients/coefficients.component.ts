@@ -218,6 +218,7 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
       this.store.dispatch(new coefficients.OpenFileFailure());
     try {
       reader.readAsText(input.files[0]);
+      input.value = null;
     } catch (e) {
       console.log(e);
       this.store.dispatch(new coefficients.OpenFileFailure());
