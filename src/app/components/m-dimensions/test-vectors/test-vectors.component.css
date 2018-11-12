@@ -24,9 +24,10 @@ form {
 
 .vector-actions {
   display: grid;
-  grid-template-columns: repeat(3, 31.5%);
+  grid-template-columns: repeat(2, 48.5%);
+  grid-template-rows: repeat(2, 50%);
   grid-gap: 0.5vw;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .header {

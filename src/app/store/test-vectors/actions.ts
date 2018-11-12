@@ -3,6 +3,8 @@ import { Action } from '@ngrx/store';
 export const TEST_VECTOR_A_CHANGE = '[Test Vectors] Test Vector A Change';
 export const TEST_VECTOR_B_CHANGE = '[Test Vectors] Test Vector B Change';
 export const TEST_VECTOR_C_CHANGE = '[Test Vectors] Test Vector C Change';
+export const GENERATE_RANDOM_TEST_VECTOR =
+  '[Test Vectors] Generate Random Test Vector';
 export const COPY = '[Test Vectors] Copy';
 export const PASTE = '[Test Vectors] Paste';
 export const CLEAR = '[Test Vectors] Clear';
@@ -43,10 +45,17 @@ export class Clear implements Action {
   constructor(public payload: string) {}
 }
 
+export class GenerateRandomTestVector implements Action {
+  readonly type = GENERATE_RANDOM_TEST_VECTOR;
+
+  constructor(public payload: string) {}
+}
+
 export type Actions =
   | TestVectorAChange
   | TestVectorBChange
   | TestVectorCChange
   | Copy
   | Paste
+  | GenerateRandomTestVector
   | Clear;

@@ -23,7 +23,7 @@ app.on('activate', () => {
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1060,
-    height: 680,
+    height: 710,
   });
   const startUrl =
     process.env.ELECTRON_START_URL ||

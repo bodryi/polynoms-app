@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CoefficientsEffects } from './store/coefficients/effects';
 import { PolynomsEffects } from './store/polynoms/effects';
+import { TestVectorsEffects } from './store/test-vectors/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { PolynomsEffects } from './store/polynoms/effects';
       ActionsEffects,
       CoefficientsEffects,
       PolynomsEffects,
+      TestVectorsEffects,
     ]),
   ],
   providers: [],

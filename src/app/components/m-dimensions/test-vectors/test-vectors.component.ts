@@ -123,6 +123,10 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
     this.store.dispatch(new testVectors.Clear(vectorName));
   }
 
+  onRandomClick(vectorName: string) {
+    this.store.dispatch(new testVectors.GenerateRandomTestVector(vectorName));
+  }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

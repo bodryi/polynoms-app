@@ -27,7 +27,7 @@ form {
   display: grid;
   grid-template-columns: repeat(3, 31.5%);
   grid-gap: 0.5vw;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 

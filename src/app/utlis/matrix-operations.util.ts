@@ -1,8 +1,4 @@
-import {
-  toBits,
-  multiplyMod,
-  plusMod,
-} from './polynoms-operations.util';
+import { toBits, multiplyMod, plusMod } from './polynoms-operations.util';
 
 const CHAR_CODE_SMALL_A = 97;
 const CHAR_CODE_CAPITAL_A = 65;
