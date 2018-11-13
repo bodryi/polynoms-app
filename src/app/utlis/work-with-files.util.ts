@@ -1,6 +1,5 @@
 import { saveAs } from 'file-saver';
-
-const SPACE_BETWEEN_CELLS = 2;
+import { SPACE_BETWEEN_CELLS } from '../constants/app.constants';
 
 function getLongestCell(matrix: Array<Array<string>>): number {
   return matrix.reduce((acc: number, curr: Array<string>) => {

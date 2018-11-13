@@ -1,10 +1,10 @@
 import { toBits, multiplyMod, plusMod } from './polynoms-operations.util';
-
-const CHAR_CODE_SMALL_A = 97;
-const CHAR_CODE_CAPITAL_A = 65;
-
-const SMALL_LATIN_CHARS_REGEXP = /[a-z]/;
-const CAPITAL_LATIN_CHARS_REGEXP = /[A-Z]/;
+import {
+  CAPITAL_LATIN_CHARS_REGEXP,
+  CHAR_CODE_CAPITAL_A,
+  CHAR_CODE_SMALL_A,
+  SMALL_LATIN_CHARS_REGEXP,
+} from '../constants/app.constants';
 
 function findVectorIndexInString(str: string): number {
   return str.split('').findIndex(c => SMALL_LATIN_CHARS_REGEXP.test(c));

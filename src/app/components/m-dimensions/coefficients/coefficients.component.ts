@@ -13,10 +13,8 @@ import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
 import { number } from '../../../validators';
 import { UpperCasePipe } from '@angular/common';
-import {
-  MAX_FACTORIZED_POWER,
-  trimPolynomLastZeros,
-} from '../../../utlis/irreducible-polynoms.util';
+import { trimPolynomLastZeros } from '../../../utlis/irreducible-polynoms.util';
+import { MAX_FACTORIZED_POWER } from '../../../constants/app.constants';
 
 @Component({
   selector: 'coefficients',

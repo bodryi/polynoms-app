@@ -1,0 +1,13 @@
+export const MATRIX_4_CELL_REGEXP = /^-?[A-C]*[a-d][A-C]*$/;
+export const MATRIX_6_CELL_REGEXP = /^-?[A-C]*[a-f][A-C]*$/;
+export const RESULTS_COUNT = 6;
+export const FOUR_SYMBOLS_REGEXP = /.{1,4}/g;
+export const ITERATIONS_COUNT = 50;
+export const MAX_FACTORIZED_POWER = 61;
+export const MAX_GENERATE_TRIES = 10;
+export const LAST_ZEROES_REGEXP = /(0+)$/g;
+export const CHAR_CODE_SMALL_A = 97;
+export const CHAR_CODE_CAPITAL_A = 65;
+export const SMALL_LATIN_CHARS_REGEXP = /[a-z]/;
+export const CAPITAL_LATIN_CHARS_REGEXP = /[A-Z]/;
+export const SPACE_BETWEEN_CELLS = 2;

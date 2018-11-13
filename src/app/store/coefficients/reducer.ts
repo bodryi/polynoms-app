@@ -17,12 +17,12 @@ export interface State {
 
 const initialState: State = {
   mod: ['', ''],
-  A: ['', ''],
-  B: ['', ''],
-  C: ['', ''],
+  A: ['1000', '1000'],
+  B: ['1000', '1000'],
+  C: ['1000', '1000'],
   matrixSize: null,
   modValid: [false, false],
-  coefficientsValid: [false, false],
+  coefficientsValid: [true, true],
   polynomTestResult: [null, null],
   testLoading: [false, false],
   power: ['', ''],

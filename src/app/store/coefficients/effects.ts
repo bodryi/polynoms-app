@@ -11,11 +11,11 @@ import {
 } from 'rxjs/internal/operators';
 import {
   generateIrreduciblePolynom,
-  MAX_FACTORIZED_POWER,
   testPolynom,
   trimPolynomLastZeros,
 } from '../../utlis/irreducible-polynoms.util';
 import { BigNumber } from 'bignumber.js';
+import { MAX_FACTORIZED_POWER } from '../../constants/app.constants';
 
 @Injectable()
 export class CoefficientsEffects {

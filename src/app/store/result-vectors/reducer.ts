@@ -1,5 +1,6 @@
 import * as Action from './actions';
 import * as MainAction from '../main/actions';
+import { RESULTS_COUNT } from '../../constants/app.constants';
 
 export interface State {
   result: Array<Array<Array<string>>>;
@@ -7,7 +8,6 @@ export interface State {
   matrixSize: number;
 }
 
-const RESULTS_COUNT = 6;
 
 const initialState: State = {
   result: [

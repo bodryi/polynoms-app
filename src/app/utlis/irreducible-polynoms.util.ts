@@ -1,10 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import { powMod } from './polynoms-operations.util';
-
-const ITERATIONS_COUNT = 50;
-export const MAX_FACTORIZED_POWER = 61;
-const MAX_GENERATE_TRIES = 10;
-const LAST_ZEROES_REGEXP = /(0+)$/g;
+import { ITERATIONS_COUNT, LAST_ZEROES_REGEXP, MAX_FACTORIZED_POWER, MAX_GENERATE_TRIES } from '../constants/app.constants';
 
 export function primeFactorization(number: BigNumber, res?: Array<BigNumber>) {
   const result = res || [];
@@ -129,24 +125,6 @@ export function generateIrreduciblePolynom(
         resolve(polynom);
       }
     }
-  });
-}
-
-export function generateIrreduciblePolynomOld(
-  maxPow: number = MAX_FACTORIZED_POWER,
-): Promise<Array<number>> {
-  return new Promise((resolve, reject) => {
-    let c = 0;
-    while (c < MAX_GENERATE_TRIES) {
-      const polynom = generateRandomPolynom(maxPow);
-      if (polynom.length > 1 && testPolynom(polynom.join(''))) {
-        resolve(polynom);
-      }
-
-      c++;
-    }
-
-    resolve(null);
   });
 }
 

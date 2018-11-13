@@ -1,11 +1,12 @@
 import * as Action from './actions';
 import * as MainAction from '../main/actions';
+import { MATRIX_4_CELL_REGEXP, MATRIX_6_CELL_REGEXP } from '../../constants/app.constants';
 
 const defaultMatrix4 = [
-  ['Aa', 'Bb', 'Cc', 'Ad'],
-  ['Aa', 'Bb', 'Cc', 'Ad'],
-  ['Aa', 'Bb', 'Cc', 'Ad'],
-  ['Aa', 'Bb', 'Cc', 'Ad'],
+  ['a', 'Ad', 'Aa', 'd'],
+  ['Bc', 'b', 'c', 'Bb'],
+  ['c', 'Ab', 'Ac', 'b'],
+  ['Ba', 'd', 'a', 'Bd'],
 ];
 const defaultMatrix6 = [
   ['a', 'b', 'c', 'd', 'e', 'f'],
@@ -16,8 +17,6 @@ const defaultMatrix6 = [
   ['f', 'Bb', 'Cc', 'Ad', 'Be', 'Cf'],
 ];
 
-const MATRIX_4_CELL_REGEXP = /^-?[A-C]*[a-d][A-C]*$/;
-const MATRIX_6_CELL_REGEXP = /^-?[A-C]*[a-f][A-C]*$/;
 const matrixRegexps = [MATRIX_4_CELL_REGEXP, MATRIX_6_CELL_REGEXP];
 
 export interface State {

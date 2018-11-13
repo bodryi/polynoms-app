@@ -1,6 +1,6 @@
 import { toBits, fillWithZerosOneNumber, fillWithZerosOneNumberInFront } from './polynoms-operations.util';
+import { FOUR_SYMBOLS_REGEXP } from '../constants/app.constants';
 
-const FOUR_SYMBOLS_REGEXP = /.{1,4}/g;
 
 export function binToHex(bin: string): string {
   const filledBin = fillWithZerosOneNumber(

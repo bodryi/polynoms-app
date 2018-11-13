@@ -7,8 +7,8 @@ import { Observable, of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/internal/operators';
 import {
   generateRandomPolynom,
-  MAX_FACTORIZED_POWER,
 } from '../../utlis/irreducible-polynoms.util';
+import { MAX_FACTORIZED_POWER } from '../../constants/app.constants';
 
 @Injectable()
 export class TestVectorsEffects {
