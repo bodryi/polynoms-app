@@ -97,7 +97,7 @@ export function testPolynom(polynomParam: string, primeMultipliers?: Array<BigNu
 
   let c = 1;
   while (c < ITERATIONS_COUNT) {
-    const randomPolynom = generateRandomPolynom(polynomPower - 1);
+    const randomPolynom = generateRandomPolynom(polynomPower);
     if (
       randomPolynom.length &&
       condition1(randomPolynom, polynomParsed, powForTests) &&
