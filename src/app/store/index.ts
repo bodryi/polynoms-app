@@ -17,7 +17,7 @@ export interface State {
   matrix: fromMatrix.State;
   resultVectors: fromResultVectors.State;
   testVectors: fromTestVectors.State;
-  polynoms: fromPolynoms.State
+  polynoms: fromPolynoms.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -42,7 +42,9 @@ export const getResultVectorsState = createFeatureSelector<
 export const getTestVectorsState = createFeatureSelector<fromTestVectors.State>(
   'testVectors',
 );
-export const getPolynomsState = createFeatureSelector<fromPolynoms.State>('polynoms');
+export const getPolynomsState = createFeatureSelector<fromPolynoms.State>(
+  'polynoms',
+);
 
 export const getMod = createSelector(
   getCoefficientsState,
@@ -55,17 +57,35 @@ export const getB = createSelector(getCoefficientsState, fromCoefficients.getB);
 
 export const getC = createSelector(getCoefficientsState, fromCoefficients.getC);
 
-export const getCoefficientsValid = createSelector(getCoefficientsState, fromCoefficients.getCoefficientsValid);
+export const getCoefficientsValid = createSelector(
+  getCoefficientsState,
+  fromCoefficients.getCoefficientsValid,
+);
 
-export const getModValid = createSelector(getCoefficientsState, fromCoefficients.getModValid);
+export const getModValid = createSelector(
+  getCoefficientsState,
+  fromCoefficients.getModValid,
+);
 
-export const getMultipliers = createSelector(getCoefficientsState, fromCoefficients.getMultipliers);
+export const getMultipliers = createSelector(
+  getCoefficientsState,
+  fromCoefficients.getMultipliers,
+);
 
-export const getModPower = createSelector(getCoefficientsState, fromCoefficients.getModPower);
+export const getModPower = createSelector(
+  getCoefficientsState,
+  fromCoefficients.getModPower,
+);
 
-export const getPolynomTestResult = createSelector(getCoefficientsState, fromCoefficients.getPolynomTestResult);
+export const getPolynomTestResult = createSelector(
+  getCoefficientsState,
+  fromCoefficients.getPolynomTestResult,
+);
 
-export const getTestLoading = createSelector(getCoefficientsState, fromCoefficients.getTestLoading);
+export const getTestLoading = createSelector(
+  getCoefficientsState,
+  fromCoefficients.getTestLoading,
+);
 
 export const getMatrix = createSelector(getMatrixState, fromMatrix.getMatrix);
 
@@ -104,6 +124,11 @@ export const getTestVectorC = createSelector(
   fromTestVectors.getTestVectorC,
 );
 
+export const getVectorBuffer = createSelector(
+  getTestVectorsState,
+  fromTestVectors.getVectorBuffer,
+);
+
 export const getIsValidTestVectorA = createSelector(
   getTestVectorsState,
   fromTestVectors.getIsValidTestVectorA,
@@ -131,20 +156,47 @@ export const getButtonsState = createSelector(
   fromActions.getButtonsState,
 );
 
-export const getPolynomA = createSelector(getPolynomsState, fromPolynoms.getPolynomA);
+export const getPolynomA = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomA,
+);
 
-export const getPolynomB = createSelector(getPolynomsState, fromPolynoms.getPolynomB);
+export const getPolynomB = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomB,
+);
 
-export const getPolynomC = createSelector(getPolynomsState, fromPolynoms.getPolynomC);
+export const getPolynomC = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomC,
+);
 
-export const getPolynomResult = createSelector(getPolynomsState, fromPolynoms.getPolynomResult);
+export const getPolynomResult = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomResult,
+);
 
-export const getPolynomPower = createSelector(getPolynomsState, fromPolynoms.getPolynomPower);
+export const getPolynomPower = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomPower,
+);
 
-export const getPolynomAValid = createSelector(getPolynomsState, fromPolynoms.getPolynomAValid);
+export const getPolynomAValid = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomAValid,
+);
 
-export const getPolynomBValid = createSelector(getPolynomsState, fromPolynoms.getPolynomBValid);
+export const getPolynomBValid = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomBValid,
+);
 
-export const getPolynomCValid = createSelector(getPolynomsState, fromPolynoms.getPolynomCValid);
+export const getPolynomCValid = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPolynomCValid,
+);
 
-export const getPowerValid = createSelector(getPolynomsState, fromPolynoms.getPowerValid);
+export const getPowerValid = createSelector(
+  getPolynomsState,
+  fromPolynoms.getPowerValid,
+);

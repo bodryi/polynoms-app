@@ -3,7 +3,6 @@ import * as MainAction from '../main/actions';
 
 export interface State {
   result: Array<Array<Array<string>>>;
-  vectorBuffer: Array<Array<string>>;
   activeResult: Array<number>;
   matrixSize: number;
 }
@@ -15,7 +14,6 @@ const initialState: State = {
     getEmptyVector(RESULTS_COUNT).map(() => getEmptyVector(4)),
     getEmptyVector(RESULTS_COUNT).map(() => getEmptyVector(6)),
   ],
-  vectorBuffer: [getEmptyVector(4), getEmptyVector(6)],
   activeResult: [0, 0],
   matrixSize: null,
 };
@@ -41,16 +39,6 @@ function setVector(
   const newResult = state.map(res => deepArrayCopy(res));
   newResult[getIndex(matrixSize)][activeResult] = [...payload];
   return newResult;
-}
-
-function setBufferVector(
-  state: Array<Array<string>>,
-  payload: Array<string>,
-  matrixSize: number,
-): Array<Array<string>> {
-  return state.map(
-    (v, index) => (index === getIndex(matrixSize) ? [...payload] : v),
-  );
 }
 
 function setActiveResult(
@@ -82,27 +70,6 @@ export function reducer(state = initialState, action: any): State {
           state.result,
           action.payload.vector,
           action.payload.index,
-          state.matrixSize,
-        ),
-      };
-
-    case Action.COPY:
-      return {
-        ...state,
-        vectorBuffer: setBufferVector(
-          state.vectorBuffer,
-          state.result[getIndex(state.matrixSize)][action.payload],
-          state.matrixSize,
-        ),
-      };
-
-    case Action.PASTE:
-      return {
-        ...state,
-        result: setVector(
-          state.result,
-          state.vectorBuffer[getIndex(state.matrixSize)],
-          action.payload,
           state.matrixSize,
         ),
       };

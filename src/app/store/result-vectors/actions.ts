@@ -16,7 +16,7 @@ export class SetActiveResultVector implements Action {
 export class SetResult implements Action {
   readonly type = SET_RESULT;
 
-  constructor(public payload: {vector: Array<string>, index: number}) {}
+  constructor(public payload: { vector: Array<string>; index: number }) {}
 }
 
 export class Copy implements Action {
@@ -37,9 +37,4 @@ export class Clear implements Action {
   constructor(public payload: number) {}
 }
 
-export type Actions =
-  | SetActiveResultVector
-  | SetResult
-  | Copy
-  | Paste
-  | Clear;
+export type Actions = SetActiveResultVector | SetResult | Copy | Paste | Clear;

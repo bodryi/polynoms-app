@@ -102,6 +102,16 @@ export function reducer(state = initialState, action: any): State {
         vectorBuffer: state[action.payload] && [...state[action.payload]],
       };
 
+    case Action.COPY_VECTOR:
+      return {
+        ...state,
+        vectorBuffer: setVector(
+          state.vectorBuffer,
+          action.payload,
+          state.matrixSize,
+        ),
+      };
+
     case Action.PASTE:
       return {
         ...state,
@@ -155,3 +165,5 @@ export const getIsValidTestVectorB = (state: State) =>
   state.BValid[getIndex(state.matrixSize)];
 export const getIsValidTestVectorC = (state: State) =>
   state.CValid[getIndex(state.matrixSize)];
+export const getVectorBuffer = (state: State) =>
+  state.vectorBuffer[getIndex(state.matrixSize)];
