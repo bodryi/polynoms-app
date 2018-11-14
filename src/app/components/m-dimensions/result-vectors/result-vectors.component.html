@@ -1,6 +1,6 @@
 <form [formGroup]="vectorsForm">
   <div formArrayName="results" class="vector-wrapper"
-       *ngFor="let result of vectorsForm.get('results').controls; let i = index">
+       *ngFor="let result of vectorsForm['controls'].results['controls']; let i = index">
     <div>
       <label class="header">
         <input type="radio" [checked]="i === (activeResult$ | async)" (change)="activeResultChange(i)" name="selected_res"/>
