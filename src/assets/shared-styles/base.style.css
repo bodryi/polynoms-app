@@ -32,3 +32,8 @@ button:active {
   background: var(--btn-active);
   transform: translateY(1px);
 }
+
+.bordered {
+  border: var(--border-width) var(--container-border) solid;
+  padding: 5px;
+}

@@ -1,0 +1,92 @@
+form {
+  overflow-y: auto;
+  height: 95vh;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.bordered {
+  margin-top: 5px;
+}
+
+.randoms-container {
+  display: grid;
+  grid-template-columns: repeat(3, 33.3%);
+  margin: 10px 0;
+}
+
+.input-wrapper input {
+  height: 25px;
+  /*margin-top: 3px;*/
+}
+
+.vector-wrapper {
+  border: var(--border-width) var(--container-border) solid;
+  padding: 10px;
+  position: relative;
+  flex-grow: 1;
+}
+
+.vector-wrapper:not(:first-child):not(:last-child) {
+  margin: 0 3px;
+}
+
+.vector-wrapper:first-child {
+  margin-right: 2px;
+}
+
+.vector-wrapper:last-child {
+  margin-left: 2px;
+}
+
+.vector-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 48.5%);
+  grid-template-rows: repeat(2, 50%);
+  grid-gap: 0.5vw;
+  margin-top: 10px;
+}
+
+.header {
+  background: var(--container-bg);
+  font-size: 16px;
+  padding: 0 5px;
+  margin: 0 0 8px 0;
+}
+
+.header button {
+  margin-left: 15px;
+}
+
+.hns-wrapper {
+  border: var(--border-width) var(--container-border) solid;
+  padding: 10px;
+  position: relative;
+  flex-grow: 1;
+}
+
+.blocks-separator {
+  text-align: center;
+  font-size: 17px;
+  margin: 10px 0;
+  text-decoration-color: black;
+  text-decoration: solid;
+  text-decoration-line: underline;
+}
+
+.signature-generation-container {
+  display: grid;
+  grid-template-columns: 33.3% 66.7%;
+  margin: 10px 0;
+}
+
+.three-actions .vector-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 31.5%);
+  grid-gap: 0.5vw;
+  margin-top: 10px;
+}

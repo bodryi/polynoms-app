@@ -1,0 +1,231 @@
+<form [formGroup]="digitalSignatureForm">
+  <div class="bordered">
+    <div class="input-wrapper">
+      <input formControlName="message" placeholder="Message..."/>
+    </div>
+  </div>
+  <p class="blocks-separator">Secret Key Generation</p>
+  <div class="randoms-container">
+    <div class="vector-wrapper">
+      <p class="header">Q (secret key)</p>
+      <vector-view formControlName="Q" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Paste</button>
+        <button (click)="0">Random</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <p class="header">N (secret key)</p>
+      <vector-view formControlName="N" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Paste</button>
+        <button (click)="0">Random</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="input-wrapper">
+        <label>h<sub>1</sub></label>
+        <input formControlName="h1"/>
+        <label>n<sub>1</sub></label>
+        <input formControlName="n1"/>
+      </div>
+      <div class="input-wrapper">
+        <label>h<sub>2</sub></label>
+        <input formControlName="h2"/>
+        <label>n<sub>2</sub></label>
+        <input formControlName="n2"/>
+      </div>
+      <div class="input-wrapper">
+        <label>h<sub>3</sub></label>
+        <input formControlName="h3"/>
+        <label>n<sub>3</sub></label>
+        <input formControlName="n3"/>
+      </div>
+    </div>
+  </div>
+  <div class="randoms-container">
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>E<sub>r1</sub> (secret key)</span>
+          <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="Er1" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>E<sub>r2</sub> (secret key)</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="Er2" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>E<sub>r3</sub> (secret key)</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="Er3" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+  </div>
+  <p class="blocks-separator">Public Key Generation</p>
+  <div class="randoms-container">
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>T</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="T" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>P</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="P" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>L</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="L" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+  </div>
+  <div class="randoms-container">
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>Y (public key)</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="Y" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>U (public key)</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="U" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+  </div>
+  <p class="blocks-separator">Signature Generation</p>
+  <div class="signature-generation-container">
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>R</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="R" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>Signature Elements</span>
+        <button (click)="0">Calculate <i>e</i></button>
+        <button (click)="0">Calculate <i>s</i></button>
+      </div>
+      <div class="input-wrapper">
+        <label><i>e</i></label>
+        <input formControlName="e"/>
+        <label><i>s</i></label>
+        <input formControlName="s"/>
+      </div>
+    </div>
+  </div>
+  <p class="blocks-separator">Signature Verification</p>
+  <div class="randoms-container">
+    <div class="vector-wrapper three-actions">
+      <div class="header">
+        <span>Y Test (public key)</span>
+      </div>
+      <vector-view formControlName="YTest" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Paste</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper three-actions">
+      <div class="header">
+        <span>U Test (public key)</span>
+      </div>
+      <vector-view formControlName="UTest" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Paste</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>Test Signature Elements</span>
+      </div>
+      <div class="input-wrapper">
+        <label><i>e</i> Test</label>
+        <input formControlName="eTest"/>
+        <label><i>s</i> Test</label>
+        <input formControlName="sTest"/>
+      </div>
+    </div>
+  </div>
+  <div class="signature-generation-container">
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>R</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <vector-view formControlName="RWave" [componentNames]="componentNames"></vector-view>
+      <div class="vector-actions">
+        <button (click)="0">Copy</button>
+        <button (click)="0">Clear</button>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>Signature Element</span>
+        <button (click)="0">Calculate</button>
+      </div>
+      <div class="input-wrapper">
+        <label><i>e</i></label>
+        <input formControlName="eCheck"/>
+      </div>
+    </div>
+  </div>
+</form>

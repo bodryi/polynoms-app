@@ -12,11 +12,6 @@
   grid-gap: 1vw;
 }
 
-.bordered {
-    border: var(--border-width) var(--container-border) solid;
-    padding: 5px;
-}
-
 .matrix-block-wrapper {
   height: 100%;
 }
