@@ -4,8 +4,9 @@ import { debounceTime, filter, map, takeUntil } from 'rxjs/internal/operators';
 import { select, Store } from '@ngrx/store';
 import * as fromRoot from '../../store';
 import { binToHex, hexToBin } from '../../utlis/convert-numbers.util';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import * as digitalSignature from '../../store/digital-signature/actions';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'digital-signature',
@@ -15,11 +16,17 @@ import * as digitalSignature from '../../store/digital-signature/actions';
 export class DigitalSignatureComponent implements OnInit, OnDestroy {
   digitalSignatureForm: FormGroup;
   componentNames: Array<string> = [];
+  NDSValid$: Observable<boolean>;
+  coefficientsValid$: Observable<boolean>;
+  modValid$: Observable<boolean>;
   readonly m = 4;
   readonly charCodeSmallA = 97;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(
+    private store: Store<fromRoot.State>,
+    private upperCasePipe: UpperCasePipe,
+  ) {}
 
   ngOnInit() {
     for (let i = 0; i < this.m; i++) {
@@ -56,6 +63,12 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     });
 
     this.connectFormToStore();
+
+    this.NDSValid$ = this.store.pipe(select(fromRoot.getNDSValid));
+    this.coefficientsValid$ = this.store.pipe(
+      select(fromRoot.getCoefficientsValid),
+    );
+    this.modValid$ = this.store.pipe(select(fromRoot.getModValid));
   }
 
   onRandomClick(vectorName: string) {
@@ -72,6 +85,18 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
 
   onPasteClick(vectorName: string) {
     this.store.dispatch(new digitalSignature.PasteVector(vectorName));
+  }
+
+  onEr1CalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateEr1());
+  }
+
+  onEr2CalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateEr2());
+  }
+
+  onEr3CalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateEr3());
   }
 
   private connectFormToStore() {
@@ -120,9 +145,11 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
               takeUntil(this.ngUnsubscribe),
             )
             .subscribe((s: string) =>
-              this.digitalSignatureForm.get(key).setValue(binToHex(s), {
-                emitEvent: false,
-              }),
+              this.digitalSignatureForm
+                .get(key)
+                .setValue(this.upperCasePipe.transform(binToHex(s)), {
+                  emitEvent: false,
+                }),
             );
 
           this.digitalSignatureForm
@@ -142,7 +169,10 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
             );
         } else {
           this.store
-            .pipe(select(fromRoot.getMessage), takeUntil(this.ngUnsubscribe))
+            .pipe(
+              select(fromRoot.getMessage),
+              takeUntil(this.ngUnsubscribe),
+            )
             .subscribe((s: string) =>
               this.digitalSignatureForm.get('message').setValue(s, {
                 emitEvent: false,
@@ -151,7 +181,10 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
 
           this.digitalSignatureForm
             .get('message')
-            .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+            .valueChanges.pipe(
+              takeUntil(this.ngUnsubscribe),
+              debounceTime(100),
+            )
             .subscribe((value: string) =>
               this.store.dispatch(
                 new digitalSignature.StringValueChange({

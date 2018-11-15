@@ -28,7 +28,7 @@ export interface State {
   RWave: Array<string>;
   eWave: string;
   QValid: boolean;
-  NValid: boolean;
+  NDSValid: boolean;
   Er1Valid: boolean;
   Er2Valid: boolean;
   Er3Valid: boolean;
@@ -72,7 +72,7 @@ const initialState: State = {
   RWave: new Array(4).fill(''),
   eWave: '',
   QValid: false,
-  NValid: false,
+  NDSValid: false,
   Er1Valid: false,
   Er2Valid: false,
   Er3Valid: false,
@@ -160,7 +160,7 @@ export const getSTest = (state: State) => state.sTest;
 export const getRWave = (state: State) => state.RWave;
 export const getEWave = (state: State) => state.eWave;
 export const getQValid = (state: State) => state.QValid;
-export const getNValid = (state: State) => state.NValid;
+export const getNValid = (state: State) => state.NDSValid;
 export const getEr1Valid = (state: State) => state.Er1Valid;
 export const getEr2Valid = (state: State) => state.Er2Valid;
 export const getEr3Valid = (state: State) => state.Er3Valid;

@@ -29,21 +29,21 @@
     <div class="vector-wrapper">
       <div class="input-wrapper">
         <label>h<sub>1</sub></label>
-        <input formControlName="h1"/>
+        <input formControlName="h1" [value]="digitalSignatureForm.get('h1').value | uppercase"/>
         <label>n<sub>1</sub></label>
-        <input formControlName="n1"/>
+        <input formControlName="n1" [value]="digitalSignatureForm.get('n1').value | uppercase"/>
       </div>
       <div class="input-wrapper">
         <label>h<sub>2</sub></label>
-        <input formControlName="h2"/>
+        <input formControlName="h2" [value]="digitalSignatureForm.get('h2').value | uppercase"/>
         <label>n<sub>2</sub></label>
-        <input formControlName="n2"/>
+        <input formControlName="n2" [value]="digitalSignatureForm.get('n2').value | uppercase"/>
       </div>
       <div class="input-wrapper">
         <label>h<sub>3</sub></label>
-        <input formControlName="h3"/>
+        <input formControlName="h3" [value]="digitalSignatureForm.get('h3').value | uppercase"/>
         <label>n<sub>3</sub></label>
-        <input formControlName="n3"/>
+        <input formControlName="n3" [value]="digitalSignatureForm.get('n3').value | uppercase"/>
       </div>
     </div>
   </div>
@@ -51,7 +51,10 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>E<sub>r1</sub> (secret key)</span>
-          <button (click)="0">Calculate</button>
+          <button (click)="onEr1CalculateClick()"
+                  [disabled]="!digitalSignatureForm.get('h1').valid || !digitalSignatureForm.get('n1').valid ||
+                  !(NDSValid$ | async) || !(coefficientsValid$ | async)  || !(modValid$ | async)"
+          >Calculate</button>
       </div>
       <vector-view formControlName="Er1" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -62,7 +65,10 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>E<sub>r2</sub> (secret key)</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onEr2CalculateClick()"
+                [disabled]="!digitalSignatureForm.get('h2').valid || !digitalSignatureForm.get('n2').valid ||
+                  !(NDSValid$ | async) || !(coefficientsValid$ | async)  || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="Er2" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -73,7 +79,10 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>E<sub>r3</sub> (secret key)</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onEr3CalculateClick()"
+                [disabled]="!digitalSignatureForm.get('h3').valid || !digitalSignatureForm.get('n3').valid ||
+                  !(NDSValid$ | async) || !(coefficientsValid$ | async)  || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="Er3" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -163,9 +172,9 @@
       </div>
       <div class="input-wrapper">
         <label><i>e</i></label>
-        <input formControlName="e"/>
+        <input formControlName="e" [value]="digitalSignatureForm.get('e').value | uppercase"/>
         <label><i>s</i></label>
-        <input formControlName="s"/>
+        <input formControlName="s" [value]="digitalSignatureForm.get('s').value | uppercase"/>
       </div>
     </div>
   </div>
@@ -199,9 +208,9 @@
       </div>
       <div class="input-wrapper">
         <label><i>e</i> Test</label>
-        <input formControlName="eTest"/>
+        <input formControlName="eTest" [value]="digitalSignatureForm.get('eTest').value | uppercase"/>
         <label><i>s</i> Test</label>
-        <input formControlName="sTest"/>
+        <input formControlName="sTest" [value]="digitalSignatureForm.get('sTest').value | uppercase"/>
       </div>
     </div>
   </div>
@@ -224,7 +233,7 @@
       </div>
       <div class="input-wrapper">
         <label><i>e</i></label>
-        <input formControlName="eWave"/>
+        <input formControlName="eWave" [value]="digitalSignatureForm.get('eWave').value | uppercase"/>
       </div>
     </div>
   </div>
