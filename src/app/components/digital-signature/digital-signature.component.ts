@@ -45,7 +45,7 @@ export class DigitalSignatureComponent implements OnInit {
       eTest: new FormControl('', Validators.required),
       sTest: new FormControl('', Validators.required),
       RWave: new FormControl(new Array(this.m).fill('')),
-      eCheck: new FormControl('', Validators.required),
+      eWave: new FormControl('', Validators.required),
     });
   }
 }
