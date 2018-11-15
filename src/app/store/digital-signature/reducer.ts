@@ -1,6 +1,7 @@
 import * as Action from './actions';
 
 export interface State {
+  message: string;
   Q: Array<string>;
   N: Array<string>;
   h1: string;
@@ -28,12 +29,6 @@ export interface State {
   eWave: string;
   QValid: boolean;
   NValid: boolean;
-  h1Valid: boolean;
-  n1Valid: boolean;
-  h2Valid: boolean;
-  n2Valid: boolean;
-  h3Valid: boolean;
-  n3Valid: boolean;
   Er1Valid: boolean;
   Er2Valid: boolean;
   Er3Valid: boolean;
@@ -43,50 +38,40 @@ export interface State {
   YValid: boolean;
   UValid: boolean;
   RValid: boolean;
-  eValid: boolean;
-  sValid: boolean;
   YTestValid: boolean;
   UTestValid: boolean;
-  eTestValid: boolean;
-  sTestValid: boolean;
   RWaveValid: boolean;
-  eWaveValid: boolean;
 }
 
 const initialState: State = {
-  Q: [],
-  N: [],
+  message: '',
+  Q: new Array(4).fill(''),
+  N: new Array(4).fill(''),
   h1: '',
   n1: '',
   h2: '',
   n2: '',
   h3: '',
   n3: '',
-  Er1: [],
-  Er2: [],
-  Er3: [],
-  T: [],
-  P: [],
-  L: [],
-  Y: [],
-  U: [],
-  R: [],
+  Er1: new Array(4).fill(''),
+  Er2: new Array(4).fill(''),
+  Er3: new Array(4).fill(''),
+  T: new Array(4).fill(''),
+  P: new Array(4).fill(''),
+  L: new Array(4).fill(''),
+  Y: new Array(4).fill(''),
+  U: new Array(4).fill(''),
+  R: new Array(4).fill(''),
   e: '',
   s: '',
-  YTest: [],
-  UTest: [],
+  YTest: new Array(4).fill(''),
+  UTest: new Array(4).fill(''),
   eTest: '',
   sTest: '',
-  RWave: [],
+  RWave: new Array(4).fill(''),
   eWave: '',
   QValid: false,
   NValid: false,
-  h1Valid: false,
-  n1Valid: false,
-  h2Valid: false,
-  n2Valid: false,
-  h3Valid: false,
-  n3Valid: false,
   Er1Valid: false,
   Er2Valid: false,
   Er3Valid: false,
@@ -96,14 +81,9 @@ const initialState: State = {
   YValid: false,
   UValid: false,
   RValid: false,
-  eValid: false,
-  sValid: false,
   YTestValid: false,
   UTestValid: false,
-  eTestValid: false,
-  sTestValid: false,
   RWaveValid: false,
-  eWaveValid: false,
 };
 
 function validateVector(value: Array<string>): boolean {
@@ -126,7 +106,6 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         [action.payload.key]: action.payload.value,
-        [`${action.payload.key}Valid`]: action.payload.valid,
       };
 
     default:
@@ -134,6 +113,7 @@ export function reducer(state = initialState, action: any): State {
   }
 }
 
+export const getMessage = (state: State) => state.message;
 export const getQ = (state: State) => state.Q;
 export const getN = (state: State) => state.N;
 export const getH1 = (state: State) => state.h1;
@@ -161,12 +141,6 @@ export const getRWave = (state: State) => state.RWave;
 export const getEWave = (state: State) => state.eWave;
 export const getQValid = (state: State) => state.QValid;
 export const getNValid = (state: State) => state.NValid;
-export const getH1Valid = (state: State) => state.h1Valid;
-export const getN1Valid = (state: State) => state.n1Valid;
-export const getH2Valid = (state: State) => state.h2Valid;
-export const getN2Valid = (state: State) => state.n2Valid;
-export const getH3Valid = (state: State) => state.h3Valid;
-export const getN3Valid = (state: State) => state.n3Valid;
 export const getEr1Valid = (state: State) => state.Er1Valid;
 export const getEr2Valid = (state: State) => state.Er2Valid;
 export const getEr3Valid = (state: State) => state.Er3Valid;
@@ -176,11 +150,6 @@ export const getLValid = (state: State) => state.LValid;
 export const getYValid = (state: State) => state.YValid;
 export const getUValid = (state: State) => state.UValid;
 export const getRValid = (state: State) => state.RValid;
-export const getEValid = (state: State) => state.eValid;
-export const getSValid = (state: State) => state.sValid;
 export const getYTestValid = (state: State) => state.YTestValid;
 export const getUTestValid = (state: State) => state.UTestValid;
-export const getETestValid = (state: State) => state.eTestValid;
-export const getSTestValid = (state: State) => state.sTestValid;
 export const getRWaveValid = (state: State) => state.RWaveValid;
-export const getEWaveValid = (state: State) => state.eWaveValid;

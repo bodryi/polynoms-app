@@ -206,6 +206,10 @@ export const getPowerValid = createSelector(
   fromPolynoms.getPowerValid,
 );
 
+export const getMessage = createSelector(
+  getDigitalSignatureState,
+  fromDigitalSignature.getMessage,
+);
 export const getQ = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getQ,
@@ -314,30 +318,6 @@ export const getNDSValid = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getNValid,
 );
-export const getH1Valid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getH1Valid,
-);
-export const getN1Valid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getN1Valid,
-);
-export const getH2Valid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getH2Valid,
-);
-export const getN2Valid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getN2Valid,
-);
-export const getH3Valid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getH3Valid,
-);
-export const getN3Valid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getN3Valid,
-);
 export const getEr1Valid = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getEr1Valid,
@@ -374,14 +354,6 @@ export const getRValid = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getRValid,
 );
-export const getEValid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getEValid,
-);
-export const getSValid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getSValid,
-);
 export const getYTestValid = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getYTestValid,
@@ -390,19 +362,7 @@ export const getUTestValid = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getUTestValid,
 );
-export const getETestValid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getETestValid,
-);
-export const getSTestValid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getSTestValid,
-);
 export const getRWaveValid = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getRWaveValid,
-);
-export const getEWaveValid = createSelector(
-  getDigitalSignatureState,
-  fromDigitalSignature.getEWaveValid,
 );

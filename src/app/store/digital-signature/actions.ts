@@ -6,7 +6,7 @@ export const ARRAY_VALUE_CHANGE = '[Digital Signature] Array Value Change';
 export class StringValueChange implements Action {
   readonly type = STRING_VALUE_CHANGE;
 
-  constructor(public payload: { key: string; value: string; valid: boolean }) {}
+  constructor(public payload: { key: string; value: string;}) {}
 }
 
 export class ArrayValueChange implements Action {
