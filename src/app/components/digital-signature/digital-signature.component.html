@@ -10,20 +10,20 @@
       <p class="header">Q (secret key)</p>
       <vector-view formControlName="Q" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Paste</button>
-        <button (click)="0">Random</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('Q')">Copy</button>
+        <button (click)="onPasteClick('Q')">Paste</button>
+        <button (click)="onRandomClick('Q')">Random</button>
+        <button (click)="onClearClick('Q')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
       <p class="header">N (secret key)</p>
       <vector-view formControlName="NDS" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Paste</button>
-        <button (click)="0">Random</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('NDS')">Copy</button>
+        <button (click)="onPasteClick('NDS')">Paste</button>
+        <button (click)="onRandomClick('NDS')">Random</button>
+        <button (click)="onClearClick('NDS')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -55,8 +55,8 @@
       </div>
       <vector-view formControlName="Er1" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('Er1')">Copy</button>
+        <button (click)="onClearClick('Er1')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -66,8 +66,8 @@
       </div>
       <vector-view formControlName="Er2" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('Er2')">Copy</button>
+        <button (click)="onClearClick('Er2')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -77,8 +77,8 @@
       </div>
       <vector-view formControlName="Er3" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('Er3')">Copy</button>
+        <button (click)="onClearClick('Er3')">Clear</button>
       </div>
     </div>
   </div>
@@ -91,8 +91,8 @@
       </div>
       <vector-view formControlName="T" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('T')">Copy</button>
+        <button (click)="onClearClick('T')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -102,8 +102,8 @@
       </div>
       <vector-view formControlName="P" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('P')">Copy</button>
+        <button (click)="onClearClick('P')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -113,8 +113,8 @@
       </div>
       <vector-view formControlName="L" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('L')">Copy</button>
+        <button (click)="onClearClick('L')">Clear</button>
       </div>
     </div>
   </div>
@@ -126,8 +126,8 @@
       </div>
       <vector-view formControlName="Y" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('Y')">Copy</button>
+        <button (click)="onClearClick('Y')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -137,8 +137,8 @@
       </div>
       <vector-view formControlName="U" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('U')">Copy</button>
+        <button (click)="onClearClick('U')">Clear</button>
       </div>
     </div>
   </div>
@@ -151,8 +151,8 @@
       </div>
       <vector-view formControlName="R" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('R')">Copy</button>
+        <button (click)="onClearClick('R')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -177,9 +177,9 @@
       </div>
       <vector-view formControlName="YTest" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Paste</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('YTest')">Copy</button>
+        <button (click)="onPasteClick('YTest')">Paste</button>
+        <button (click)="onClearClick('YTest')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper three-actions">
@@ -188,9 +188,9 @@
       </div>
       <vector-view formControlName="UTest" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Paste</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('UTest')">Copy</button>
+        <button (click)="onPasteClick('UTest')">Paste</button>
+        <button (click)="onClearClick('UTest')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">
@@ -213,8 +213,8 @@
       </div>
       <vector-view formControlName="RWave" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
-        <button (click)="0">Copy</button>
-        <button (click)="0">Clear</button>
+        <button (click)="onCopyClick('RWave')">Copy</button>
+        <button (click)="onClearClick('RWave')">Clear</button>
       </div>
     </div>
     <div class="vector-wrapper">

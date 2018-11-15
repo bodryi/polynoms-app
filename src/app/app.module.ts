@@ -12,6 +12,7 @@ import { CoefficientsEffects } from './store/coefficients/effects';
 import { PolynomsEffects } from './store/polynoms/effects';
 import { TestVectorsEffects } from './store/test-vectors/effects';
 import { ResultVectorEffects } from './store/result-vectors/effects';
+import { DigitalSignatureEffects } from './store/digital-signature/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { ResultVectorEffects } from './store/result-vectors/effects';
       PolynomsEffects,
       TestVectorsEffects,
       ResultVectorEffects,
+      DigitalSignatureEffects,
     ]),
   ],
   providers: [],

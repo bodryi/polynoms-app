@@ -58,6 +58,22 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     this.connectFormToStore();
   }
 
+  onRandomClick(vectorName: string) {
+    this.store.dispatch(new digitalSignature.GenerateRandomVector(vectorName));
+  }
+
+  onClearClick(vectorName: string) {
+    this.store.dispatch(new digitalSignature.ClearVector(vectorName));
+  }
+
+  onCopyClick(vectorName: string) {
+    this.store.dispatch(new digitalSignature.CopyVector(vectorName));
+  }
+
+  onPasteClick(vectorName: string) {
+    this.store.dispatch(new digitalSignature.PasteVector(vectorName));
+  }
+
   private connectFormToStore() {
     if (this.digitalSignatureForm.controls) {
       Object.keys(this.digitalSignatureForm.controls).forEach(key => {

@@ -3,7 +3,7 @@ import * as Action from './actions';
 export interface State {
   message: string;
   Q: Array<string>;
-  N: Array<string>;
+  NDS: Array<string>;
   h1: string;
   n1: string;
   h2: string;
@@ -41,12 +41,13 @@ export interface State {
   YTestValid: boolean;
   UTestValid: boolean;
   RWaveValid: boolean;
+  buffer: Array<string>;
 }
 
 const initialState: State = {
   message: '',
   Q: new Array(4).fill(''),
-  N: new Array(4).fill(''),
+  NDS: new Array(4).fill(''),
   h1: '',
   n1: '',
   h2: '',
@@ -84,6 +85,7 @@ const initialState: State = {
   YTestValid: false,
   UTestValid: false,
   RWaveValid: false,
+  buffer: new Array(4).fill(''),
 };
 
 function validateVector(value: Array<string>): boolean {
@@ -108,6 +110,24 @@ export function reducer(state = initialState, action: any): State {
         [action.payload.key]: action.payload.value,
       };
 
+    case Action.CLEAR_VECTOR:
+      return {
+        ...state,
+        [action.payload]: new Array(4).fill(''),
+      };
+
+    case Action.COPY_VECTOR:
+      return {
+        ...state,
+        buffer: [...state[action.payload]],
+      };
+
+    case Action.PASTE_VECTOR:
+      return {
+        ...state,
+        [action.payload]: [...state.buffer],
+      };
+
     default:
       return state;
   }
@@ -115,7 +135,7 @@ export function reducer(state = initialState, action: any): State {
 
 export const getMessage = (state: State) => state.message;
 export const getQ = (state: State) => state.Q;
-export const getN = (state: State) => state.N;
+export const getN = (state: State) => state.NDS;
 export const getH1 = (state: State) => state.h1;
 export const getN1 = (state: State) => state.n1;
 export const getH2 = (state: State) => state.h2;
