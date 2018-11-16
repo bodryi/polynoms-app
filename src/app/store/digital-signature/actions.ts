@@ -10,6 +10,7 @@ export const PASTE_VECTOR = '[Digital Signature] Paste Vector';
 export const CALCULATE_ER1 = '[Digital Signature] Calculate Er1';
 export const CALCULATE_ER2 = '[Digital Signature] Calculate Er2';
 export const CALCULATE_ER3 = '[Digital Signature] Calculate Er3';
+export const CALCULATE_T = '[Digital Signature] Calculate T';
 
 export class StringValueChange implements Action {
   readonly type = STRING_VALUE_CHANGE;
@@ -59,6 +60,10 @@ export class CalculateEr3 implements Action {
   readonly type = CALCULATE_ER3;
 }
 
+export class CalculateT implements Action {
+  readonly type = CALCULATE_T;
+}
+
 export type Actions =
   | StringValueChange
   | ArrayValueChange
@@ -68,4 +73,5 @@ export type Actions =
   | CalculateEr1
   | CalculateEr2
   | CalculateEr3
+  | CalculateT
   | ClearVector;

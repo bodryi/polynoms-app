@@ -99,6 +99,10 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     this.store.dispatch(new digitalSignature.CalculateEr3());
   }
 
+  onTCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateT());
+  }
+
   private connectFormToStore() {
     if (this.digitalSignatureForm.controls) {
       Object.keys(this.digitalSignatureForm.controls).forEach(key => {

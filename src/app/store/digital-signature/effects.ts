@@ -7,11 +7,16 @@ import { Observable, of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/internal/operators';
 import { generateRandomPolynom } from '../../utlis/irreducible-polynoms.util';
 import { MAX_FACTORIZED_POWER } from '../../constants/app.constants';
-import { localRightSideUnit } from '../../utlis/digital-signature.util';
+import {
+  calculateT,
+  localRightSideUnit,
+} from '../../utlis/digital-signature.util';
 
 @Injectable()
 export class DigitalSignatureEffects {
   private NDS$ = this.store.pipe(select(fromRoot.getNDS));
+  private Q$ = this.store.pipe(select(fromRoot.getQ));
+  private Er1$ = this.store.pipe(select(fromRoot.getEr1));
   private h1$ = this.store.pipe(select(fromRoot.getH1));
   private h2$ = this.store.pipe(select(fromRoot.getH2));
   private h3$ = this.store.pipe(select(fromRoot.getH3));
@@ -57,15 +62,17 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, NDS, h, n, mod, A, B]: [
-        any,
-        Array<string>,
-        string,
-        string,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, NDS, h, n, mod, A, B]: [
+          any,
+          Array<string>,
+          string,
+          string,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'Er1',
@@ -87,15 +94,17 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, NDS, h, n, mod, A, B]: [
-        any,
-        Array<string>,
-        string,
-        string,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, NDS, h, n, mod, A, B]: [
+          any,
+          Array<string>,
+          string,
+          string,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'Er2',
@@ -117,19 +126,51 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, NDS, h, n, mod, A, B]: [
-        any,
-        Array<string>,
-        string,
-        string,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, NDS, h, n, mod, A, B]: [
+          any,
+          Array<string>,
+          string,
+          string,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'Er3',
             value: localRightSideUnit(NDS, h, n, mod, A, B),
+          }),
+        ),
+    ),
+  );
+
+  @Effect()
+  calculateT$: Observable<any> = this.actions$.pipe(
+    ofType(digitalSignatureActions.CALCULATE_T),
+    withLatestFrom(
+      this.Q$,
+      this.Er1$,
+      this.mod$,
+      this.coefficientA$,
+      this.coefficientB$,
+    ),
+    switchMap(
+      (
+        [_, Q, Er1, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string
+        ],
+      ) =>
+        of(
+          new digitalSignatureActions.ArrayValueChange({
+            key: 'T',
+            value: calculateT(Q, Er1, mod, A, B),
           }),
         ),
     ),
