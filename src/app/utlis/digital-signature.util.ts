@@ -2,7 +2,6 @@ import {
   multiply,
   plus,
   pow,
-  quo,
   toBits,
   mod as modulo,
   xgcd,
@@ -58,7 +57,6 @@ export function calculateT(
   ...coefficients: Array<string>
 ) {
   const invertedQ = invertedElement(Q, mod, ...coefficients);
-  console.log(invertedQ);
   return multiplyVectors(Er1, invertedQ, matrix4, mod, ...coefficients);
 }
 
@@ -67,70 +65,73 @@ function invertedElement(
   mod: string,
   ...coefficientsStrings: Array<string>
 ): Array<string> {
-  const QParsed = Q.map(s => toBits(s));
+  const parsedQ = Q.map(s => toBits(s));
   const parsedMod = toBits(mod);
   const coefficients = coefficientsStrings.map(s => toBits(s));
+  const divisor = multiply(
+    pow(
+      plus(multiply(coefficients[0], coefficients[1]), [1]),
+      new BigNumber('2'),
+    ),
+    plus(multiply(parsedQ[0], parsedQ[1]), multiply(parsedQ[2], parsedQ[3])),
+  );
+  const invertedDivisor = xgcd(divisor, parsedMod).x;
 
   return [
-    calculateInvertedVectorComponent1(QParsed, parsedMod, ...coefficients),
-    calculateInvertedVectorComponent2(QParsed, parsedMod, ...coefficients),
-    calculateInvertedVectorComponent3(QParsed, parsedMod, ...coefficients),
-    calculateInvertedVectorComponent4(QParsed, parsedMod, ...coefficients),
+    calculateInvertedVectorComponent1(
+      parsedQ,
+      invertedDivisor,
+      ...coefficients,
+    ),
+    calculateInvertedVectorComponent2(
+      parsedQ,
+      invertedDivisor,
+      ...coefficients,
+    ),
+    calculateInvertedVectorComponent3(
+      parsedQ,
+      invertedDivisor,
+      ...coefficients,
+    ),
+    calculateInvertedVectorComponent4(
+      parsedQ,
+      invertedDivisor,
+      ...coefficients,
+    ),
   ];
 }
 
 function calculateInvertedVectorComponent1(
   Q: Array<Array<number>>,
-  mod: Array<number>,
+  invertedDivisor: Array<number>,
   ...coefficients: Array<Array<number>>
 ): string {
-  const divisor = multiply(
-    pow(
-      plus(multiply(coefficients[0], coefficients[1]), [1]),
-      new BigNumber('2'),
-    ),
-    plus(multiply(Q[0], Q[1]), multiply(Q[2], Q[3])),
-  );
   const divided = plus(
     plus(multiply(Q[0], multiply(coefficients[0], coefficients[1])), Q[1]),
     plus(multiply(Q[2], coefficients[0]), multiply(Q[3], coefficients[1])),
   );
-  console.log(divided, divisor);
-  return quo(divided, divisor).join('');
+
+  return multiply(divided, invertedDivisor).join('');
 }
 
 function calculateInvertedVectorComponent2(
   Q: Array<Array<number>>,
-  mod: Array<number>,
+  invertedDivisor: Array<number>,
   ...coefficients: Array<Array<number>>
 ): string {
-  const divisor = multiply(
-    pow(
-      plus(multiply(coefficients[0], coefficients[1]), [1]),
-      new BigNumber('2'),
-    ),
-    plus(multiply(Q[0], Q[1]), multiply(Q[2], Q[3])),
-  );
   const divided = plus(
     plus(Q[0], multiply(Q[1], multiply(coefficients[0], coefficients[1]))),
     plus(multiply(Q[2], coefficients[0]), multiply(Q[3], coefficients[1])),
   );
 
-  return quo(divided, divisor).join('');
+  return multiply(divided, invertedDivisor).join('');
 }
 
 function calculateInvertedVectorComponent3(
   Q: Array<Array<number>>,
-  mod: Array<number>,
+  invertedDivisor: Array<number>,
   ...coefficients: Array<Array<number>>
 ): string {
-  const divisor = multiply(
-    pow(
-      plus(multiply(coefficients[0], coefficients[1]), [1]),
-      new BigNumber('2'),
-    ),
-    plus(multiply(Q[0], Q[1]), multiply(Q[2], Q[3])),
-  );
   const divided = plus(
     multiply(
       coefficients[1],
@@ -139,21 +140,14 @@ function calculateInvertedVectorComponent3(
     Q[2],
   );
 
-  return quo(divided, divisor).join('');
+  return multiply(divided, invertedDivisor).join('');
 }
 
 function calculateInvertedVectorComponent4(
   Q: Array<Array<number>>,
-  mod: Array<number>,
+  invertedDivisor: Array<number>,
   ...coefficients: Array<Array<number>>
 ): string {
-  const divisor = multiply(
-    pow(
-      plus(multiply(coefficients[0], coefficients[1]), [1]),
-      new BigNumber('2'),
-    ),
-    plus(multiply(Q[0], Q[1]), multiply(Q[2], Q[3])),
-  );
   const divided = plus(
     multiply(
       coefficients[0],
@@ -162,5 +156,5 @@ function calculateInvertedVectorComponent4(
     Q[3],
   );
 
-  return quo(divided, divisor).join('');
+  return multiply(divided, invertedDivisor).join('');
 }

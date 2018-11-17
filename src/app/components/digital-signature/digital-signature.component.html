@@ -53,7 +53,7 @@
         <span>E<sub>r1</sub> (secret key)</span>
           <button (click)="onEr1CalculateClick()"
                   [disabled]="!digitalSignatureForm.get('h1').valid || !digitalSignatureForm.get('n1').valid ||
-                  !(NDSValid$ | async) || !(coefficientsValid$ | async)  || !(modValid$ | async)"
+                  !(NDSValid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
           >Calculate</button>
       </div>
       <vector-view formControlName="Er1" [componentNames]="componentNames"></vector-view>
@@ -67,7 +67,7 @@
         <span>E<sub>r2</sub> (secret key)</span>
         <button (click)="onEr2CalculateClick()"
                 [disabled]="!digitalSignatureForm.get('h2').valid || !digitalSignatureForm.get('n2').valid ||
-                  !(NDSValid$ | async) || !(coefficientsValid$ | async)  || !(modValid$ | async)"
+                  !(NDSValid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
         >Calculate</button>
       </div>
       <vector-view formControlName="Er2" [componentNames]="componentNames"></vector-view>
@@ -81,7 +81,7 @@
         <span>E<sub>r3</sub> (secret key)</span>
         <button (click)="onEr3CalculateClick()"
                 [disabled]="!digitalSignatureForm.get('h3').valid || !digitalSignatureForm.get('n3').valid ||
-                  !(NDSValid$ | async) || !(coefficientsValid$ | async)  || !(modValid$ | async)"
+                  !(NDSValid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
         >Calculate</button>
       </div>
       <vector-view formControlName="Er3" [componentNames]="componentNames"></vector-view>
@@ -96,7 +96,9 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>T</span>
-        <button (click)="onTCalculateClick()">Calculate</button>
+        <button (click)="onTCalculateClick()"
+                [disabled]="!(QValid$ | async) || !(Er1Valid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="T" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">

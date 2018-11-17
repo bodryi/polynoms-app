@@ -19,6 +19,8 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
   NDSValid$: Observable<boolean>;
   coefficientsValid$: Observable<boolean>;
   modValid$: Observable<boolean>;
+  Er1Valid$: Observable<boolean>;
+  QValid$: Observable<boolean>;
   readonly m = 4;
   readonly charCodeSmallA = 97;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -69,6 +71,8 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
       select(fromRoot.getCoefficientsValid),
     );
     this.modValid$ = this.store.pipe(select(fromRoot.getModValid));
+    this.Er1Valid$ = this.store.pipe(select(fromRoot.getEr1Valid));
+    this.QValid$ = this.store.pipe(select(fromRoot.getQValid));
   }
 
   onRandomClick(vectorName: string) {
