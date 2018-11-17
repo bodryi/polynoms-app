@@ -10,6 +10,7 @@ import {
   pow,
   powMod,
   quo,
+  shiftNulls,
   toBits,
   xgcd,
 } from '../polynoms-operations.util';
@@ -161,7 +162,7 @@ describe('Polynoms Operations Util', () => {
           .map(n => parseInt(n, 10)),
       ),
     ).toEqual(
-      '01110111'
+      '1110111'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),
@@ -243,7 +244,7 @@ describe('Polynoms Operations Util', () => {
           .map(n => parseInt(n, 10)),
       ),
     ).toEqual(
-      '00111101001101111111000000100011100100100011011111101'
+      '111101001101111111000000100011100100100011011111101'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),
@@ -325,6 +326,24 @@ describe('Polynoms Operations Util', () => {
 
     expect(
       quo(
+        '1011100001001111100100100111100111'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+        '1101001111100011000011111'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '1100001111'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+
+    expect(
+      quo(
         '110010110101010010101111111001011010101001010111111100101101010100101011111'
           .split('')
           .reverse()
@@ -354,6 +373,50 @@ describe('Polynoms Operations Util', () => {
       ),
     ).toEqual(
       '100100011001100001011010000111001011101000'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+  });
+
+  it('shift nulls', () => {
+    expect(
+      shiftNulls(
+        '00000000010111111010011001011000000001000101101111000110111000010110100111000010100101010'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '10111111010011001011000000001000101101111000110111000010110100111000010100101010'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+
+    expect(
+      shiftNulls(
+        '101010111101010111111110101001111101011'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '101010111101010111111110101001111101011'
+        .split('')
+        .reverse()
+        .map(n => parseInt(n, 10)),
+    );
+
+    expect(
+      shiftNulls(
+        '000000000000000000101010111101010111111110101001111101011'
+          .split('')
+          .reverse()
+          .map(n => parseInt(n, 10)),
+      ),
+    ).toEqual(
+      '101010111101010111111110101001111101011'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),
@@ -421,7 +484,7 @@ describe('Polynoms Operations Util', () => {
           .map(n => parseInt(n, 10)),
       ),
     ).toEqual(
-      '000000000000000'
+      '0'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),
@@ -440,7 +503,7 @@ describe('Polynoms Operations Util', () => {
           .map(n => parseInt(n, 10)),
       ),
     ).toEqual(
-      '0011'
+      '11'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),
@@ -522,11 +585,11 @@ describe('Polynoms Operations Util', () => {
   it('xgcd', () => {
     expect(
       xgcd(
-        '00011111101011011111'
+        '0001000100100011'
           .split('')
           .reverse()
           .map(n => parseInt(n, 10)),
-        '000110100000111111011010001100100101'
+        '1010110111001111'
           .split('')
           .reverse()
           .map(n => parseInt(n, 10)),
@@ -536,11 +599,11 @@ describe('Polynoms Operations Util', () => {
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),
-      x: '000000000000001100001111000111010000'
+      x: '101010110011'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),
-      y: '00000000000100000101'
+      y: '000100011100'
         .split('')
         .reverse()
         .map(n => parseInt(n, 10)),

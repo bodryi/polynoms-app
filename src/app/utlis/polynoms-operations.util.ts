@@ -153,8 +153,8 @@ export function mod(
   dividend: Array<number>,
   divisor: Array<number>,
 ): Array<number> {
-  const a = [...dividend].reverse();
-  const b = [...divisor].reverse();
+  const a = shiftNulls([...dividend]).reverse();
+  const b = shiftNulls([...divisor]).reverse();
   while (a.length >= b.length && a) {
     if (a[0] === 1) {
       a.shift();
@@ -165,15 +165,15 @@ export function mod(
       a.shift();
     }
   }
-  return a.reverse();
+  return shiftNulls(a.reverse());
 }
 
 export function quo(
   dividend: Array<number>,
   divisor: Array<number>,
 ): Array<number> {
-  const a = [...dividend].reverse();
-  const b = [...divisor].reverse();
+  const a = shiftNulls([...dividend]).reverse();
+  const b = shiftNulls([...divisor]).reverse();
   let res = '';
   if (a.length < b.length) {
     res += '0';
@@ -261,12 +261,28 @@ export function xgcd(
   if (isNull(a)) {
     return { gcd: b, x: [0], y: [1] };
   }
-  const { gcd: gcdLocal, x: y, y: x } = xgcd(mod(b, a), a);
-  return {
-    gcd: gcdLocal,
-    x: minus(x, multiply(quo(b, a), y)),
-    y,
-  };
+  let a0 = [...a];
+  let a1 = [...b];
+  let x0 = [1];
+  let x1 = [0];
+  let y0 = [0];
+  let y1 = [1];
+  while (!isNull(a1)) {
+    const q = quo(a0, a1);
+    const oldA1 = [...a1];
+    a1 = mod(a0, a1);
+    a0 = oldA1;
+
+    const oldX1 = [...x1];
+    x1 = plus(x0, multiply(x1, q));
+    x0 = oldX1;
+
+    const oldY1 = [...y1];
+    y1 = plus(y0, multiply(y1, q));
+    y0 = oldY1;
+  }
+
+  return { gcd: shiftNulls(a0), x: x0, y: y0 };
 }
 
 export function isNull(polynom: Array<number>) {
@@ -277,4 +293,19 @@ export function isNull(polynom: Array<number>) {
     return false;
   }
   return polynom.reduce((acc, curr) => acc && !curr, true);
+}
+
+export function shiftNulls(polynom: Array<number>): Array<number> {
+  if (!polynom || !Array.isArray(polynom) || !polynom.length) {
+    return [0];
+  }
+
+  while (polynom.length && !polynom[polynom.length - 1]) {
+    if (polynom.length === 1 && !polynom[0]) {
+      return [0];
+    }
+    polynom.pop();
+  }
+
+  return [...polynom];
 }
