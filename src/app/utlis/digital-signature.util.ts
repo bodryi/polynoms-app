@@ -1,13 +1,11 @@
 import {
   multiply,
-  multiplyMod,
   plus,
-  plusMod,
   pow,
-  powMod,
   quo,
   toBits,
   mod as modulo,
+  xgcd,
 } from './polynoms-operations.util';
 import { BigNumber } from 'bignumber.js';
 import { multiplyVectors } from './matrix-operations.util';
@@ -34,18 +32,19 @@ export function localRightSideUnit(
   const unit = new Array(4).fill('');
   unit[0] = hParsed.join('');
   const divisor = plus(multiply(N[0], coefficients[0]), N[3]);
+  const invertedDivisor = xgcd(divisor, parsedMod).x;
   unit[1] = plus(
-    quo(N[3], divisor),
+    multiply(N[3], invertedDivisor),
     multiply(
-      quo(plus(N[0], multiply(N[3], coefficients[1])), divisor),
+      multiply(plus(N[0], multiply(N[3], coefficients[1])), invertedDivisor),
       nParsed,
     ),
   ).join('');
   unit[2] = plus(
-    quo(N[0], divisor),
+    multiply(N[0], invertedDivisor),
     multiply(
       hParsed,
-      quo(plus(N[0], multiply(N[3], coefficients[1])), divisor),
+      multiply(plus(N[0], multiply(N[3], coefficients[1])), invertedDivisor),
     ),
   ).join('');
   unit[3] = nParsed.join('');
