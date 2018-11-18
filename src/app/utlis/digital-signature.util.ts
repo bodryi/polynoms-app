@@ -150,20 +150,21 @@ export function calculateE(
   R: Array<string>,
   mod: string,
 ): string {
-  const parsedMod = toBits(mod);
-
-  const sha = sha256(message);
-  const shaVector4 = sha.match(/.{1,64}/g);
-  return shaVector4
-    .map((c: string, index: number) =>
-      plusMod(toBits(c), toBits(R[index]), parsedMod),
-    )
-    .reduce(
-      (acc: Array<number>, curr: Array<number>) =>
-        plusMod(acc, curr, parsedMod),
-      [0],
-    )
-    .join('');
+  return '';
+  // const parsedMod = toBits(mod);
+  //
+  // const sha = sha256(message);
+  // const shaVector4 = sha.match(/.{1,64}/g);
+  // return shaVector4
+  //   .map((c: string, index: number) =>
+  //     plusMod(toBits(c), toBits(R[index]), parsedMod),
+  //   )
+  //   .reduce(
+  //     (acc: Array<number>, curr: Array<number>) =>
+  //       plusMod(acc, curr, parsedMod),
+  //     [0],
+  //   )
+  //   .join('');
   // temporary
   // message hash
   // vector of hash split into 4 parts plus R
@@ -176,10 +177,15 @@ export function calculateS(
   randomX: string,
   mod: string,
 ): string {
-  return plus(
-    [+randomK % 2],
-    multiplyMod(toBits(e), [+randomX % 2], toBits(mod)),
-  ).join('');
+  return '';
+  // return plus(
+  //   [+randomK % 2],
+  //   multiplyMod(toBits(e), [+randomX % 2], toBits(mod)),
+  // ).join('');
+}
+
+export function calcuateRWave(Y: Array<string>, U: Array<string>, eTest: string, ) {
+
 }
 
 function invertedElement(
