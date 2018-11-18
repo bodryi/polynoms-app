@@ -184,7 +184,14 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
                 }),
               ),
             );
-        } else if (key !== 'message') {
+        } else if (
+          key !== 'message' &&
+          key !== 'e' &&
+          key !== 's' &&
+          key !== 'eTest' &&
+          key !== 'sTest' &&
+          key !== 'eWave'
+        ) {
           this.store
             .pipe(
               select(
@@ -218,17 +225,19 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
         } else {
           this.store
             .pipe(
-              select(fromRoot.getMessage),
+              select(
+                fromRoot[`get${key.charAt(0).toUpperCase() + key.slice(1)}`],
+              ),
               takeUntil(this.ngUnsubscribe),
             )
             .subscribe((s: string) =>
-              this.digitalSignatureForm.get('message').setValue(s, {
+              this.digitalSignatureForm.get(key).setValue(s, {
                 emitEvent: false,
               }),
             );
 
           this.digitalSignatureForm
-            .get('message')
+            .get(key)
             .valueChanges.pipe(
               takeUntil(this.ngUnsubscribe),
               debounceTime(100),
@@ -236,7 +245,7 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
             .subscribe((value: string) =>
               this.store.dispatch(
                 new digitalSignature.StringValueChange({
-                  key: 'message',
+                  key,
                   value,
                 }),
               ),

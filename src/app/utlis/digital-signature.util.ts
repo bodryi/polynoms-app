@@ -11,6 +11,7 @@ import {
 import { BigNumber } from 'bignumber.js';
 import { multiplyVectors, vectorPow } from './matrix-operations.util';
 import { sha256 } from 'js-sha256';
+import { hexToBin } from './convert-numbers.util';
 
 const matrix4 = [
   ['a', 'Ad', 'Aa', 'd'],
@@ -150,21 +151,25 @@ export function calculateE(
   R: Array<string>,
   mod: string,
 ): string {
-  return '';
-  // const parsedMod = toBits(mod);
-  //
-  // const sha = sha256(message);
-  // const shaVector4 = sha.match(/.{1,64}/g);
-  // return shaVector4
-  //   .map((c: string, index: number) =>
-  //     plusMod(toBits(c), toBits(R[index]), parsedMod),
-  //   )
-  //   .reduce(
-  //     (acc: Array<number>, curr: Array<number>) =>
-  //       plusMod(acc, curr, parsedMod),
-  //     [0],
-  //   )
-  //   .join('');
+  // return '';
+  const parsedMod = toBits(mod);
+
+  const sha = sha256(message);
+  const shaVector4 = sha.match(/.{1,64}/g).map(s => hexToBin(s));
+  return new BigNumber(
+    shaVector4
+      .map((c: string, index: number) =>
+        plusMod(toBits(c), toBits(R[index]), parsedMod),
+      )
+      .reduce(
+        (acc: Array<number>, curr: Array<number>) =>
+          plusMod(acc, curr, parsedMod),
+        [0],
+      )
+      .reverse()
+      .join(''),
+    2,
+  ).toString(10);
   // temporary
   // message hash
   // vector of hash split into 4 parts plus R
@@ -177,16 +182,27 @@ export function calculateS(
   randomX: string,
   mod: string,
 ): string {
-  return '';
-  // return plus(
-  //   [+randomK % 2],
-  //   multiplyMod(toBits(e), [+randomX % 2], toBits(mod)),
-  // ).join('');
+  return new BigNumber(randomK)
+    .minus(
+      new BigNumber(e).multipliedBy(new BigNumber(randomX)).mod(
+        new BigNumber(
+          mod.length - 1,
+          // mod
+          //   .split('')
+          //   .reverse()
+          //   .join(''),
+          // 2,
+        ),
+      ),
+    )
+    .toString(10);
 }
 
-export function calcuateRWave(Y: Array<string>, U: Array<string>, eTest: string, ) {
-
-}
+export function calcuateRWave(
+  Y: Array<string>,
+  U: Array<string>,
+  eTest: string,
+) {}
 
 function invertedElement(
   Q: Array<string>,
