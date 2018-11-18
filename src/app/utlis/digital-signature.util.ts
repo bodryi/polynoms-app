@@ -5,9 +5,12 @@ import {
   toBits,
   mod as modulo,
   xgcd,
+  plusMod,
+  multiplyMod,
 } from './polynoms-operations.util';
 import { BigNumber } from 'bignumber.js';
-import { multiplyVectors } from './matrix-operations.util';
+import { multiplyVectors, vectorPow } from './matrix-operations.util';
+import { sha256 } from 'js-sha256';
 
 const matrix4 = [
   ['a', 'Ad', 'Aa', 'd'],
@@ -55,9 +58,128 @@ export function calculateT(
   Q: Array<string>,
   mod: string,
   ...coefficients: Array<string>
-) {
+): Array<string> {
   const invertedQ = invertedElement(Q, mod, ...coefficients);
   return multiplyVectors(Er1, invertedQ, matrix4, mod, ...coefficients);
+}
+
+export function calculateP(
+  Er2: Array<string>,
+  T: Array<string>,
+  mod: string,
+  ...coefficients: Array<string>
+): Array<string> {
+  const invertedT = invertedElement(T, mod, ...coefficients);
+  return multiplyVectors(invertedT, Er2, matrix4, mod, ...coefficients);
+}
+
+export function calculateL(
+  Er3: Array<string>,
+  P: Array<string>,
+  mod: string,
+  ...coefficients: Array<string>
+): Array<string> {
+  const invertedP = invertedElement(P, mod, ...coefficients);
+  return multiplyVectors(Er3, invertedP, matrix4, mod, ...coefficients);
+}
+
+export function calculateY(
+  Q: Array<string>,
+  NDS: Array<string>,
+  T: Array<string>,
+  power: string,
+  mod: string,
+  ...coefficients: Array<string>
+): Array<string> {
+  return multiplyVectors(
+    multiplyVectors(
+      Q,
+      vectorPow(NDS, power, mod, matrix4, ...coefficients),
+      matrix4,
+      mod,
+      ...coefficients,
+    ),
+    T,
+    matrix4,
+    mod,
+    ...coefficients,
+  );
+}
+
+export function calculateU(
+  P: Array<string>,
+  NDS: Array<string>,
+  L: Array<string>,
+  mod: string,
+  ...coefficients: Array<string>
+): Array<string> {
+  return multiplyVectors(
+    multiplyVectors(P, NDS, matrix4, mod, ...coefficients),
+    L,
+    matrix4,
+    mod,
+    ...coefficients,
+  );
+}
+
+export function calculateR(
+  Q: Array<string>,
+  NDS: Array<string>,
+  L: Array<string>,
+  power: string,
+  mod: string,
+  ...coefficients: Array<string>
+): Array<string> {
+  return multiplyVectors(
+    multiplyVectors(
+      Q,
+      vectorPow(NDS, power, mod, matrix4, ...coefficients),
+      matrix4,
+      mod,
+      ...coefficients,
+    ),
+    L,
+    matrix4,
+    mod,
+    ...coefficients,
+  );
+}
+
+export function calculateE(
+  message: string,
+  R: Array<string>,
+  mod: string,
+): string {
+  const parsedMod = toBits(mod);
+
+  const sha = sha256(message);
+  const shaVector4 = sha.match(/.{1,64}/g);
+  return shaVector4
+    .map((c: string, index: number) =>
+      plusMod(toBits(c), toBits(R[index]), parsedMod),
+    )
+    .reduce(
+      (acc: Array<number>, curr: Array<number>) =>
+        plusMod(acc, curr, parsedMod),
+      [0],
+    )
+    .join('');
+  // temporary
+  // message hash
+  // vector of hash split into 4 parts plus R
+  // each of R polynoms plus each other
+}
+
+export function calculateS(
+  randomK: string,
+  e: string,
+  randomX: string,
+  mod: string,
+): string {
+  return plus(
+    [+randomK % 2],
+    multiplyMod(toBits(e), [+randomX % 2], toBits(mod)),
+  ).join('');
 }
 
 function invertedElement(

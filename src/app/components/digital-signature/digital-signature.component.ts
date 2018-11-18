@@ -20,7 +20,13 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
   coefficientsValid$: Observable<boolean>;
   modValid$: Observable<boolean>;
   Er1Valid$: Observable<boolean>;
+  Er2Valid$: Observable<boolean>;
+  Er3Valid$: Observable<boolean>;
   QValid$: Observable<boolean>;
+  TValid$: Observable<boolean>;
+  PValid$: Observable<boolean>;
+  LValid$: Observable<boolean>;
+  RValid$: Observable<boolean>;
   readonly m = 4;
   readonly charCodeSmallA = 97;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -72,7 +78,13 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     );
     this.modValid$ = this.store.pipe(select(fromRoot.getModValid));
     this.Er1Valid$ = this.store.pipe(select(fromRoot.getEr1Valid));
+    this.Er2Valid$ = this.store.pipe(select(fromRoot.getEr2Valid));
+    this.Er3Valid$ = this.store.pipe(select(fromRoot.getEr3Valid));
     this.QValid$ = this.store.pipe(select(fromRoot.getQValid));
+    this.TValid$ = this.store.pipe(select(fromRoot.getTValid));
+    this.PValid$ = this.store.pipe(select(fromRoot.getPValid));
+    this.LValid$ = this.store.pipe(select(fromRoot.getLValid));
+    this.RValid$ = this.store.pipe(select(fromRoot.getRValid));
   }
 
   onRandomClick(vectorName: string) {
@@ -105,6 +117,34 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
 
   onTCalculateClick() {
     this.store.dispatch(new digitalSignature.CalculateT());
+  }
+
+  onPCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateP());
+  }
+
+  onLCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateL());
+  }
+
+  onYCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateY());
+  }
+
+  onUCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateU());
+  }
+
+  onRCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateR());
+  }
+
+  onECalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateE());
+  }
+
+  onSCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateS());
   }
 
   private connectFormToStore() {

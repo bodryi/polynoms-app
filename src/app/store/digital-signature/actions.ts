@@ -11,6 +11,13 @@ export const CALCULATE_ER1 = '[Digital Signature] Calculate Er1';
 export const CALCULATE_ER2 = '[Digital Signature] Calculate Er2';
 export const CALCULATE_ER3 = '[Digital Signature] Calculate Er3';
 export const CALCULATE_T = '[Digital Signature] Calculate T';
+export const CALCULATE_P = '[Digital Signature] Calculate P';
+export const CALCULATE_L = '[Digital Signature] Calculate L';
+export const CALCULATE_Y = '[Digital Signature] Calculate Y';
+export const CALCULATE_U = '[Digital Signature] Calculate U';
+export const CALCULATE_R = '[Digital Signature] Calculate R';
+export const CALCULATE_E = '[Digital Signature] Calculate E';
+export const CALCULATE_S = '[Digital Signature] Calculate S';
 
 export class StringValueChange implements Action {
   readonly type = STRING_VALUE_CHANGE;
@@ -64,6 +71,34 @@ export class CalculateT implements Action {
   readonly type = CALCULATE_T;
 }
 
+export class CalculateL implements Action {
+  readonly type = CALCULATE_L;
+}
+
+export class CalculateP implements Action {
+  readonly type = CALCULATE_P;
+}
+
+export class CalculateY implements Action {
+  readonly type = CALCULATE_Y;
+}
+
+export class CalculateU implements Action {
+  readonly type = CALCULATE_U;
+}
+
+export class CalculateR implements Action {
+  readonly type = CALCULATE_R;
+}
+
+export class CalculateE implements Action {
+  readonly type = CALCULATE_E;
+}
+
+export class CalculateS implements Action {
+  readonly type = CALCULATE_S;
+}
+
 export type Actions =
   | StringValueChange
   | ArrayValueChange
@@ -74,4 +109,10 @@ export type Actions =
   | CalculateEr2
   | CalculateEr3
   | CalculateT
+  | CalculateL
+  | CalculateP
+  | CalculateY
+  | CalculateR
+  | CalculateE
+  | CalculateS
   | ClearVector;

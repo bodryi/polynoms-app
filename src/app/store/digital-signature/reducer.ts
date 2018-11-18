@@ -19,6 +19,8 @@ export interface State {
   Y: Array<string>;
   U: Array<string>;
   R: Array<string>;
+  randomX: string;
+  randomK: string;
   e: string;
   s: string;
   YTest: Array<string>;
@@ -63,6 +65,8 @@ const initialState: State = {
   Y: new Array(4).fill(''),
   U: new Array(4).fill(''),
   R: new Array(4).fill(''),
+  randomX: '',
+  randomK: '',
   e: '',
   s: '',
   YTest: new Array(4).fill(''),
@@ -114,6 +118,7 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         [action.payload]: new Array(4).fill(''),
+        [`${action.payload.key}Valid`]: false,
       };
 
     case Action.COPY_VECTOR:
@@ -126,6 +131,7 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         [action.payload]: [...state.buffer],
+        [`${action.payload.key}Valid`]: validateVector(state.buffer),
       };
 
     default:
@@ -153,6 +159,8 @@ export const getU = (state: State) => state.U;
 export const getR = (state: State) => state.R;
 export const getE = (state: State) => state.e;
 export const getS = (state: State) => state.s;
+export const getRandomX = (state: State) => state.randomX;
+export const getRandomK = (state: State) => state.randomK;
 export const getYTest = (state: State) => state.YTest;
 export const getUTest = (state: State) => state.UTest;
 export const getETest = (state: State) => state.eTest;

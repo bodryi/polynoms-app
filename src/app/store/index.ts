@@ -366,3 +366,11 @@ export const getRWaveValid = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getRWaveValid,
 );
+export const getRandomX = createSelector(
+  getDigitalSignatureState,
+  fromDigitalSignature.getRandomX,
+);
+export const getRandomK = createSelector(
+  getDigitalSignatureState,
+  fromDigitalSignature.getRandomK,
+);

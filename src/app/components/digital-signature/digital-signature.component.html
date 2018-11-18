@@ -109,7 +109,9 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>P</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onPCalculateClick()"
+                [disabled]="!(TValid$ | async) || !(Er2Valid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="P" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -120,7 +122,9 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>L</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onLCalculateClick()"
+                [disabled]="!(PValid$ | async) || !(Er3Valid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="L" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -133,7 +137,10 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>Y (public key)</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onYCalculateClick()"
+                [disabled]="!(QValid$ | async) || !(NDSValid$ | async) || !(TValid$ | async) ||
+                !(coefficientsValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="Y" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -144,7 +151,10 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>U (public key)</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onUCalculateClick()"
+                [disabled]="!(PValid$ | async) || !(NDSValid$ | async) || !(LValid$ | async) ||
+                !(coefficientsValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="U" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -158,7 +168,10 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>R</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onRCalculateClick()"
+                [disabled]="!(QValid$ | async) || !(NDSValid$ | async) || !(LValid$ | async) ||
+                !(coefficientsValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="R" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -169,8 +182,12 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>Signature Elements</span>
-        <button (click)="0">Calculate <i>e</i></button>
-        <button (click)="0">Calculate <i>s</i></button>
+        <button (click)="onECalculateClick()"
+                [disabled]="!digitalSignatureForm.get('message').valid || !(RValid$ | async) || !(modValid$ | async)"
+        >Calculate <i>e</i></button>
+        <button (click)="onSCalculateClick()"
+                [disabled]="!digitalSignatureForm.get('e').valid"
+        >Calculate <i>s</i></button>
       </div>
       <div class="input-wrapper">
         <label><i>e</i></label>
