@@ -18,6 +18,8 @@ export const CALCULATE_U = '[Digital Signature] Calculate U';
 export const CALCULATE_R = '[Digital Signature] Calculate R';
 export const CALCULATE_E = '[Digital Signature] Calculate E';
 export const CALCULATE_S = '[Digital Signature] Calculate S';
+export const CALCULATE_R_WAVE = '[Digital Signature] Calculate R Wave';
+export const CALCULATE_E_WAVE = '[Digital Signature] Calculate E Wave';
 
 export class StringValueChange implements Action {
   readonly type = STRING_VALUE_CHANGE;
@@ -97,6 +99,14 @@ export class CalculateE implements Action {
 
 export class CalculateS implements Action {
   readonly type = CALCULATE_S;
+}
+
+export class CalculateRWave implements Action {
+  readonly type = CALCULATE_R_WAVE;
+}
+
+export class CalculateEWave implements Action {
+  readonly type = CALCULATE_E_WAVE;
 }
 
 export type Actions =

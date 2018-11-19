@@ -6,7 +6,6 @@ import {
   mod as modulo,
   xgcd,
   plusMod,
-  multiplyMod,
 } from './polynoms-operations.util';
 import { BigNumber } from 'bignumber.js';
 import { multiplyVectors, vectorPow } from './matrix-operations.util';
@@ -198,11 +197,28 @@ export function calculateS(
     .toString(10);
 }
 
-export function calcuateRWave(
+export function calculateRWave(
   Y: Array<string>,
   U: Array<string>,
   eTest: string,
-) {}
+  sTest: string,
+  mod: string,
+  ...coefficients: Array<string>
+) {
+  return multiplyVectors(
+    vectorPow(Y, eTest, mod, matrix4, ...coefficients),
+    vectorPow(
+      sTest[0] === '-' ? invertedElement(U, mod, ...coefficients) : U,
+      sTest,
+      mod,
+      matrix4,
+      ...coefficients,
+    ),
+    matrix4,
+    mod,
+    ...coefficients,
+  );
+}
 
 function invertedElement(
   Q: Array<string>,

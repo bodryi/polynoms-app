@@ -16,6 +16,7 @@ import {
   calculateT,
   calculateU,
   calculateY,
+  calculateRWave,
   localRightSideUnit,
 } from '../../utlis/digital-signature.util';
 
@@ -27,6 +28,11 @@ export class DigitalSignatureEffects {
   private P$ = this.store.pipe(select(fromRoot.getP));
   private L$ = this.store.pipe(select(fromRoot.getL));
   private R$ = this.store.pipe(select(fromRoot.getR));
+  private RWave$ = this.store.pipe(select(fromRoot.getRWave));
+  private Y$ = this.store.pipe(select(fromRoot.getY));
+  private U$ = this.store.pipe(select(fromRoot.getU));
+  private YTest$ = this.store.pipe(select(fromRoot.getYTest));
+  private UTest$ = this.store.pipe(select(fromRoot.getUTest));
   private Er1$ = this.store.pipe(select(fromRoot.getEr1));
   private Er2$ = this.store.pipe(select(fromRoot.getEr2));
   private Er3$ = this.store.pipe(select(fromRoot.getEr3));
@@ -37,6 +43,8 @@ export class DigitalSignatureEffects {
   private n2$ = this.store.pipe(select(fromRoot.getN2));
   private n3$ = this.store.pipe(select(fromRoot.getN3));
   private e$ = this.store.pipe(select(fromRoot.getE));
+  private eTest$ = this.store.pipe(select(fromRoot.getETest));
+  private sTest$ = this.store.pipe(select(fromRoot.getSTest));
   private message$ = this.store.pipe(select(fromRoot.getMessage));
   private randomX$ = this.store.pipe(select(fromRoot.getRandomX));
   private randomK$ = this.store.pipe(select(fromRoot.getRandomK));
@@ -79,15 +87,17 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, NDS, h, n, mod, A, B]: [
-        any,
-        Array<string>,
-        string,
-        string,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, NDS, h, n, mod, A, B]: [
+          any,
+          Array<string>,
+          string,
+          string,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'Er1',
@@ -109,15 +119,17 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, NDS, h, n, mod, A, B]: [
-        any,
-        Array<string>,
-        string,
-        string,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, NDS, h, n, mod, A, B]: [
+          any,
+          Array<string>,
+          string,
+          string,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'Er2',
@@ -139,15 +151,17 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, NDS, h, n, mod, A, B]: [
-        any,
-        Array<string>,
-        string,
-        string,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, NDS, h, n, mod, A, B]: [
+          any,
+          Array<string>,
+          string,
+          string,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'Er3',
@@ -168,14 +182,16 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, Q, Er1, mod, A, B]: [
-        any,
-        Array<string>,
-        Array<string>,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, Q, Er1, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'T',
@@ -196,14 +212,16 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, T, Er2, mod, A, B]: [
-        any,
-        Array<string>,
-        Array<string>,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, T, Er2, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'P',
@@ -224,14 +242,16 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, P, Er3, mod, A, B]: [
-        any,
-        Array<string>,
-        Array<string>,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, P, Er3, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'L',
@@ -253,19 +273,21 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, Q, N, T, mod, A, B]: [
-        any,
-        Array<string>,
-        Array<string>,
-        Array<string>,
-        string,
-        string,
-        string
-      ]) => {
+      (
+        [_, Q, N, T, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string
+        ],
+      ) => {
         const modPower = mod.length - 1;
         const power =
           modPower > 0
-            ? (Math.floor(Math.random() * 65535) % modPower) + 1
+            ? Math.floor(Math.random() * 65535) % modPower + 1
             : null;
         if (!power) {
           throw new Error('Calculate Y Effect: mod must have power > 0');
@@ -299,15 +321,17 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, P, N, L, mod, A, B]: [
-        any,
-        Array<string>,
-        Array<string>,
-        Array<string>,
-        string,
-        string,
-        string
-      ]) =>
+      (
+        [_, P, N, L, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string
+        ],
+      ) =>
         of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'U',
@@ -329,19 +353,21 @@ export class DigitalSignatureEffects {
       this.coefficientB$,
     ),
     switchMap(
-      ([_, Q, N, L, mod, A, B]: [
-        any,
-        Array<string>,
-        Array<string>,
-        Array<string>,
-        string,
-        string,
-        string
-      ]) => {
+      (
+        [_, Q, N, L, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string
+        ],
+      ) => {
         const modPower = mod.length - 1;
         const power =
           modPower > 0
-            ? (Math.floor(Math.random() * 65535) % modPower) + 1
+            ? Math.floor(Math.random() * 65535) % modPower + 1
             : null;
         if (!power) {
           throw new Error('Calculate R Effect: mod must have power > 0');
@@ -386,6 +412,54 @@ export class DigitalSignatureEffects {
         new digitalSignatureActions.StringValueChange({
           key: 's',
           value: calculateS(k, e, x, mod),
+        }),
+      ),
+    ),
+  );
+
+  @Effect()
+  calculateRWave$: Observable<any> = this.actions$.pipe(
+    ofType(digitalSignatureActions.CALCULATE_R_WAVE),
+    withLatestFrom(
+      this.YTest$,
+      this.UTest$,
+      this.eTest$,
+      this.sTest$,
+      this.mod$,
+      this.coefficientA$,
+      this.coefficientB$,
+    ),
+    switchMap(
+      (
+        [_, Y, U, e, s, mod, A, B]: [
+          any,
+          Array<string>,
+          Array<string>,
+          string,
+          string,
+          string,
+          string,
+          string
+        ],
+      ) =>
+        of(
+          new digitalSignatureActions.ArrayValueChange({
+            key: 'RWave',
+            value: calculateRWave(Y, U, e, s, mod, A, B),
+          }),
+        ),
+    ),
+  );
+
+  @Effect()
+  calculateEWave$: Observable<any> = this.actions$.pipe(
+    ofType(digitalSignatureActions.CALCULATE_E_WAVE),
+    withLatestFrom(this.message$, this.RWave$, this.mod$),
+    switchMap(([_, message, R, mod]: [any, string, Array<string>, string]) =>
+      of(
+        new digitalSignatureActions.StringValueChange({
+          key: 'eWave',
+          value: calculateE(message, R, mod),
         }),
       ),
     ),

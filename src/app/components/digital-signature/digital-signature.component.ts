@@ -27,6 +27,9 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
   PValid$: Observable<boolean>;
   LValid$: Observable<boolean>;
   RValid$: Observable<boolean>;
+  YTestValid$: Observable<boolean>;
+  UTestValid$: Observable<boolean>;
+  RWaveValid$: Observable<boolean>;
   readonly m = 4;
   readonly charCodeSmallA = 97;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -85,6 +88,9 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     this.PValid$ = this.store.pipe(select(fromRoot.getPValid));
     this.LValid$ = this.store.pipe(select(fromRoot.getLValid));
     this.RValid$ = this.store.pipe(select(fromRoot.getRValid));
+    this.YTestValid$ = this.store.pipe(select(fromRoot.getYTestValid));
+    this.UTestValid$ = this.store.pipe(select(fromRoot.getUTestValid));
+    this.RWaveValid$ = this.store.pipe(select(fromRoot.getRWaveValid));
   }
 
   onRandomClick(vectorName: string) {
@@ -145,6 +151,14 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
 
   onSCalculateClick() {
     this.store.dispatch(new digitalSignature.CalculateS());
+  }
+
+  onRWaveCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateRWave());
+  }
+
+  onEWaveCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateEWave());
   }
 
   private connectFormToStore() {
@@ -238,10 +252,7 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
 
           this.digitalSignatureForm
             .get(key)
-            .valueChanges.pipe(
-              takeUntil(this.ngUnsubscribe),
-              debounceTime(100),
-            )
+            .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
             .subscribe((value: string) =>
               this.store.dispatch(
                 new digitalSignature.StringValueChange({

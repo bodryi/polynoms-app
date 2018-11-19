@@ -118,7 +118,7 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         [action.payload]: new Array(4).fill(''),
-        [`${action.payload.key}Valid`]: false,
+        [`${action.payload}Valid`]: false,
       };
 
     case Action.COPY_VECTOR:
@@ -131,7 +131,7 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         [action.payload]: [...state.buffer],
-        [`${action.payload.key}Valid`]: validateVector(state.buffer),
+        [`${action.payload}Valid`]: validateVector(state.buffer),
       };
 
     default:

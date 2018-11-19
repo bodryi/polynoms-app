@@ -237,7 +237,10 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>R</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onRWaveCalculateClick()"
+                [disabled]="!(YTestValid$ | async) || !(UTestValid$ | async) || !digitalSignatureForm.get('sTest').valid ||
+                 !digitalSignatureForm.get('sTest').valid || !(coefficientsValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <vector-view formControlName="RWave" [componentNames]="componentNames"></vector-view>
       <div class="vector-actions">
@@ -248,7 +251,9 @@
     <div class="vector-wrapper">
       <div class="header">
         <span>Signature Element</span>
-        <button (click)="0">Calculate</button>
+        <button (click)="onEWaveCalculateClick()"
+                [disabled]="!digitalSignatureForm.get('message').valid || !(RWaveValid$ | async) || !(modValid$ | async)"
+        >Calculate</button>
       </div>
       <div class="input-wrapper">
         <label><i>e</i></label>
