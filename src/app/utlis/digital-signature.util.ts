@@ -146,18 +146,13 @@ export function calculateE(
   R: Array<string>,
   mod: string,
 ): string {
-  const parsedMod = toBits(mod);
-
-  const polynomSum = [message]
-    .concat(R)
-    .reduce(
-      (acc: Array<number>, curr: string) =>
-        plusMod(acc, toBits(curr), parsedMod),
-      [0],
-    )
-    .join('');
-
-  return new BigNumber(binToHex(polynomSum), 16).toString();
+  return '1';
+  // return new BigNumber(
+  //   plusMod(toBits(message), toBits(R[1]), toBits(mod)).join(''),
+  //   2,
+  // )
+  //   .mod(new BigNumber(mod.length - 1))
+  //   .toString(10);
 }
 
 export function calculateS(
@@ -168,16 +163,9 @@ export function calculateS(
 ): string {
   return new BigNumber(randomK)
     .minus(
-      new BigNumber(e).multipliedBy(new BigNumber(randomX)).mod(
-        new BigNumber(
-          mod.length - 1,
-          // mod
-          //   .split('')
-          //   .reverse()
-          //   .join(''),
-          // 2,
-        ),
-      ),
+      new BigNumber(e)
+        .multipliedBy(new BigNumber(randomX))
+        .mod(new BigNumber(mod.length - 1)),
     )
     .toString(10);
 }
