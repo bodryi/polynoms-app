@@ -9,6 +9,7 @@ export const COPY = '[Test Vectors] Copy';
 export const COPY_VECTOR = '[Test Vectors] Copy Vector';
 export const PASTE = '[Test Vectors] Paste';
 export const CLEAR = '[Test Vectors] Clear';
+export const REVERT_A = '[Test Vectors] Revert A';
 
 export class TestVectorAChange implements Action {
   readonly type = TEST_VECTOR_A_CHANGE;
@@ -58,6 +59,10 @@ export class GenerateRandomTestVector implements Action {
   constructor(public payload: string) {}
 }
 
+export class RevertA implements Action {
+  readonly type = REVERT_A
+}
+
 export type Actions =
   | TestVectorAChange
   | TestVectorBChange
@@ -66,4 +71,5 @@ export type Actions =
   | CopyVector
   | Paste
   | GenerateRandomTestVector
+  | RevertA
   | Clear;

@@ -2,8 +2,10 @@ import { Action } from '@ngrx/store';
 
 export const STRING_VALUE_CHANGE = '[Digital Signature] String Value Change';
 export const ARRAY_VALUE_CHANGE = '[Digital Signature] Array Value Change';
-export const GENERATE_RANDOM_VECTOR =
-  '[Digital Signature] Generate Random Vector';
+export const GENERATE_RANDOM_VECTOR_N =
+  '[Digital Signature] Generate Random Vector N';
+export const GENERATE_RANDOM_VECTOR_Q =
+  '[Digital Signature] Generate Random Vector Q';
 export const CLEAR_VECTOR = '[Digital Signature] Clear Vector';
 export const COPY_VECTOR = '[Digital Signature] Copy Vector';
 export const PASTE_VECTOR = '[Digital Signature] Paste Vector';
@@ -33,8 +35,14 @@ export class ArrayValueChange implements Action {
   constructor(public payload: { key: string; value: Array<any> }) {}
 }
 
-export class GenerateRandomVector implements Action {
-  readonly type = GENERATE_RANDOM_VECTOR;
+export class GenerateRandomVectorN implements Action {
+  readonly type = GENERATE_RANDOM_VECTOR_N;
+
+  constructor(public payload: string) {}
+}
+
+export class GenerateRandomVectorQ implements Action {
+  readonly type = GENERATE_RANDOM_VECTOR_Q;
 
   constructor(public payload: string) {}
 }
@@ -112,7 +120,8 @@ export class CalculateEWave implements Action {
 export type Actions =
   | StringValueChange
   | ArrayValueChange
-  | GenerateRandomVector
+  | GenerateRandomVectorN
+  | GenerateRandomVectorQ
   | CopyVector
   | PasteVector
   | CalculateEr1

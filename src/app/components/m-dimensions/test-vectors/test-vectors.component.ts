@@ -127,6 +127,10 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
     this.store.dispatch(new testVectors.GenerateRandomTestVector(vectorName));
   }
 
+  revertA() {
+    this.store.dispatch(new testVectors.RevertA());
+  }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

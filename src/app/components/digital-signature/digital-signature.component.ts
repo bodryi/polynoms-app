@@ -93,8 +93,12 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     this.RWaveValid$ = this.store.pipe(select(fromRoot.getRWaveValid));
   }
 
-  onRandomClick(vectorName: string) {
-    this.store.dispatch(new digitalSignature.GenerateRandomVector(vectorName));
+  onRandomQClick(vectorName: string) {
+    this.store.dispatch(new digitalSignature.GenerateRandomVectorQ(vectorName));
+  }
+
+  onRandomNClick(vectorName: string) {
+    this.store.dispatch(new digitalSignature.GenerateRandomVectorN(vectorName));
   }
 
   onClearClick(vectorName: string) {
@@ -199,7 +203,6 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
               ),
             );
         } else if (
-          key !== 'message' &&
           key !== 'e' &&
           key !== 's' &&
           key !== 'eTest' &&

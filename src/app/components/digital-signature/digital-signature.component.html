@@ -1,7 +1,7 @@
 <form [formGroup]="digitalSignatureForm">
   <div class="bordered">
     <div class="input-wrapper">
-      <input formControlName="message" placeholder="Message..."/>
+      <input formControlName="message" [value]="digitalSignatureForm.get('message').value | uppercase" placeholder="Message hash..."/>
     </div>
   </div>
   <p class="blocks-separator">Secret Key Generation</p>
@@ -12,7 +12,7 @@
       <div class="vector-actions">
         <button (click)="onCopyClick('Q')">Copy</button>
         <button (click)="onPasteClick('Q')">Paste</button>
-        <button (click)="onRandomClick('Q')">Random</button>
+        <button (click)="onRandomQClick('Q')">Random</button>
         <button (click)="onClearClick('Q')">Clear</button>
       </div>
     </div>
@@ -22,7 +22,7 @@
       <div class="vector-actions">
         <button (click)="onCopyClick('NDS')">Copy</button>
         <button (click)="onPasteClick('NDS')">Paste</button>
-        <button (click)="onRandomClick('NDS')">Random</button>
+        <button (click)="onRandomNClick('NDS')">Random</button>
         <button (click)="onClearClick('NDS')">Clear</button>
       </div>
     </div>

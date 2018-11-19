@@ -10,8 +10,7 @@ import {
 } from './polynoms-operations.util';
 import { BigNumber } from 'bignumber.js';
 import { multiplyVectors, vectorPow } from './matrix-operations.util';
-import { sha256 } from 'js-sha256';
-import { binToHex, hexToBin } from './convert-numbers.util';
+import { binToHex } from './convert-numbers.util';
 
 const matrix4 = [
   ['a', 'Ad', 'Aa', 'd'],
@@ -147,29 +146,18 @@ export function calculateE(
   R: Array<string>,
   mod: string,
 ): string {
-  // return '';
   const parsedMod = toBits(mod);
 
-  const sha = sha256(message);
-  const shaVector4 = sha.match(/.{1,64}/g).map(s => hexToBin(s));
-  return new BigNumber(
-    shaVector4
-      .map((c: string, index: number) =>
-        plusMod(toBits(c), toBits(R[index]), parsedMod),
-      )
-      .reduce(
-        (acc: Array<number>, curr: Array<number>) =>
-          plusMod(acc, curr, parsedMod),
-        [0],
-      )
-      .reverse()
-      .join(''),
-    2,
-  ).toString(10);
-  // temporary
-  // message hash
-  // vector of hash split into 4 parts plus R
-  // each of R polynoms plus each other
+  const polynomSum = [message]
+    .concat(R)
+    .reduce(
+      (acc: Array<number>, curr: string) =>
+        plusMod(acc, toBits(curr), parsedMod),
+      [0],
+    )
+    .join('');
+
+  return new BigNumber(binToHex(polynomSum), 16).toString();
 }
 
 export function calculateS(
@@ -217,7 +205,7 @@ export function calculateRWave(
   );
 }
 
-function invertedElement(
+export function invertedElement(
   Q: Array<string>,
   mod: string,
   ...coefficientsStrings: Array<string>
