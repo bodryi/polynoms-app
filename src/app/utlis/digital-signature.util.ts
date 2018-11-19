@@ -201,12 +201,12 @@ export function calculateRWave(
   sTest: string,
   mod: string,
   ...coefficients: Array<string>
-) {
+): Array<string> {
   return multiplyVectors(
     vectorPow(Y, eTest, mod, matrix4, ...coefficients),
     vectorPow(
       sTest[0] === '-' ? invertedElement(U, mod, ...coefficients) : U,
-      sTest,
+      sTest[0] === '-' ? sTest.substr(1) : sTest,
       mod,
       matrix4,
       ...coefficients,
