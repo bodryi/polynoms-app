@@ -19,6 +19,11 @@ import {
   calculateRWave,
   localRightSideUnit,
 } from '../../utlis/digital-signature.util';
+import {
+  multiplyMod,
+  toBits,
+  xgcd,
+} from '../../utlis/polynoms-operations.util';
 
 @Injectable()
 export class DigitalSignatureEffects {
@@ -61,15 +66,25 @@ export class DigitalSignatureEffects {
   @Effect()
   generateRandomVector$: Observable<any> = this.actions$.pipe(
     ofType(digitalSignatureActions.GENERATE_RANDOM_VECTOR),
-    switchMap((action: { payload: string }) => {
-      const randomVector = [];
-      for (let i = 0; i < 4; i++) {
-        randomVector.push(generateRandomPolynom(MAX_FACTORIZED_POWER).join(''));
-      }
+    withLatestFrom(this.mod$),
+    switchMap(([action, mod]: [{ payload: string }, string]) => {
+      const randX1 = generateRandomPolynom(MAX_FACTORIZED_POWER);
+      const randX2 = generateRandomPolynom(MAX_FACTORIZED_POWER);
+      const randX3 = generateRandomPolynom(MAX_FACTORIZED_POWER);
+      const parsedMod = toBits(mod);
+      const multiplication = multiplyMod(randX1, randX2, parsedMod);
+      const invertedX3 = xgcd(randX3, parsedMod).x;
+      const x4 = multiplyMod(multiplication, invertedX3, parsedMod);
+
       return of(
         new digitalSignatureActions.ArrayValueChange({
           key: action.payload,
-          value: randomVector,
+          value: [
+            randX1.join(''),
+            randX2.join(''),
+            randX3.join(''),
+            x4.join(''),
+          ],
         }),
       );
     }),

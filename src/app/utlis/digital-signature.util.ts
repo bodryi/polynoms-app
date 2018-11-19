@@ -6,11 +6,12 @@ import {
   mod as modulo,
   xgcd,
   plusMod,
+  multiplyMod,
 } from './polynoms-operations.util';
 import { BigNumber } from 'bignumber.js';
 import { multiplyVectors, vectorPow } from './matrix-operations.util';
 import { sha256 } from 'js-sha256';
-import { hexToBin } from './convert-numbers.util';
+import { binToHex, hexToBin } from './convert-numbers.util';
 
 const matrix4 = [
   ['a', 'Ad', 'Aa', 'd'],
@@ -35,19 +36,15 @@ export function localRightSideUnit(
   unit[0] = hParsed.join('');
   const divisor = plus(multiply(N[0], coefficients[0]), N[3]);
   const invertedDivisor = xgcd(divisor, parsedMod).x;
-  unit[1] = plus(
-    multiply(N[3], invertedDivisor),
-    multiply(
-      multiply(plus(N[0], multiply(N[3], coefficients[1])), invertedDivisor),
-      nParsed,
-    ),
+  unit[1] = multiplyMod(
+    plus(N[3], multiply(plus(N[0], multiply(N[3], coefficients[1])), nParsed)),
+    invertedDivisor,
+    parsedMod,
   ).join('');
-  unit[2] = plus(
-    multiply(N[0], invertedDivisor),
-    multiply(
-      hParsed,
-      multiply(plus(N[0], multiply(N[3], coefficients[1])), invertedDivisor),
-    ),
+  unit[2] = multiplyMod(
+    plus(N[0], multiply(plus(N[0], multiply(N[3], coefficients[1])), hParsed)),
+    invertedDivisor,
+    parsedMod,
   ).join('');
   unit[3] = nParsed.join('');
   return unit;
