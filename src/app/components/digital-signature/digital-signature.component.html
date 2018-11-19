@@ -136,9 +136,18 @@
   <div class="randoms-container">
     <div class="vector-wrapper">
       <div class="header">
+        <span>Random X</span>
+      </div>
+      <div class="input-wrapper">
+        <label><i>x</i></label>
+        <input formControlName="randomX"/>
+      </div>
+    </div>
+    <div class="vector-wrapper">
+      <div class="header">
         <span>Y (public key)</span>
         <button (click)="onYCalculateClick()"
-                [disabled]="!(QValid$ | async) || !(NDSValid$ | async) || !(TValid$ | async) ||
+                [disabled]="!digitalSignatureForm.get('randomX').valid || !(QValid$ | async) || !(NDSValid$ | async) || !(TValid$ | async) ||
                 !(coefficientsValid$ | async) || !(modValid$ | async)"
         >Calculate</button>
       </div>
@@ -164,12 +173,21 @@
     </div>
   </div>
   <p class="blocks-separator">Signature Generation</p>
-  <div class="signature-generation-container">
+  <div class="randoms-container">
+    <div class="vector-wrapper">
+      <div class="header">
+        <span>Random K</span>
+      </div>
+      <div class="input-wrapper">
+        <label><i>k</i></label>
+        <input formControlName="randomK"/>
+      </div>
+    </div>
     <div class="vector-wrapper">
       <div class="header">
         <span>R</span>
         <button (click)="onRCalculateClick()"
-                [disabled]="!(QValid$ | async) || !(NDSValid$ | async) || !(LValid$ | async) ||
+                [disabled]="!digitalSignatureForm.get('randomK').valid || !(QValid$ | async) || !(NDSValid$ | async) || !(LValid$ | async) ||
                 !(coefficientsValid$ | async) || !(modValid$ | async)"
         >Calculate</button>
       </div>

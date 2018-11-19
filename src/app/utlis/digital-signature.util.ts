@@ -3,14 +3,12 @@ import {
   plus,
   pow,
   toBits,
-  mod as modulo,
   xgcd,
   plusMod,
   multiplyMod,
 } from './polynoms-operations.util';
 import { BigNumber } from 'bignumber.js';
 import { multiplyVectors, vectorPow } from './matrix-operations.util';
-import { binToHex } from './convert-numbers.util';
 
 const matrix4 = [
   ['a', 'Ad', 'Aa', 'd'],
@@ -146,18 +144,12 @@ export function calculateE(
   R: Array<string>,
   mod: string,
 ): string {
-  const parsedMod = toBits(mod);
-
-  const polynomSum = [message]
-    .concat(R)
-    .reduce(
-      (acc: Array<number>, curr: string) =>
-        plusMod(acc, toBits(curr), parsedMod),
-      [0],
-    )
-    .join('');
-
-  return new BigNumber(binToHex(polynomSum), 16).toString();
+  return new BigNumber(
+    plusMod(toBits(message), toBits(R[0]), toBits(mod)).join(''),
+    2,
+  )
+    .mod(new BigNumber(mod.length - 1))
+    .toString();
 }
 
 export function calculateS(
@@ -171,11 +163,6 @@ export function calculateS(
       new BigNumber(e).multipliedBy(new BigNumber(randomX)).mod(
         new BigNumber(
           mod.length - 1,
-          // mod
-          //   .split('')
-          //   .reverse()
-          //   .join(''),
-          // 2,
         ),
       ),
     )

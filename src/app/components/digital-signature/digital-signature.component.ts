@@ -54,6 +54,8 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
       n2: new FormControl('', Validators.required),
       h3: new FormControl('', Validators.required),
       n3: new FormControl('', Validators.required),
+      randomX: new FormControl('', Validators.required),
+      randomK: new FormControl('', Validators.required),
       Er1: new FormControl(new Array(this.m).fill('')),
       Er2: new FormControl(new Array(this.m).fill('')),
       Er3: new FormControl(new Array(this.m).fill('')),
@@ -205,6 +207,8 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
         } else if (
           key !== 'e' &&
           key !== 's' &&
+          key !== 'randomX' &&
+          key !== 'randomK' &&
           key !== 'eTest' &&
           key !== 'sTest' &&
           key !== 'eWave'

@@ -288,39 +288,26 @@ export class DigitalSignatureEffects {
       this.Q$,
       this.NDS$,
       this.T$,
+      this.randomX$,
       this.mod$,
       this.coefficientA$,
       this.coefficientB$,
     ),
     switchMap(
-      ([_, Q, N, T, mod, A, B]: [
+      ([_, Q, N, T, x, mod, A, B]: [
         any,
         Array<string>,
         Array<string>,
         Array<string>,
         string,
         string,
+        string,
         string
       ]) => {
-        const modPower = mod.length - 1;
-        const power =
-          modPower > 0
-            ? (Math.floor(Math.random() * 65535) % modPower) + 1
-            : null;
-        if (!power) {
-          throw new Error('Calculate Y Effect: mod must have power > 0');
-        } else {
-          this.store.dispatch(
-            new digitalSignatureActions.StringValueChange({
-              key: 'randomX',
-              value: power.toString(),
-            }),
-          );
-        }
         return of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'Y',
-            value: calculateY(Q, N, T, power.toString(), mod, A, B),
+            value: calculateY(Q, N, T, x, mod, A, B),
           }),
         );
       },
@@ -364,39 +351,26 @@ export class DigitalSignatureEffects {
       this.Q$,
       this.NDS$,
       this.L$,
+      this.randomK$,
       this.mod$,
       this.coefficientA$,
       this.coefficientB$,
     ),
     switchMap(
-      ([_, Q, N, L, mod, A, B]: [
+      ([_, Q, N, L, k, mod, A, B]: [
         any,
         Array<string>,
         Array<string>,
         Array<string>,
         string,
         string,
+        string,
         string
       ]) => {
-        const modPower = mod.length - 1;
-        const power =
-          modPower > 0
-            ? (Math.floor(Math.random() * 65535) % modPower) + 1
-            : null;
-        if (!power) {
-          throw new Error('Calculate R Effect: mod must have power > 0');
-        } else {
-          this.store.dispatch(
-            new digitalSignatureActions.StringValueChange({
-              key: 'randomK',
-              value: power.toString(),
-            }),
-          );
-        }
         return of(
           new digitalSignatureActions.ArrayValueChange({
             key: 'R',
-            value: calculateR(Q, N, L, power.toString(), mod, A, B),
+            value: calculateR(Q, N, L, k, mod, A, B),
           }),
         );
       },
