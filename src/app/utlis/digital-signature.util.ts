@@ -10,7 +10,6 @@ import {
 } from './polynoms-operations.util';
 import { BigNumber } from 'bignumber.js';
 import { multiplyVectors, vectorPow } from './matrix-operations.util';
-import { binToHex } from './convert-numbers.util';
 
 const matrix4 = [
   ['a', 'Ad', 'Aa', 'd'],
