@@ -50,7 +50,7 @@
   <div class="randoms-container">
     <div class="vector-wrapper">
       <div class="header">
-        <span>E<sub>r1</sub> (secret key)</span>
+        <span>E<sub>r1</sub></span>
           <button (click)="onEr1CalculateClick()"
                   [disabled]="!digitalSignatureForm.get('h1').valid || !digitalSignatureForm.get('n1').valid ||
                   !(NDSValid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
@@ -64,7 +64,7 @@
     </div>
     <div class="vector-wrapper">
       <div class="header">
-        <span>E<sub>r2</sub> (secret key)</span>
+        <span>E<sub>r2</sub></span>
         <button (click)="onEr2CalculateClick()"
                 [disabled]="!digitalSignatureForm.get('h2').valid || !digitalSignatureForm.get('n2').valid ||
                   !(NDSValid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
@@ -78,7 +78,7 @@
     </div>
     <div class="vector-wrapper">
       <div class="header">
-        <span>E<sub>r3</sub> (secret key)</span>
+        <span>E<sub>r3</sub></span>
         <button (click)="onEr3CalculateClick()"
                 [disabled]="!digitalSignatureForm.get('h3').valid || !digitalSignatureForm.get('n3').valid ||
                   !(NDSValid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
@@ -121,7 +121,7 @@
     </div>
     <div class="vector-wrapper">
       <div class="header">
-        <span>L</span>
+        <span>L (secret key)</span>
         <button (click)="onLCalculateClick()"
                 [disabled]="!(PValid$ | async) || !(Er3Valid$ | async) || !(coefficientsValid$ | async) || !(modValid$ | async)"
         >Calculate</button>
@@ -136,7 +136,7 @@
   <div class="randoms-container">
     <div class="vector-wrapper">
       <div class="header">
-        <span>Random X</span>
+        <span>Random X (secret key)</span>
       </div>
       <div class="input-wrapper">
         <label><i>x</i></label>
