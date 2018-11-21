@@ -3,7 +3,6 @@ import {
   plus,
   pow,
   toBits,
-  mod as modulo,
   xgcd,
   plusMod,
   multiplyMod,
@@ -18,7 +17,7 @@ const matrix4 = [
   ['Ba', 'd', 'a', 'Bd'],
 ];
 
-export function localRightSideUnit2(
+export function localRightSideUnit(
   NDS: Array<string>,
   h: string,
   n: string,
@@ -45,64 +44,6 @@ export function localRightSideUnit2(
     parsedMod,
   ).join('');
   unit[3] = nParsed.join('');
-  return unit;
-}
-
-// export function localBiSideUnit(
-export function localRightSideUnit(
-  NDS: Array<string>,
-  h: string,
-  n: string,
-  mod: string,
-  ...coefficientsStrings: Array<string>
-): Array<string> {
-  const N = NDS.map(s => toBits(s));
-  const coefficients = coefficientsStrings.map(s => toBits(s));
-  const parsedMod = toBits(mod);
-  const unit = new Array(4).fill('');
-
-  const x0Divisor = plusMod(
-    plus(N[0], N[1]),
-    plus(multiply(N[2], coefficients[0]), multiply(N[3], coefficients[1])),
-    parsedMod,
-  );
-  const x0DivisorReverted = xgcd(x0Divisor, parsedMod).x;
-  const x0 = multiplyMod(N[0], x0DivisorReverted, parsedMod);
-
-  unit[0] = x0.join('');
-
-  unit[1] = plusMod(
-    multiply(
-      N[3],
-      xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
-    ),
-    multiply(
-      plus(N[0], multiply(N[3], coefficients[1])),
-      multiply(
-        xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
-        multiply(N[3], multiply(x0, xgcd(N[0], parsedMod).x)),
-      ),
-    ),
-    parsedMod,
-  ).join('');
-
-  unit[2] = plusMod(
-    multiply(
-      N[3],
-      xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
-    ),
-    multiply(
-      plus(N[0], multiply(N[3], coefficients[1])),
-      multiply(
-        xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
-        x0,
-      ),
-    ),
-    parsedMod,
-  ).join('');
-
-  unit[3] = multiplyMod(multiply(N[3], xgcd(N[0], parsedMod).x), x0, parsedMod).join('');
-
   return unit;
 }
 
