@@ -204,10 +204,10 @@
       <div class="header">
         <span>Signature Elements</span>
         <button (click)="onECalculateClick()"
-                [disabled]="!digitalSignatureForm.get('message').valid || !(RValid$ | async) || !(modValid$ | async)"
+                [disabled]="!digitalSignatureForm.get('qMod').valid || !digitalSignatureForm.get('message').valid || !(RValid$ | async) || !(modValid$ | async)"
         >Calculate <i>e</i></button>
         <button (click)="onSCalculateClick()"
-                [disabled]="!digitalSignatureForm.get('e').valid"
+                [disabled]="!digitalSignatureForm.get('qMod').valid || !digitalSignatureForm.get('e').valid"
         >Calculate <i>s</i></button>
       </div>
       <div class="input-wrapper">
