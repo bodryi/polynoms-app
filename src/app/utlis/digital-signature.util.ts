@@ -18,7 +18,7 @@ const matrix4 = [
   ['Ba', 'd', 'a', 'Bd'],
 ];
 
-export function localRightSideUnit(
+export function localRightSideUnit2(
   NDS: Array<string>,
   h: string,
   n: string,
@@ -45,6 +45,64 @@ export function localRightSideUnit(
     parsedMod,
   ).join('');
   unit[3] = nParsed.join('');
+  return unit;
+}
+
+// export function localBiSideUnit(
+export function localRightSideUnit(
+  NDS: Array<string>,
+  h: string,
+  n: string,
+  mod: string,
+  ...coefficientsStrings: Array<string>
+): Array<string> {
+  const N = NDS.map(s => toBits(s));
+  const coefficients = coefficientsStrings.map(s => toBits(s));
+  const parsedMod = toBits(mod);
+  const unit = new Array(4).fill('');
+
+  const x0Divisor = plusMod(
+    plus(N[0], N[1]),
+    plus(multiply(N[2], coefficients[0]), multiply(N[3], coefficients[1])),
+    parsedMod,
+  );
+  const x0DivisorReverted = xgcd(x0Divisor, parsedMod).x;
+  const x0 = multiplyMod(N[0], x0DivisorReverted, parsedMod);
+
+  unit[0] = x0.join('');
+
+  unit[1] = plusMod(
+    multiply(
+      N[3],
+      xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
+    ),
+    multiply(
+      plus(N[0], multiply(N[3], coefficients[1])),
+      multiply(
+        xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
+        multiply(N[3], multiply(x0, xgcd(N[0], parsedMod).x)),
+      ),
+    ),
+    parsedMod,
+  ).join('');
+
+  unit[2] = plusMod(
+    multiply(
+      N[3],
+      xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
+    ),
+    multiply(
+      plus(N[0], multiply(N[3], coefficients[1])),
+      multiply(
+        xgcd(plus(multiply(N[0], coefficients[0]), N[3]), parsedMod).x,
+        x0,
+      ),
+    ),
+    parsedMod,
+  ).join('');
+
+  unit[3] = multiplyMod(multiply(N[3], xgcd(N[0], parsedMod).x), x0, parsedMod).join('');
+
   return unit;
 }
 
@@ -144,14 +202,15 @@ export function calculateE(
   message: string,
   R: Array<string>,
   mod: string,
+  qMod: string,
 ): string {
-  return '1';
-  // return new BigNumber(
-  //   plusMod(toBits(message), toBits(R[1]), toBits(mod)).join(''),
-  //   2,
-  // )
-  //   .mod(new BigNumber(mod.length - 1))
-  //   .toString(10);
+  // return '1';
+  return new BigNumber(
+    plusMod(toBits(message), toBits(R[1]), toBits(mod)).join(''),
+    2,
+  )
+    .mod(new BigNumber(qMod))
+    .toString(10);
 }
 
 export function calculateS(
@@ -159,14 +218,19 @@ export function calculateS(
   e: string,
   randomX: string,
   mod: string,
+  qMod: string,
 ): string {
-  return new BigNumber(randomK)
-    .minus(
-      new BigNumber(e)
-        .multipliedBy(new BigNumber(randomX))
-        .mod(new BigNumber(mod.length - 1)),
-    )
-    .toString(10);
+  let s = new BigNumber(randomK).minus(
+    new BigNumber(e)
+      .multipliedBy(new BigNumber(randomX))
+      .mod(new BigNumber(qMod)),
+  );
+
+  while (s.comparedTo(0) === -1) {
+    s = s.plus(new BigNumber(qMod));
+  }
+
+  return s.toString(10);
 }
 
 export function calculateRWave(

@@ -3,6 +3,7 @@ import * as Action from './actions';
 export interface State {
   message: string;
   Q: Array<string>;
+  qMod: string;
   NDS: Array<string>;
   h1: string;
   n1: string;
@@ -49,6 +50,7 @@ export interface State {
 const initialState: State = {
   message: '',
   Q: new Array(4).fill(''),
+  qMod: '',
   NDS: new Array(4).fill(''),
   h1: '',
   n1: '',
@@ -141,6 +143,7 @@ export function reducer(state = initialState, action: any): State {
 
 export const getMessage = (state: State) => state.message;
 export const getQ = (state: State) => state.Q;
+export const getQMod = (state: State) => state.qMod;
 export const getN = (state: State) => state.NDS;
 export const getH1 = (state: State) => state.h1;
 export const getN1 = (state: State) => state.n1;

@@ -29,6 +29,7 @@ import {
 export class DigitalSignatureEffects {
   private NDS$ = this.store.pipe(select(fromRoot.getNDS));
   private Q$ = this.store.pipe(select(fromRoot.getQ));
+  private qMod$ = this.store.pipe(select(fromRoot.getQMod));
   private T$ = this.store.pipe(select(fromRoot.getT));
   private P$ = this.store.pipe(select(fromRoot.getP));
   private L$ = this.store.pipe(select(fromRoot.getL));
@@ -380,12 +381,12 @@ export class DigitalSignatureEffects {
   @Effect()
   calculateE$: Observable<any> = this.actions$.pipe(
     ofType(digitalSignatureActions.CALCULATE_E),
-    withLatestFrom(this.message$, this.R$, this.mod$),
-    switchMap(([_, message, R, mod]: [any, string, Array<string>, string]) =>
+    withLatestFrom(this.message$, this.R$, this.mod$, this.qMod$),
+    switchMap(([_, message, R, mod, qMod]: [any, string, Array<string>, string, string]) =>
       of(
         new digitalSignatureActions.StringValueChange({
           key: 'e',
-          value: calculateE(message, R, mod),
+          value: calculateE(message, R, mod, qMod),
         }),
       ),
     ),
@@ -394,12 +395,12 @@ export class DigitalSignatureEffects {
   @Effect()
   calculateS$: Observable<any> = this.actions$.pipe(
     ofType(digitalSignatureActions.CALCULATE_S),
-    withLatestFrom(this.randomK$, this.e$, this.randomX$, this.mod$),
-    switchMap(([_, k, e, x, mod]: [any, string, string, string, string]) =>
+    withLatestFrom(this.randomK$, this.e$, this.randomX$, this.mod$, this.qMod$),
+    switchMap(([_, k, e, x, mod, qMod]: [any, string, string, string, string, string]) =>
       of(
         new digitalSignatureActions.StringValueChange({
           key: 's',
-          value: calculateS(k, e, x, mod),
+          value: calculateS(k, e, x, mod, qMod),
         }),
       ),
     ),
@@ -440,12 +441,12 @@ export class DigitalSignatureEffects {
   @Effect()
   calculateEWave$: Observable<any> = this.actions$.pipe(
     ofType(digitalSignatureActions.CALCULATE_E_WAVE),
-    withLatestFrom(this.message$, this.RWave$, this.mod$),
-    switchMap(([_, message, R, mod]: [any, string, Array<string>, string]) =>
+    withLatestFrom(this.message$, this.RWave$, this.mod$, this.qMod$),
+    switchMap(([_, message, R, mod, qMod]: [any, string, Array<string>, string, string]) =>
       of(
         new digitalSignatureActions.StringValueChange({
           key: 'eWave',
-          value: calculateE(message, R, mod),
+          value: calculateE(message, R, mod, qMod),
         }),
       ),
     ),

@@ -374,3 +374,7 @@ export const getRandomK = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getRandomK,
 );
+export const getQMod = createSelector(
+  getDigitalSignatureState,
+  fromDigitalSignature.getQMod,
+);

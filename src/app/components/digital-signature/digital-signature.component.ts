@@ -47,6 +47,7 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     this.digitalSignatureForm = new FormGroup({
       message: new FormControl('', Validators.required),
       Q: new FormControl(new Array(this.m).fill('')),
+      qMod: new FormControl('', Validators.required),
       NDS: new FormControl(new Array(this.m).fill('')),
       h1: new FormControl('', Validators.required),
       n1: new FormControl('', Validators.required),
@@ -209,6 +210,7 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
           key !== 's' &&
           key !== 'randomX' &&
           key !== 'randomK' &&
+          key !== 'qMod' &&
           key !== 'eTest' &&
           key !== 'sTest' &&
           key !== 'eWave'
@@ -259,7 +261,10 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
 
           this.digitalSignatureForm
             .get(key)
-            .valueChanges.pipe(takeUntil(this.ngUnsubscribe), debounceTime(100))
+            .valueChanges.pipe(
+              takeUntil(this.ngUnsubscribe),
+              debounceTime(100),
+            )
             .subscribe((value: string) =>
               this.store.dispatch(
                 new digitalSignature.StringValueChange({

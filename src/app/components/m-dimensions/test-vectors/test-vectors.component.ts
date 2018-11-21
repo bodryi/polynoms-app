@@ -6,6 +6,7 @@ import * as testVectors from '../../../store/test-vectors/actions';
 import { debounceTime, filter, map, takeUntil } from 'rxjs/internal/operators';
 import { Subject } from 'rxjs';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
+import {BigNumber } from 'bignumber.js';
 
 @Component({
   selector: 'test-vectors',
@@ -129,6 +130,7 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
 
   revertA() {
     this.store.dispatch(new testVectors.RevertA());
+    console.log(new BigNumber('2').pow(66).minus(new BigNumber('1')).toString(10))
   }
 
   ngOnDestroy() {

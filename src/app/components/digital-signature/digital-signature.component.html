@@ -3,6 +3,9 @@
     <div class="input-wrapper">
       <input formControlName="message" [value]="digitalSignatureForm.get('message').value | uppercase" placeholder="Message hash..."/>
     </div>
+    <div class="input-wrapper">
+      <input formControlName="qMod" placeholder="q..."/>
+    </div>
   </div>
   <p class="blocks-separator">Secret Key Generation</p>
   <div class="randoms-container">
