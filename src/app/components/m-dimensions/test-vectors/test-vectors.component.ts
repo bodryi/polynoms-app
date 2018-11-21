@@ -126,6 +126,8 @@ export class TestVectorsComponent implements OnInit, OnDestroy {
 
   onRandomClick(vectorName: string) {
     this.store.dispatch(new testVectors.GenerateRandomTestVector(vectorName));
+    // console.log(new BigNumber('2').pow(31).minus(1).toString(10))
+    // console.log(new BigNumber('2').pow(31).minus(1).multipliedBy(2).toString(10))
   }
 
   revertA() {
