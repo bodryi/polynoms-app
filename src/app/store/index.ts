@@ -378,3 +378,7 @@ export const getQMod = createSelector(
   getDigitalSignatureState,
   fromDigitalSignature.getQMod,
 );
+export const getDigitalSignatureBuffer = createSelector(
+  getDigitalSignatureState,
+  fromDigitalSignature.getDigitalSignatureBuffer,
+);

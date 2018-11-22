@@ -38,7 +38,7 @@ export class Copy implements Action {
 export class CopyVector implements Action {
   readonly type = COPY_VECTOR;
 
-  constructor(public payload: string) {}
+  constructor(public payload: Array<string>) {}
 }
 
 export class Paste implements Action {

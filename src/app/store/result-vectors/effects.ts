@@ -21,7 +21,7 @@ export class ResultVectorEffects {
   copyVector$: Observable<any> = this.actions$.pipe(
     ofType(resultVectorsActions.COPY),
     withLatestFrom(this.result$),
-    switchMap(([action, result]: [{ payload: number }, Array<string>]) =>
+    switchMap(([action, result]: [{ payload: number }, Array<Array<string>>]) =>
       of(new testVectorsActions.CopyVector(result[action.payload])),
     ),
   );

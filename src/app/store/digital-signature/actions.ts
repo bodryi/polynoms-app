@@ -8,7 +8,11 @@ export const GENERATE_RANDOM_VECTOR_Q =
   '[Digital Signature] Generate Random Vector Q';
 export const CLEAR_VECTOR = '[Digital Signature] Clear Vector';
 export const COPY_VECTOR = '[Digital Signature] Copy Vector';
+export const COPY_VECTOR_TO_MAIN_BUFFER =
+  '[Digital Signature] Copy Vector To Main Buffer';
 export const PASTE_VECTOR = '[Digital Signature] Paste Vector';
+export const PASTE_VECTOR_FROM_MAIN_BUFFER =
+  '[Digital Signature] Paste Vector From Main Buffer';
 export const CALCULATE_ER1 = '[Digital Signature] Calculate Er1';
 export const CALCULATE_ER2 = '[Digital Signature] Calculate Er2';
 export const CALCULATE_ER3 = '[Digital Signature] Calculate Er3';
@@ -59,10 +63,20 @@ export class CopyVector implements Action {
   constructor(public payload: string) {}
 }
 
+export class CopyVectorToMainBuffer implements Action {
+  readonly type = COPY_VECTOR_TO_MAIN_BUFFER;
+}
+
 export class PasteVector implements Action {
   readonly type = PASTE_VECTOR;
 
   constructor(public payload: string) {}
+}
+
+export class PasteVectorFromMainBuffer implements Action {
+  readonly type = PASTE_VECTOR_FROM_MAIN_BUFFER;
+
+  constructor(public payload: { key: string; value: Array<string> }) {}
 }
 
 export class CalculateEr1 implements Action {
@@ -123,7 +137,9 @@ export type Actions =
   | GenerateRandomVectorN
   | GenerateRandomVectorQ
   | CopyVector
+  | CopyVectorToMainBuffer
   | PasteVector
+  | PasteVectorFromMainBuffer
   | CalculateEr1
   | CalculateEr2
   | CalculateEr3

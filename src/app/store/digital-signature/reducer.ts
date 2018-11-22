@@ -129,11 +129,11 @@ export function reducer(state = initialState, action: any): State {
         buffer: [...state[action.payload]],
       };
 
-    case Action.PASTE_VECTOR:
+    case Action.PASTE_VECTOR_FROM_MAIN_BUFFER:
       return {
         ...state,
-        [action.payload]: [...state.buffer],
-        [`${action.payload}Valid`]: validateVector(state.buffer),
+        [action.payload.key]: [...action.payload.value],
+        [`${action.payload.key}Valid`]: validateVector(action.payload.value),
       };
 
     default:
@@ -184,3 +184,4 @@ export const getRValid = (state: State) => state.RValid;
 export const getYTestValid = (state: State) => state.YTestValid;
 export const getUTestValid = (state: State) => state.UTestValid;
 export const getRWaveValid = (state: State) => state.RWaveValid;
+export const getDigitalSignatureBuffer = (state: State) => state.buffer;
