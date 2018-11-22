@@ -26,6 +26,7 @@ export const CALCULATE_E = '[Digital Signature] Calculate E';
 export const CALCULATE_S = '[Digital Signature] Calculate S';
 export const CALCULATE_R_WAVE = '[Digital Signature] Calculate R Wave';
 export const CALCULATE_E_WAVE = '[Digital Signature] Calculate E Wave';
+export const CALCULATE_Q_MOD = '[Digital Signature] Calculate Q Mod';
 
 export class StringValueChange implements Action {
   readonly type = STRING_VALUE_CHANGE;
@@ -131,6 +132,10 @@ export class CalculateEWave implements Action {
   readonly type = CALCULATE_E_WAVE;
 }
 
+export class CalculateQMod implements Action {
+  readonly type = CALCULATE_Q_MOD;
+}
+
 export type Actions =
   | StringValueChange
   | ArrayValueChange
@@ -150,4 +155,5 @@ export type Actions =
   | CalculateR
   | CalculateE
   | CalculateS
+  | CalculateQMod
   | ClearVector;

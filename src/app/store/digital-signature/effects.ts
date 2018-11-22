@@ -21,11 +21,12 @@ import {
 } from '../../utlis/digital-signature.util';
 import {
   multiplyMod,
+  shiftNulls,
   toBits,
   xgcd,
 } from '../../utlis/polynoms-operations.util';
 import * as testVectorsActions from '../test-vectors/actions';
-import { PasteVector } from './actions';
+import { BigNumber } from 'bignumber.js';
 
 @Injectable()
 export class DigitalSignatureEffects {
@@ -97,6 +98,24 @@ export class DigitalSignatureEffects {
         }),
       ),
     ),
+  );
+
+  @Effect()
+  calculateQMod$: Observable<any> = this.actions$.pipe(
+    ofType(digitalSignatureActions.CALCULATE_Q_MOD),
+    withLatestFrom(this.mod$),
+    switchMap(([_, mod]: [any, string]) => {
+      const modPower = shiftNulls(toBits(mod)).length - 1;
+      return of(
+        new digitalSignatureActions.StringValueChange({
+          key: 'qMod',
+          value: new BigNumber('2')
+            .pow(modPower)
+            .minus(1)
+            .toString(10),
+        }),
+      );
+    }),
   );
 
   @Effect()

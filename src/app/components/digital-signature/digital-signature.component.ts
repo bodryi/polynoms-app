@@ -168,6 +168,10 @@ export class DigitalSignatureComponent implements OnInit, OnDestroy {
     this.store.dispatch(new digitalSignature.CalculateEWave());
   }
 
+  onQModCalculateClick() {
+    this.store.dispatch(new digitalSignature.CalculateQMod());
+  }
+
   private connectFormToStore() {
     if (this.digitalSignatureForm.controls) {
       Object.keys(this.digitalSignatureForm.controls).forEach(key => {

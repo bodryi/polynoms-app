@@ -1,10 +1,13 @@
 <form [formGroup]="digitalSignatureForm">
   <div class="bordered">
     <div class="input-wrapper">
-      <input formControlName="message" [value]="digitalSignatureForm.get('message').value | uppercase" placeholder="Message hash..."/>
-    </div>
-    <div class="input-wrapper">
-      <input formControlName="qMod" placeholder="q..."/>
+      <label>Document hash</label>
+      <input formControlName="message" [value]="digitalSignatureForm.get('message').value | uppercase"/>
+      <label>q</label>
+      <div class="q-block">
+        <input formControlName="qMod" placeholder="q..."/>
+        <button (click)="onQModCalculateClick()" [disabled]="!(modValid$ | async)">Calculate</button>
+      </div>
     </div>
   </div>
   <p class="blocks-separator">Secret Key Generation</p>

@@ -90,3 +90,17 @@ form {
   grid-gap: 0.5vw;
   margin-top: 10px;
 }
+
+.q-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.q-block input {
+  width: 89%;
+}
+
+.q-block button {
+  width: 9%;
+}

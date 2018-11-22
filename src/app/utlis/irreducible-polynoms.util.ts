@@ -37,13 +37,13 @@ export function generateRandomPolynom(
   const pow = exact ? maxPow : Math.floor(Math.random() * 65535) % maxPow + 1;
   let result = null;
   if (exact) {
-    while (shiftNulls(result).length !== maxPow) {
-      result = new Array(pow || maxPow)
+    while (shiftNulls(result).length !== maxPow + 1) {
+      result = new Array((pow + 1 || maxPow + 1))
         .fill(null)
         .map(() => Math.floor(Math.random() * 65535) % 2);
     }
   } else {
-    result = new Array(pow || maxPow)
+    result = new Array((pow || maxPow + 1))
       .fill(null)
       .map(() => Math.floor(Math.random() * 65535) % 2);
   }
