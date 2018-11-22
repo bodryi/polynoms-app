@@ -204,8 +204,10 @@
       </div>
     </div>
     <div class="vector-wrapper">
-      <div class="header">
-        <span>Signature Elements</span>
+      <div class="header signature-elements">
+        <div>
+          <span>Signature Elements</span>
+        </div>
         <button (click)="onECalculateClick()"
                 [disabled]="!digitalSignatureForm.get('qMod').valid || !digitalSignatureForm.get('message').valid || !(RValid$ | async) || !(modValid$ | async)"
         >Calculate <i>e</i></button>

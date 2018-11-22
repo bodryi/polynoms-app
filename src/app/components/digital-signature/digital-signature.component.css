@@ -104,3 +104,8 @@ form {
 .q-block button {
   width: 9%;
 }
+
+.signature-elements {
+  display: flex;
+  align-items: center;
+}

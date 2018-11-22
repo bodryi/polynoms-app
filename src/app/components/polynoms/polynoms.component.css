@@ -1,3 +1,8 @@
+form {
+  max-height: 94vh;
+  overflow-y: auto;
+}
+
 .fields-wrapper, .actions-block {
   margin: 5px 0;
   padding: 10px 5px;

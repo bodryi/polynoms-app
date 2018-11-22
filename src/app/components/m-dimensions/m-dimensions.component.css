@@ -4,6 +4,8 @@
     grid-template-columns: 40% 58%;
     grid-gap: 2vw;
     margin: 5px 0;
+    max-height: 94vh;
+    overflow-y: auto;
 }
 
 .double-cell {
