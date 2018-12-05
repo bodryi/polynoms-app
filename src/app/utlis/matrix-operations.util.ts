@@ -5,6 +5,7 @@ import {
   CHAR_CODE_SMALL_A,
   SMALL_LATIN_CHARS_REGEXP,
 } from '../constants/app.constants';
+import { BigNumber } from 'bignumber.js';
 
 function findVectorIndexInString(str: string): number {
   return str.split('').findIndex(c => SMALL_LATIN_CHARS_REGEXP.test(c));
@@ -92,16 +93,16 @@ export function vectorPow(
   multiplyMatrix: Array<Array<string>>,
   ...coefficients: Array<string>
 ) {
-  const parsedPow = parseInt(pow, 10);
+  const parsedPow = new BigNumber(pow);
 
   let res: Array<string> = null;
   let tempC = [...v];
   let w = parsedPow;
 
-  while (w > 0) {
-    if (w % 2) {
+  while (w.comparedTo(0) === 1) {
+    if (w.mod(2).comparedTo(0) === 1) {
       res = [...tempC];
-      w = (w - 1) / 2;
+      w = w.minus(1).div(2);
       tempC = multiplyVectors(
         tempC,
         tempC,
@@ -110,7 +111,7 @@ export function vectorPow(
         ...coefficients,
       );
 
-      if (!w) {
+      if (!w.comparedTo(0)) {
         return res;
       } else {
         break;
@@ -123,21 +124,21 @@ export function vectorPow(
         mod,
         ...coefficients,
       );
-      w /= 2;
+      w = w.div(2);
     }
   }
 
-  let vi = w;
+  let vi = new BigNumber(w);
 
-  while (vi >= 0) {
-    if (vi % 2) {
+  while (vi.comparedTo(0) !== -1) {
+    if (vi.mod(2).comparedTo(0) === 1) {
       res = multiplyVectors(res, tempC, multiplyMatrix, mod, ...coefficients);
-      vi = (vi - 1) / 2;
+      vi = vi.minus(1).div(2);
     } else {
-      if (!vi) {
+      if (!vi.comparedTo(0)) {
         return res;
       } else {
-        vi /= 2;
+        vi = vi.div(2);
       }
     }
     tempC = multiplyVectors(tempC, tempC, multiplyMatrix, mod, ...coefficients);

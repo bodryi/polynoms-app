@@ -13,8 +13,12 @@ import * as fromRoot from '../../../store';
 import { binToHex, hexToBin } from '../../../utlis/convert-numbers.util';
 import { number } from '../../../validators';
 import { UpperCasePipe } from '@angular/common';
-import { trimPolynomLastZeros } from '../../../utlis/irreducible-polynoms.util';
+import {
+  primeFactorization,
+  trimPolynomLastZeros,
+} from '../../../utlis/irreducible-polynoms.util';
 import { MAX_FACTORIZED_POWER } from '../../../constants/app.constants';
+import { BigNumber } from 'bignumber.js';
 
 @Component({
   selector: 'coefficients',
@@ -225,6 +229,9 @@ export class CoefficientsComponent implements OnInit, OnDestroy {
 
   testPolynom() {
     this.store.dispatch(new coefficients.TestPolynom());
+    // console.log(binToHex('11' + '0'.repeat(125) + '1'));
+    // x^127+x+1
+    console.log(primeFactorization(new BigNumber(2).pow(63).minus(1)).map(n => n.toString()));
   }
 
   generatePolynom() {
